@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -14,7 +14,7 @@ var textCellEditor_1 = require("./textCellEditor");
 var PopupTextCellEditor = (function (_super) {
     __extends(PopupTextCellEditor, _super);
     function PopupTextCellEditor() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     PopupTextCellEditor.prototype.isPopup = function () {
         return true;

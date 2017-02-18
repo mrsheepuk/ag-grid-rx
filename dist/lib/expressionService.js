@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -64,16 +64,15 @@ var ExpressionService = (function () {
             return 'return ' + expression + ';';
         }
     };
-    __decorate([
-        __param(0, context_2.Qualifier('loggerFactory')), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [logger_1.LoggerFactory]), 
-        __metadata('design:returntype', void 0)
-    ], ExpressionService.prototype, "setBeans", null);
-    ExpressionService = __decorate([
-        context_1.Bean('expressionService'), 
-        __metadata('design:paramtypes', [])
-    ], ExpressionService);
     return ExpressionService;
 }());
+__decorate([
+    __param(0, context_2.Qualifier('loggerFactory')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [logger_1.LoggerFactory]),
+    __metadata("design:returntype", void 0)
+], ExpressionService.prototype, "setBeans", null);
+ExpressionService = __decorate([
+    context_1.Bean('expressionService')
+], ExpressionService);
 exports.ExpressionService = ExpressionService;

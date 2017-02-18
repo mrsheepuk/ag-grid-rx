@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -15,13 +15,14 @@ var beanStub_1 = require("../context/beanStub");
 var Component = (function (_super) {
     __extends(Component, _super);
     function Component(template) {
-        _super.call(this);
-        this.childComponents = [];
-        this.annotatedEventListeners = [];
-        this.visible = true;
+        var _this = _super.call(this) || this;
+        _this.childComponents = [];
+        _this.annotatedEventListeners = [];
+        _this.visible = true;
         if (template) {
-            this.setTemplate(template);
+            _this.setTemplate(template);
         }
+        return _this;
     }
     Component.prototype.instantiate = function (context) {
         this.instantiateRecurse(this.getGui(), context);
@@ -195,7 +196,7 @@ var Component = (function (_super) {
     Component.prototype.getRefElement = function (refName) {
         return this.queryForHtmlElement('[ref="' + refName + '"]');
     };
-    Component.EVENT_VISIBLE_CHANGED = 'visibleChanged';
     return Component;
 }(beanStub_1.BeanStub));
+Component.EVENT_VISIBLE_CHANGED = 'visibleChanged';
 exports.Component = Component;

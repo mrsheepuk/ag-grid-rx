@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -79,18 +79,17 @@ var FilterStage = (function () {
         });
         rowNode.allChildrenCount = allChildrenCount;
     };
-    __decorate([
-        context_2.Autowired('gridOptionsWrapper'), 
-        __metadata('design:type', gridOptionsWrapper_1.GridOptionsWrapper)
-    ], FilterStage.prototype, "gridOptionsWrapper", void 0);
-    __decorate([
-        context_2.Autowired('filterManager'), 
-        __metadata('design:type', filterManager_1.FilterManager)
-    ], FilterStage.prototype, "filterManager", void 0);
-    FilterStage = __decorate([
-        context_1.Bean('filterStage'), 
-        __metadata('design:paramtypes', [])
-    ], FilterStage);
     return FilterStage;
 }());
+__decorate([
+    context_2.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], FilterStage.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    context_2.Autowired('filterManager'),
+    __metadata("design:type", filterManager_1.FilterManager)
+], FilterStage.prototype, "filterManager", void 0);
+FilterStage = __decorate([
+    context_1.Bean('filterStage')
+], FilterStage);
 exports.FilterStage = FilterStage;

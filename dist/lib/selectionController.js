@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var utils_1 = require('./utils');
+var utils_1 = require("./utils");
 var context_1 = require("./context/context");
 var context_2 = require("./context/context");
 var logger_1 = require("./logger");
@@ -34,7 +34,7 @@ var SelectionController = (function () {
         this.logger = loggerFactory.create('SelectionController');
         this.reset();
         if (this.gridOptionsWrapper.isRowModelDefault()) {
-            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.reset.bind(this));
+            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.rowDataChanged.bind(this));
         }
         else {
             this.logger.log('dont know what to do here');
@@ -162,6 +162,22 @@ var SelectionController = (function () {
         this.selectedNodes = {};
         this.lastSelectedNode = null;
     };
+    SelectionController.prototype.rowDataChanged = function () {
+        var _this = this;
+        // Check selected nodes still present in nodeset, if not, deselect
+        // them.
+        var changed = false;
+        this.getSelectedRows().forEach(function (selectedRow) {
+            if (!_this.rowModel.isRowPresent(selectedRow)) {
+                _this.deselectNode(selectedRow);
+                if (_this.lastSelectedNode == selectedRow)
+                    _this.lastSelectedNode = null;
+                changed = true;
+            }
+        });
+        if (changed)
+            this.eventService.dispatchEvent(events_1.Events.EVENT_SELECTION_CHANGED);
+    };
     // returns a list of all nodes at 'best cost' - a feature to be used
     // with groups / trees. if a group has all it's children selected,
     // then the group appears in the result, but not the children.
@@ -268,34 +284,33 @@ var SelectionController = (function () {
         var node = this.rowModel.getRow(index);
         this.selectNode(node, tryMulti);
     };
-    __decorate([
-        context_3.Autowired('eventService'), 
-        __metadata('design:type', eventService_1.EventService)
-    ], SelectionController.prototype, "eventService", void 0);
-    __decorate([
-        context_3.Autowired('rowModel'), 
-        __metadata('design:type', Object)
-    ], SelectionController.prototype, "rowModel", void 0);
-    __decorate([
-        context_3.Autowired('gridOptionsWrapper'), 
-        __metadata('design:type', gridOptionsWrapper_1.GridOptionsWrapper)
-    ], SelectionController.prototype, "gridOptionsWrapper", void 0);
-    __decorate([
-        __param(0, context_2.Qualifier('loggerFactory')), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [logger_1.LoggerFactory]), 
-        __metadata('design:returntype', void 0)
-    ], SelectionController.prototype, "setBeans", null);
-    __decorate([
-        context_4.PostConstruct, 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], SelectionController.prototype, "init", null);
-    SelectionController = __decorate([
-        context_1.Bean('selectionController'), 
-        __metadata('design:paramtypes', [])
-    ], SelectionController);
     return SelectionController;
 }());
+__decorate([
+    context_3.Autowired('eventService'),
+    __metadata("design:type", eventService_1.EventService)
+], SelectionController.prototype, "eventService", void 0);
+__decorate([
+    context_3.Autowired('rowModel'),
+    __metadata("design:type", Object)
+], SelectionController.prototype, "rowModel", void 0);
+__decorate([
+    context_3.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], SelectionController.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    __param(0, context_2.Qualifier('loggerFactory')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [logger_1.LoggerFactory]),
+    __metadata("design:returntype", void 0)
+], SelectionController.prototype, "setBeans", null);
+__decorate([
+    context_4.PostConstruct,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], SelectionController.prototype, "init", null);
+SelectionController = __decorate([
+    context_1.Bean('selectionController')
+], SelectionController);
 exports.SelectionController = SelectionController;

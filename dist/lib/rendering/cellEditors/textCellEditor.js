@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -12,11 +12,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var constants_1 = require("../../constants");
 var component_1 = require("../../widgets/component");
-var utils_1 = require('../../utils');
+var utils_1 = require("../../utils");
 var TextCellEditor = (function (_super) {
     __extends(TextCellEditor, _super);
     function TextCellEditor() {
-        _super.call(this, TextCellEditor.TEMPLATE);
+        return _super.call(this, TextCellEditor.TEMPLATE) || this;
     }
     TextCellEditor.prototype.init = function (params) {
         var eInput = this.getGui();
@@ -83,7 +83,7 @@ var TextCellEditor = (function (_super) {
         var eInput = this.getGui();
         return eInput.value;
     };
-    TextCellEditor.TEMPLATE = '<input class="ag-cell-edit-input" type="text"/>';
     return TextCellEditor;
 }(component_1.Component));
+TextCellEditor.TEMPLATE = '<input class="ag-cell-edit-input" type="text"/>';
 exports.TextCellEditor = TextCellEditor;

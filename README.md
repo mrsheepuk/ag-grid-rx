@@ -1,24 +1,46 @@
 
-ag-Grid
+ag-Grid-rx
 ==============
-[![CDNJS](https://img.shields.io/cdnjs/v/ag-grid.svg)](https://cdnjs.com/libraries/ag-grid)
-[![npm](https://img.shields.io/npm/dm/ag-grid.svg)](https://www.npmjs.com/package/ag-grid)
-[![npm](https://img.shields.io/npm/dt/ag-grid.svg)](https://www.npmjs.com/package/ag-grid)
 
-"ag" stands for AGnostic
+A fork of [ag-Grid](http://www.ag-grid.com) which allows the use of an RxJS observable for
+the provision of data into the grid, along with efficient updating of the existing rows when
+that observable emits new values. This makes it ideal for Angular (2+) combined with NgRx or
+Redux for state management.
 
-#### Install with Bower
-```sh
-$ bower install ag-grid
-```
+The benefit of this is better performance, particularly on Internet Explorer (which struggles
+with large grids of many columns against large data sets), for frequent live updating of large
+data sets which mostly stay the same between refreshes.
+
+In general, follow the usage guidelines for ag-Grid. The key difference is that setRowData can 
+take an Observable<any[]> instead of a simple any[]. Each time this observable emits new data, 
+the grid will attempt to map any identical objects to existing rows, instead of re-creating 
+the entire grid.
+
+To do this, the *data items must have a "natural ID" property, named 'id'*, which must be unique
+within the data set and constant for a logical data item within that set. For correct 
+functionality, the data objects supplied by the observable must be immutable - i.e. if the 
+values for a row of data are changed, a *new object* with the same value for "id" must be 
+provided. If the same object is re-used, *the grid will not be updated*. This model is designed 
+to work well with state management libraries such as Flux, Redux, NgRx, et al. 
+
+If no 'id' property is provided, or the data is not provided as an observable, the grid
+should behave similarly to the default ag-Grid. But if you're not using an observable, 
+you should probably just use the main ag-Grid components :) 
+
+The only other key difference is that any selection is maintained when new data is emitted
+by the provided observable, rather than the selection being fully cleared each time the data
+is refreshed.
 
 #### Install with Npm
 ```sh
-$ npm install ag-grid
+$ npm install ag-grid-rx
 ```
 
-See the [www.ag-grid.com](http://www.ag-grid.com) for overview and documentation.
-
+#### Use with Angular (2+)
+```sh
+$ npm install ag-grid-rx-ng
+```
+See [ag-grid-rx-ng](https://github.com/mrsheepuk/ag-grid-rx-ng).
 
 Building
 ==============
@@ -35,7 +57,7 @@ Default gulp task is for development. It includes source maps, does not include 
 
 Folder Structure
 ==============
-The new build has the following structure:
+The build has the following structure:
 - **\src** -> contains source files (TypeScript and CSS), don't touch these!
 - **\dist** -> contains distribution files
 - **\dist\ag-grid.js and \dist\ag-grid.min.js** -> use these if not using a package manager and put ag-Grid on
@@ -45,33 +67,3 @@ separately.
 - **\dist\lib** -> contains compiles JavaScript files in CommonJS format.
 - **\main.js** -> CommonJS root file, reference this file if importing project via CommonJS.
 - **\main.d.ts** -> CommonJS root definition file.
-
-
-Asking Questions
-==============
-
-Please do not use GitHub issues to ask questions. Ask questions on the
-[website forum](http://www.ag-grid.com/forum).
-
-
-Contributing
-==============
-
-ag-Grid is not looking for contributors. It is not intended to be developed by an online community.
-However suggestion on change and raising bugs are appreciated.
-
-If you are doing a Pull Request:
-- Make your code changes in `src/` files only, don't update dist files
-- Discard all changes to `dist/`
-- Create Pull Request
-
-For large changes:
-- Make your doc changes in project [ag-grid-docs](https://github.com/ceolter/ag-grid-docs), a feature is not complete unless it's documented!
-- Do manual end to end testing off all examples in documentation
-
-PR's on new features **are not** generally accepted. 
-
-PR's on small bug fixes **are** generally accepted.
-
-If a PR for a large request is submitted, the typical action is the author will take influence from the
-code to implement the feature, either in ag-grid or [ag-grid-enterprise](https://github.com/ceolter/ag-grid-enterprise).

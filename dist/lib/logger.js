@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -29,18 +29,17 @@ var LoggerFactory = (function () {
     LoggerFactory.prototype.create = function (name) {
         return new Logger(name, this.logging);
     };
-    __decorate([
-        __param(0, context_2.Qualifier('gridOptionsWrapper')), 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [gridOptionsWrapper_1.GridOptionsWrapper]), 
-        __metadata('design:returntype', void 0)
-    ], LoggerFactory.prototype, "setBeans", null);
-    LoggerFactory = __decorate([
-        context_1.Bean('loggerFactory'), 
-        __metadata('design:paramtypes', [])
-    ], LoggerFactory);
     return LoggerFactory;
 }());
+__decorate([
+    __param(0, context_2.Qualifier('gridOptionsWrapper')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [gridOptionsWrapper_1.GridOptionsWrapper]),
+    __metadata("design:returntype", void 0)
+], LoggerFactory.prototype, "setBeans", null);
+LoggerFactory = __decorate([
+    context_1.Bean('loggerFactory')
+], LoggerFactory);
 exports.LoggerFactory = LoggerFactory;
 var Logger = (function () {
     function Logger(name, logging) {

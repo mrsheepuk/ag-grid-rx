@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -73,14 +73,13 @@ var TemplateService = (function () {
             }, 0);
         }
     };
-    __decorate([
-        context_2.Autowired('$scope'), 
-        __metadata('design:type', Object)
-    ], TemplateService.prototype, "$scope", void 0);
-    TemplateService = __decorate([
-        context_1.Bean('templateService'), 
-        __metadata('design:paramtypes', [])
-    ], TemplateService);
     return TemplateService;
 }());
+__decorate([
+    context_2.Autowired('$scope'),
+    __metadata("design:type", Object)
+], TemplateService.prototype, "$scope", void 0);
+TemplateService = __decorate([
+    context_1.Bean('templateService')
+], TemplateService);
 exports.TemplateService = TemplateService;

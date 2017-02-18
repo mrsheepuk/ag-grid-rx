@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -9,6 +9,9 @@ var rowNode_1 = require("../../entities/rowNode");
 var utils_1 = require("../../utils");
 var InMemoryNodeManager = (function () {
     function InMemoryNodeManager(rootNode, gridOptionsWrapper, context, eventService) {
+        // Keep an index of existing nodes, so we can find them rapidly when
+        // data updates come in.
+        this.nodeIndex = {};
         this.nextId = 0;
         this.rootNode = rootNode;
         this.gridOptionsWrapper = gridOptionsWrapper;
@@ -46,6 +49,82 @@ var InMemoryNodeManager = (function () {
         else {
             this.rootNode.allLeafChildren = result;
         }
+    };
+    InMemoryNodeManager.prototype.updateRowData = function (rowData) {
+        // This is intended to be called for observable data updates, where the data 
+        // supplied is likely to be similar to the data we already have. Therefore,
+        // it attempts to keep, wherever possible, the exsiting RowNodes, rather than
+        // binning the whole lot and starting again.
+        var _this = this;
+        // Clear out the grouped / filtered / sorted views of the data, no simple way
+        // to keep those.
+        this.rootNode.childrenAfterFilter = null;
+        this.rootNode.childrenAfterGroup = null;
+        this.rootNode.childrenAfterSort = null;
+        this.rootNode.childrenMapped = null;
+        // We never reset nextId in here, so it should always strictly ascend as 
+        // rownodes are created by createNode (unless we've got empty data, in 
+        // which case we'll reset to zero).
+        // this.nextId = 0;
+        // If we have no rowData, reset everything.
+        if (!rowData) {
+            this.rootNode.allLeafChildren = [];
+            this.rootNode.childrenAfterGroup = [];
+            this.nextId = 0;
+            return;
+        }
+        // Take our existing set of allLeafChildren, and update it with the
+        // supplied rowData.
+        var currentPosition = 0;
+        rowData.forEach(function (dataItem) {
+            var node = null;
+            // If this is top leve, and our data item has a natural ID, re-use
+            // existing nodes where possible.
+            if (dataItem.hasOwnProperty('id')) {
+                // Check for existing node.
+                var indexEntry = _this.nodeIndex[dataItem.id];
+                if (indexEntry && indexEntry.data == dataItem) {
+                    // Existing data, unchanged (requires it to be the SAME OBJECT).
+                    node = indexEntry.node;
+                    // Check its position in the array.
+                    if (indexEntry.ind != currentPosition) {
+                        utils_1.Utils.removeFromArray(_this.rootNode.allLeafChildren, node);
+                        utils_1.Utils.insertIntoArray(_this.rootNode.allLeafChildren, node, currentPosition);
+                        _this.nodeIndex[dataItem.id].ind = currentPosition;
+                    }
+                }
+                else if (indexEntry && indexEntry.data != dataItem) {
+                    // Existing data, changed (or a different object representing
+                    // the same data, not doing deep inspection here).
+                    node = indexEntry.node;
+                    _this.nodeIndex[dataItem.id].data = dataItem;
+                    node.setData(dataItem);
+                    // Check its position in the array.
+                    if (indexEntry.ind != currentPosition) {
+                        utils_1.Utils.removeFromArray(_this.rootNode.allLeafChildren, node);
+                        utils_1.Utils.insertIntoArray(_this.rootNode.allLeafChildren, node, currentPosition);
+                        _this.nodeIndex[dataItem.id].ind = currentPosition;
+                    }
+                }
+                else {
+                    // New data we haven't seen before.
+                    node = _this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
+                    _this.nodeIndex[dataItem.id] = {
+                        data: dataItem,
+                        node: node,
+                        ind: currentPosition
+                    };
+                    // Insert it at the current position in the index.
+                    utils_1.Utils.insertIntoArray(_this.rootNode.allLeafChildren, node, currentPosition);
+                }
+            }
+            else {
+                // No ID property, have to re-create every time.
+                node = _this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
+                utils_1.Utils.insertIntoArray(_this.rootNode.allLeafChildren, node, currentPosition);
+            }
+            currentPosition++;
+        });
     };
     InMemoryNodeManager.prototype.recursiveFunction = function (rowData, parent, level) {
         var _this = this;
@@ -174,7 +253,7 @@ var InMemoryNodeManager = (function () {
             return false;
         }
     };
-    InMemoryNodeManager.TOP_LEVEL = 0;
     return InMemoryNodeManager;
 }());
+InMemoryNodeManager.TOP_LEVEL = 0;
 exports.InMemoryNodeManager = InMemoryNodeManager;

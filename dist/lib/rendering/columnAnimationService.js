@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -92,18 +92,17 @@ var ColumnAnimationService = (function () {
         setTimeout(function () { return nowFuncs.forEach(function (func) { return func(); }); }, 0);
         setTimeout(function () { return waitFuncs.forEach(function (func) { return func(); }); }, 300);
     };
-    __decorate([
-        context_1.Autowired('gridOptionsWrapper'), 
-        __metadata('design:type', gridOptionsWrapper_1.GridOptionsWrapper)
-    ], ColumnAnimationService.prototype, "gridOptionsWrapper", void 0);
-    __decorate([
-        context_1.Autowired('gridPanel'), 
-        __metadata('design:type', gridPanel_1.GridPanel)
-    ], ColumnAnimationService.prototype, "gridPanel", void 0);
-    ColumnAnimationService = __decorate([
-        context_1.Bean('columnAnimationService'), 
-        __metadata('design:paramtypes', [])
-    ], ColumnAnimationService);
     return ColumnAnimationService;
 }());
+__decorate([
+    context_1.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], ColumnAnimationService.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    context_1.Autowired('gridPanel'),
+    __metadata("design:type", gridPanel_1.GridPanel)
+], ColumnAnimationService.prototype, "gridPanel", void 0);
+ColumnAnimationService = __decorate([
+    context_1.Bean('columnAnimationService')
+], ColumnAnimationService);
 exports.ColumnAnimationService = ColumnAnimationService;

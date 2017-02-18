@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -26,7 +26,7 @@ var beanStub_1 = require("../context/beanStub");
 var ColumnHoverService = (function (_super) {
     __extends(ColumnHoverService, _super);
     function ColumnHoverService() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ColumnHoverService.prototype.init = function () {
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_CELL_MOUSE_OVER, this.onCellMouseOver.bind(this));
@@ -43,20 +43,19 @@ var ColumnHoverService = (function (_super) {
     ColumnHoverService.prototype.isHovered = function (column) {
         return column == this.currentlySelectedColumn;
     };
-    __decorate([
-        context_1.Autowired('eventService'), 
-        __metadata('design:type', eventService_1.EventService)
-    ], ColumnHoverService.prototype, "eventService", void 0);
-    __decorate([
-        context_1.PostConstruct, 
-        __metadata('design:type', Function), 
-        __metadata('design:paramtypes', []), 
-        __metadata('design:returntype', void 0)
-    ], ColumnHoverService.prototype, "init", null);
-    ColumnHoverService = __decorate([
-        context_1.Bean('columnHoverService'), 
-        __metadata('design:paramtypes', [])
-    ], ColumnHoverService);
     return ColumnHoverService;
 }(beanStub_1.BeanStub));
+__decorate([
+    context_1.Autowired('eventService'),
+    __metadata("design:type", eventService_1.EventService)
+], ColumnHoverService.prototype, "eventService", void 0);
+__decorate([
+    context_1.PostConstruct,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ColumnHoverService.prototype, "init", null);
+ColumnHoverService = __decorate([
+    context_1.Bean('columnHoverService')
+], ColumnHoverService);
 exports.ColumnHoverService = ColumnHoverService;

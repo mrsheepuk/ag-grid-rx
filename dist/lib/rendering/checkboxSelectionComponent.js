@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -21,7 +21,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var component_1 = require("../widgets/component");
 var rowNode_1 = require("../entities/rowNode");
-var utils_1 = require('../utils');
+var utils_1 = require("../utils");
 var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var svgFactory_1 = require("../svgFactory");
@@ -33,7 +33,7 @@ var svgFactory = svgFactory_1.SvgFactory.getInstance();
 var CheckboxSelectionComponent = (function (_super) {
     __extends(CheckboxSelectionComponent, _super);
     function CheckboxSelectionComponent() {
-        _super.call(this, "<span class=\"ag-selection-checkbox\"/>");
+        return _super.call(this, "<span class=\"ag-selection-checkbox\"/>") || this;
     }
     CheckboxSelectionComponent.prototype.createAndAddIcons = function () {
         this.eCheckedIcon = utils_1.Utils.createIconNoSpan('checkboxChecked', this.gridOptionsWrapper, null, svgFactory.createCheckboxCheckedIcon);
@@ -103,22 +103,22 @@ var CheckboxSelectionComponent = (function (_super) {
         };
         return params;
     };
-    __decorate([
-        context_1.Autowired('gridOptionsWrapper'), 
-        __metadata('design:type', gridOptionsWrapper_1.GridOptionsWrapper)
-    ], CheckboxSelectionComponent.prototype, "gridOptionsWrapper", void 0);
-    __decorate([
-        context_1.Autowired('eventService'), 
-        __metadata('design:type', eventService_1.EventService)
-    ], CheckboxSelectionComponent.prototype, "eventService", void 0);
-    __decorate([
-        context_1.Autowired('gridApi'), 
-        __metadata('design:type', gridApi_1.GridApi)
-    ], CheckboxSelectionComponent.prototype, "gridApi", void 0);
-    __decorate([
-        context_1.Autowired('columnApi'), 
-        __metadata('design:type', columnController_1.ColumnApi)
-    ], CheckboxSelectionComponent.prototype, "columnApi", void 0);
     return CheckboxSelectionComponent;
 }(component_1.Component));
+__decorate([
+    context_1.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], CheckboxSelectionComponent.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    context_1.Autowired('eventService'),
+    __metadata("design:type", eventService_1.EventService)
+], CheckboxSelectionComponent.prototype, "eventService", void 0);
+__decorate([
+    context_1.Autowired('gridApi'),
+    __metadata("design:type", gridApi_1.GridApi)
+], CheckboxSelectionComponent.prototype, "gridApi", void 0);
+__decorate([
+    context_1.Autowired('columnApi'),
+    __metadata("design:type", columnController_1.ColumnApi)
+], CheckboxSelectionComponent.prototype, "columnApi", void 0);
 exports.CheckboxSelectionComponent = CheckboxSelectionComponent;

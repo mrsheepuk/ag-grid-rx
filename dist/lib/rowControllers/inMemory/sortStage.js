@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -80,22 +80,21 @@ var SortStage = (function () {
             child.childIndex = index;
         });
     };
-    __decorate([
-        context_1.Autowired('gridOptionsWrapper'), 
-        __metadata('design:type', gridOptionsWrapper_1.GridOptionsWrapper)
-    ], SortStage.prototype, "gridOptionsWrapper", void 0);
-    __decorate([
-        context_1.Autowired('sortController'), 
-        __metadata('design:type', sortController_1.SortController)
-    ], SortStage.prototype, "sortController", void 0);
-    __decorate([
-        context_1.Autowired('valueService'), 
-        __metadata('design:type', valueService_1.ValueService)
-    ], SortStage.prototype, "valueService", void 0);
-    SortStage = __decorate([
-        context_1.Bean('sortStage'), 
-        __metadata('design:paramtypes', [])
-    ], SortStage);
     return SortStage;
 }());
+__decorate([
+    context_1.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], SortStage.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    context_1.Autowired('sortController'),
+    __metadata("design:type", sortController_1.SortController)
+], SortStage.prototype, "sortController", void 0);
+__decorate([
+    context_1.Autowired('valueService'),
+    __metadata("design:type", valueService_1.ValueService)
+], SortStage.prototype, "valueService", void 0);
+SortStage = __decorate([
+    context_1.Bean('sortStage')
+], SortStage);
 exports.SortStage = SortStage;

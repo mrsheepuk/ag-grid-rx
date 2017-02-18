@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -16,7 +16,7 @@ var utils_1 = require("../../utils");
 var LargeTextCellEditor = (function (_super) {
     __extends(LargeTextCellEditor, _super);
     function LargeTextCellEditor() {
-        _super.call(this, LargeTextCellEditor.TEMPLATE);
+        return _super.call(this, LargeTextCellEditor.TEMPLATE) || this;
     }
     LargeTextCellEditor.prototype.init = function (params) {
         this.params = params;
@@ -52,11 +52,11 @@ var LargeTextCellEditor = (function (_super) {
     LargeTextCellEditor.prototype.isPopup = function () {
         return true;
     };
-    LargeTextCellEditor.TEMPLATE = 
-    // tab index is needed so we can focus, which is needed for keyboard events
-    '<div class="ag-large-text" tabindex="0">' +
-        '<div class="ag-large-textarea"></div>' +
-        '</div>';
     return LargeTextCellEditor;
 }(component_1.Component));
+LargeTextCellEditor.TEMPLATE = 
+// tab index is needed so we can focus, which is needed for keyboard events
+'<div class="ag-large-text" tabindex="0">' +
+    '<div class="ag-large-textarea"></div>' +
+    '</div>';
 exports.LargeTextCellEditor = LargeTextCellEditor;

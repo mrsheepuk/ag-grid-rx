@@ -1,7 +1,7 @@
 {
-  "name": "ag-grid",
+  "name": "ag-grid-rx",
   "version": "8.0.1",
-  "description": "Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components",
+  "description": "Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)",
   "main": "./main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   "typings": "./main.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ceolter/ag-grid.git"
+    "url": "https://github.com/mrsheepuk/ag-grid-rx.git"
   },
   "keywords": [
     "web-components",
@@ -24,12 +24,12 @@
     "angularjs",
     "reactjs"
   ],
-  "author": "Niall Crosby <niall.crosby@ag-grid.com>",
+  "author": "Niall Crosby <niall.crosby@ag-grid.com>, rx fork by Mark Hughes",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ceolter/ag-grid/issues"
+    "url": "https://github.com/mrsheepuk/ag-grid-rx/issues"
   },
-  "homepage": "http://www.ag-grid.com/",
+  "homepage": "https://github.com/mrsheepuk/ag-grid-rx",
   "devDependencies": {
     "rxjs": "5.1.1",
     "gulp": "3.9.0",

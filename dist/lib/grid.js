@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -94,7 +94,7 @@ var Grid = (function () {
         if (params && params.seedBeanInstances) {
             utils_1.Utils.assign(seed, params.seedBeanInstances);
         }
-        this.context = new context_1.Context({
+        var contextParams = {
             overrideBeans: overrideBeans,
             seed: seed,
             beans: [rowModelClass, gridApi_1.GridApi, componentProvider_1.ComponentProvider, cellRendererFactory_1.CellRendererFactory, horizontalDragService_1.HorizontalDragService, headerTemplateLoader_1.HeaderTemplateLoader, floatingRowModel_1.FloatingRowModel, dragService_1.DragService,
@@ -112,7 +112,8 @@ var Grid = (function () {
                 { componentName: 'AgCheckbox', theClass: agCheckbox_1.AgCheckbox }
             ],
             debug: !!gridOptions.debug
-        });
+        };
+        this.context = new context_1.Context(contextParams, new logger_1.Logger('Context', contextParams.debug));
         var eventService = this.context.getBean('eventService');
         var readyEvent = {
             api: gridOptions.api,
@@ -151,13 +152,13 @@ var Grid = (function () {
     Grid.prototype.destroy = function () {
         this.context.destroy();
     };
-    // the default is InMemoryRowModel, which is also used for pagination.
-    // the enterprise adds viewport to this list.
-    Grid.RowModelClasses = {
-        virtual: virtualPageRowModel_1.VirtualPageRowModel,
-        pagination: inMemoryRowModel_1.InMemoryRowModel,
-        normal: inMemoryRowModel_1.InMemoryRowModel
-    };
     return Grid;
 }());
+// the default is InMemoryRowModel, which is also used for pagination.
+// the enterprise adds viewport to this list.
+Grid.RowModelClasses = {
+    virtual: virtualPageRowModel_1.VirtualPageRowModel,
+    pagination: inMemoryRowModel_1.InMemoryRowModel,
+    normal: inMemoryRowModel_1.InMemoryRowModel
+};
 exports.Grid = Grid;

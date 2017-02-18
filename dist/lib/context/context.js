@@ -1,14 +1,13 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.0.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
 var utils_1 = require("../utils");
-var logger_1 = require("../logger");
 var Context = (function () {
-    function Context(params) {
+    function Context(params, logger) {
         this.beans = {};
         this.componentsMappedByName = {};
         this.destroyed = false;
@@ -16,7 +15,7 @@ var Context = (function () {
             return;
         }
         this.contextParams = params;
-        this.logger = new logger_1.Logger('Context', this.contextParams.debug);
+        this.logger = logger;
         this.logger.log('>> creating ag-Application Context');
         this.setupComponents();
         this.createBeans();
