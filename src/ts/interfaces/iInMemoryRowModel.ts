@@ -1,3 +1,5 @@
+import {Observable} from "rxjs";
+
 import {RowNode} from "../entities/rowNode";
 import {IRowModel} from "./iRowModel";
 
@@ -20,7 +22,7 @@ export interface IInMemoryRowModel extends IRowModel {
     /** InMemory model only. */
     expandOrCollapseAll(expand: boolean): void;
     /** InMemory model only. */
-    setRowData(rows: any[], refresh: boolean, firstId?: number): void;
+    setRowData(rows: any[] | Observable<any[]>, refresh: boolean, firstId?: number): void;
     /** When the row height was changed for a row node */
     onRowHeightChanged(): void;
     /** When all row heights should be reset */

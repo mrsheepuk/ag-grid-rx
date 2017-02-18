@@ -1,3 +1,5 @@
+import {Observable, Subscription} from 'rxjs';
+
 import {Utils as _} from "../../utils";
 import {Constants as constants, Constants} from "../../constants";
 import {GridOptionsWrapper} from "../../gridOptionsWrapper";
@@ -394,9 +396,20 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         return result;
     }
 
+    private rowDataSubscription: Subscription = null;
     // rows: the rows to put into the model
     // firstId: the first id to use, used for paging, where we are not on the first page
-    public setRowData(rowData: any[], refresh: boolean, firstId?: number) {
+    public setRowData(rowData: any[] | Observable<any[]>, refresh: boolean, firstId?: number) {
+        // If we're handed an observable, subscribe to it instead of the normal handling.
+        // This will almost certainly break pagination.
+        if (rowData instanceof Observable) {
+            // We have an observable rowData, subscribe to it.
+            if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
+            this.rowDataSubscription = rowData.subscribe((newData: any[]) => {
+                this.updateRowData(newData);
+            });
+            return;
+        }
 
         // remember group state, so we can expand groups that should be expanded
         var groupState = this.getGroupState();
@@ -412,6 +425,29 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         if (refresh) {
             this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState});
         }
+    }
+
+    private updateRowData(newData: any[]) {
+        // When the data observable provides new data, handle it in a similar way to
+        // when setRowData is called, but use updateRowData on the nodeManager instead
+        // of setRowData, and telling anything waiting for data updates that it's cool
+        // to keep rendered rows, as we're trying to keep the same row nodes in place
+        // wherever possible.
+
+        // remember group state, so we can expand groups that should be expanded
+        var groupState = this.getGroupState();
+
+        this.nodeManager.updateRowData(newData);
+
+        // this event kicks off:
+        // - clears selection
+        // - updates filters
+        // - shows 'no rows' overlay if needed
+        this.eventService.dispatchEvent(Events.EVENT_ROW_DATA_CHANGED);
+
+        // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
+        // the same set of nodes wherever possible.
+        this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true});
     }
 
     private doRowsToDisplay() {

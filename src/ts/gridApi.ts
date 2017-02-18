@@ -1,3 +1,5 @@
+import {Observable} from 'rxjs';
+
 import {CsvCreator} from "./csvCreator";
 import {RowRenderer} from "./rendering/rowRenderer";
 import {HeaderRenderer} from "./headerRendering/headerRenderer";
@@ -139,7 +141,7 @@ export class GridApi {
         }
     }
     
-    public setRowData(rowData: any[]) {
+    public setRowData(rowData: any[] | Observable<any[]>) {
         if (this.gridOptionsWrapper.isRowModelDefault()) {
             this.selectionController.reset();
             this.inMemoryRowModel.setRowData(rowData, true);

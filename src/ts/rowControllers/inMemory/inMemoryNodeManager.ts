@@ -10,6 +10,16 @@ export class InMemoryNodeManager {
 
     private static TOP_LEVEL = 0;
 
+    // Keep an index of existing nodes, so we can find them rapidly when
+    // data updates come in.
+    private nodeIndex: {
+        [dataId: number]: {
+            data: any,
+            node: RowNode,
+            ind: number
+        }
+    } = {};
+
     private rootNode: RowNode;
     private gridOptionsWrapper: GridOptionsWrapper;
     private context: Context;
@@ -67,6 +77,84 @@ export class InMemoryNodeManager {
             this.rootNode.allLeafChildren = result;
         }
     }
+
+    public updateRowData(rowData: any[]) {
+        // This is intended to be called for observable data updates, where the data 
+        // supplied is likely to be similar to the data we already have. Therefore,
+        // it attempts to keep, wherever possible, the exsiting RowNodes, rather than
+        // binning the whole lot and starting again.
+
+        // Clear out the grouped / filtered / sorted views of the data, no simple way
+        // to keep those.
+        this.rootNode.childrenAfterFilter = null;
+        this.rootNode.childrenAfterGroup = null;
+        this.rootNode.childrenAfterSort = null;
+        this.rootNode.childrenMapped = null;
+
+        // We never reset nextId in here, so it should always strictly ascend as 
+        // rownodes are created by createNode (unless we've got empty data, in 
+        // which case we'll reset to zero).
+        // this.nextId = 0;
+
+        // If we have no rowData, reset everything.
+        if (!rowData) {
+            this.rootNode.allLeafChildren = [];
+            this.rootNode.childrenAfterGroup = [];
+            this.nextId = 0;
+            return;
+        }
+
+        // Take our existing set of allLeafChildren, and update it with the
+        // supplied rowData.
+        var currentPosition: number = 0;
+        rowData.forEach((dataItem)=> {
+            var node: RowNode = null;
+            // If this is top leve, and our data item has a natural ID, re-use
+            // existing nodes where possible.
+            if (dataItem.hasOwnProperty('id')) {
+                // Check for existing node.
+                var indexEntry = this.nodeIndex[dataItem.id];
+                if (indexEntry && indexEntry.data == dataItem) {
+                    // Existing data, unchanged (requires it to be the SAME OBJECT).
+                    node = indexEntry.node;
+                    // Check its position in the array.
+                    if (indexEntry.ind != currentPosition) {
+                        _.removeFromArray(this.rootNode.allLeafChildren, node);
+                        _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
+                        this.nodeIndex[dataItem.id].ind = currentPosition;
+                    }
+                } else if (indexEntry && indexEntry.data != dataItem) {
+                    // Existing data, changed (or a different object representing
+                    // the same data, not doing deep inspection here).
+                    node = indexEntry.node;
+                    this.nodeIndex[dataItem.id].data = dataItem;
+                    node.setData(dataItem);
+                    // Check its position in the array.
+                    if (indexEntry.ind != currentPosition) {
+                        _.removeFromArray(this.rootNode.allLeafChildren, node);
+                        _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
+                        this.nodeIndex[dataItem.id].ind = currentPosition;
+                    }
+                } else {
+                    // New data we haven't seen before.
+                    node = this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
+                    this.nodeIndex[dataItem.id] = {
+                        data: dataItem,
+                        node: node,
+                        ind: currentPosition
+                    };
+                    // Insert it at the current position in the index.
+                    _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
+                }
+            } else {
+                // No ID property, have to re-create every time.
+                node = this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
+                _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
+            }
+            currentPosition++;
+        });
+    }
+    
 
     private recursiveFunction(rowData: any[], parent: RowNode, level: number): RowNode[] {
 

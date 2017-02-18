@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declaration": true,
     "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "dom","es5","scripthost", "es2015.promise" ],
     "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist/lib"
   },
   "include": ["src/ts/**/*"]
