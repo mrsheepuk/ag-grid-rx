@@ -1,6 +1,6 @@
 /**
  * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.1
+ * @version v8.0.3
  * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
@@ -167,9 +167,9 @@ var SelectionController = (function () {
         // Check selected nodes still present in nodeset, if not, deselect
         // them.
         var changed = false;
-        this.getSelectedRows().forEach(function (selectedRow) {
+        utils_1.Utils.iterateObject(this.selectedNodes, function (key, selectedRow) {
             if (!_this.rowModel.isRowPresent(selectedRow)) {
-                _this.deselectNode(selectedRow);
+                delete _this.selectedNodes[key];
                 if (_this.lastSelectedNode == selectedRow)
                     _this.lastSelectedNode = null;
                 changed = true;

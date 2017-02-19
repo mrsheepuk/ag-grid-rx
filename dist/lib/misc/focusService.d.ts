@@ -1,4 +1,4 @@
-// Type definitions for ag-grid-rx v8.0.1
+// Type definitions for ag-grid-rx v8.0.3
 // Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 /** THIS IS NOT USED - it was something Niall was working on, but doesn't work well with popup editors */

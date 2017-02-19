@@ -4,6 +4,9 @@ ag-grid-angular {
 ag-grid-ng2 {
   display: inline-block;
 }
+ag-grid-rx {
+  display: inline-block;
+}
 .ag-rtl {
   direction: rtl;
 }

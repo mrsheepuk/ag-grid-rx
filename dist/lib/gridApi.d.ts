@@ -1,4 +1,4 @@
-// Type definitions for ag-grid-rx v8.0.1
+// Type definitions for ag-grid-rx v8.0.3
 // Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { Observable } from 'rxjs';
@@ -57,7 +57,7 @@ export declare class GridApi {
     exportDataAsExcel(params?: CsvExportParams): void;
     setDatasource(datasource: any): void;
     setViewportDatasource(viewportDatasource: IViewportDatasource): void;
-    setRowData(rowData: any[] | Observable<any[]>): void;
+    setRowData(rowData: Observable<any[]>): void;
     setFloatingTopRowData(rows: any[]): void;
     setFloatingBottomRowData(rows: any[]): void;
     getFloatingTopRowCount(): number;

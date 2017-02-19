@@ -1,4 +1,4 @@
-// Type definitions for ag-grid-rx v8.0.1
+// Type definitions for ag-grid-rx v8.0.3
 // Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { Observable } from 'rxjs';
@@ -22,6 +22,7 @@ export declare class InMemoryRowModel implements IInMemoryRowModel {
     private rowsToDisplay;
     private nodeManager;
     init(): void;
+    destroy(): void;
     private onRowGroupOpened();
     private onFilterChanged();
     private onSortChanged();
@@ -62,7 +63,7 @@ export declare class InMemoryRowModel implements IInMemoryRowModel {
     private doPivot();
     private getGroupState();
     private rowDataSubscription;
-    setRowData(rowData: any[] | Observable<any[]>, refresh: boolean, firstId?: number): void;
+    setRowData(rowData: Observable<any[]>): void;
     private updateRowData(newData);
     private doRowsToDisplay();
     insertItemsAtIndex(index: number, items: any[], skipRefresh: boolean): void;

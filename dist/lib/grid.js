@@ -1,6 +1,6 @@
 /**
  * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.1
+ * @version v8.0.3
  * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
@@ -135,16 +135,7 @@ var Grid = (function () {
     Grid.prototype.getRowModelClass = function (gridOptions) {
         var rowModelType = gridOptions.rowModelType;
         if (utils_1.Utils.exists(rowModelType)) {
-            var rowModelClass = Grid.RowModelClasses[rowModelType];
-            if (utils_1.Utils.exists(rowModelClass)) {
-                return rowModelClass;
-            }
-            else {
-                console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
-                if (rowModelType === 'viewport') {
-                    console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
-                }
-            }
+            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
         }
         return inMemoryRowModel_1.InMemoryRowModel;
     };

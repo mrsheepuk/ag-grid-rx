@@ -1,8 +1,9 @@
-// Type definitions for ag-grid-rx v8.0.1
+// Type definitions for ag-grid-rx v8.0.3
 // Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
+import { Observable } from 'rxjs';
 import { RowNode } from "./entities/rowNode";
-import { GridOptions, NodeChildDetails, GetContextMenuItems, GetMainMenuItems, ProcessRowParams, ProcessCellForExportParams, GetRowNodeIdFunc, NavigateToNextCellParams, TabToNextCellParams } from "./entities/gridOptions";
+import { GridOptions, GetContextMenuItems, GetMainMenuItems, ProcessRowParams, ProcessCellForExportParams, GetRowNodeIdFunc, NavigateToNextCellParams, TabToNextCellParams } from "./entities/gridOptions";
 import { GridApi } from "./gridApi";
 import { ColDef, IAggFunc, ColGroupDef } from "./entities/colDef";
 import { ColumnApi } from "./columnController/columnController";
@@ -101,7 +102,8 @@ export declare class GridOptionsWrapper {
     getPaginationOverflowSize(): number;
     getPaginationPageSize(): number;
     getPaginationInitialRowCount(): number;
-    getRowData(): any[];
+    getRowData(): Observable<any[]>;
+    getRowDataKeyProperty(): string;
     isGroupUseEntireRow(): boolean;
     isEnableRtl(): boolean;
     getGroupColumnDef(): ColDef;
@@ -155,7 +157,6 @@ export declare class GridOptionsWrapper {
     getDefaultColGroupDef(): ColGroupDef;
     getHeaderCellTemplate(): string;
     getHeaderCellTemplateFunc(): (params: any) => string | HTMLElement;
-    getNodeChildDetailsFunc(): ((dataItem: any) => NodeChildDetails);
     getGroupRowAggNodesFunc(): (nodes: RowNode[]) => any;
     getContextMenuItemsFunc(): GetContextMenuItems;
     getMainMenuItemsFunc(): GetMainMenuItems;

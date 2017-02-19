@@ -1,6 +1,6 @@
 /**
  * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.1
+ * @version v8.0.3
  * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
@@ -103,7 +103,7 @@ var GridApi = (function () {
     GridApi.prototype.setRowData = function (rowData) {
         if (this.gridOptionsWrapper.isRowModelDefault()) {
             this.selectionController.reset();
-            this.inMemoryRowModel.setRowData(rowData, true);
+            this.inMemoryRowModel.setRowData(rowData);
         }
         else {
             console.log('cannot call setRowData unless using normal row model');
