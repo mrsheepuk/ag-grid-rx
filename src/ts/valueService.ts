@@ -26,7 +26,7 @@ export class ValueService {
     @PostConstruct
     public init(): void {
         this.cellExpressions = this.gridOptionsWrapper.isEnableCellExpressions();
-        this.userProvidedTheGroups = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        this.userProvidedTheGroups = false; //rx: don't support child grouping etc - _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
         this.suppressUseColIdForGroups = this.gridOptionsWrapper.isSuppressUseColIdForGroups();
         this.initialised = true;
     }

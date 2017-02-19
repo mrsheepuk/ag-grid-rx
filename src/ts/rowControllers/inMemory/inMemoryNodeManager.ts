@@ -15,8 +15,7 @@ export class InMemoryNodeManager {
     private nodeIndex: {
         [dataId: number]: {
             data: any,
-            node: RowNode,
-            ind: number
+            node: RowNode
         }
     } = {};
 
@@ -45,39 +44,6 @@ export class InMemoryNodeManager {
         this.rootNode.childrenAfterFilter = [];
     }
 
-    public setRowData(rowData: any[], firstId?: number): RowNode[] {
-
-        this.rootNode.childrenAfterFilter = null;
-        this.rootNode.childrenAfterGroup = null;
-        this.rootNode.childrenAfterSort = null;
-        this.rootNode.childrenMapped = null;
-
-        this.nextId = _.exists(firstId) ? firstId : 0;
-
-        if (!rowData) {
-            this.rootNode.allLeafChildren = [];
-            this.rootNode.childrenAfterGroup = [];
-            return;
-        }
-
-        // func below doesn't have 'this' pointer, so need to pull out these bits
-        this.getNodeChildDetails = this.gridOptionsWrapper.getNodeChildDetailsFunc();
-        this.suppressParentsInRowNodes = this.gridOptionsWrapper.isSuppressParentsInRowNodes();
-        this.doesDataFlower = this.gridOptionsWrapper.getDoesDataFlowerFunc();
-
-        var rowsAlreadyGrouped = _.exists(this.getNodeChildDetails);
-
-        // kick off recursion
-        var result = this.recursiveFunction(rowData, null, InMemoryNodeManager.TOP_LEVEL);
-
-        if (rowsAlreadyGrouped) {
-            this.rootNode.childrenAfterGroup = result;
-            this.setLeafChildren(this.rootNode);
-        } else {
-            this.rootNode.allLeafChildren = result;
-        }
-    }
-
     public updateRowData(rowData: any[]) {
         // This is intended to be called for observable data updates, where the data 
         // supplied is likely to be similar to the data we already have. Therefore,
@@ -97,147 +63,96 @@ export class InMemoryNodeManager {
         // this.nextId = 0;
 
         // If we have no rowData, reset everything.
-        if (!rowData) {
+        if (!rowData || rowData.length == 0) {
             this.rootNode.allLeafChildren = [];
             this.rootNode.childrenAfterGroup = [];
             this.nextId = 0;
             return;
         }
 
-        // Take our existing set of allLeafChildren, and update it with the
-        // supplied rowData.
-        var currentPosition: number = 0;
-        rowData.forEach((dataItem)=> {
-            var node: RowNode = null;
-            // If this is top leve, and our data item has a natural ID, re-use
-            // existing nodes where possible.
-            if (dataItem.hasOwnProperty('id')) {
-                // Check for existing node.
-                var indexEntry = this.nodeIndex[dataItem.id];
-                if (indexEntry && indexEntry.data == dataItem) {
-                    // Existing data, unchanged (requires it to be the SAME OBJECT).
-                    node = indexEntry.node;
-                    // Check its position in the array.
-                    if (indexEntry.ind != currentPosition) {
-                        _.removeFromArray(this.rootNode.allLeafChildren, node);
-                        _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
-                        this.nodeIndex[dataItem.id].ind = currentPosition;
-                    }
-                } else if (indexEntry && indexEntry.data != dataItem) {
-                    // Existing data, changed (or a different object representing
-                    // the same data, not doing deep inspection here).
-                    node = indexEntry.node;
-                    this.nodeIndex[dataItem.id].data = dataItem;
-                    node.setData(dataItem);
-                    // Check its position in the array.
-                    if (indexEntry.ind != currentPosition) {
-                        _.removeFromArray(this.rootNode.allLeafChildren, node);
-                        _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
-                        this.nodeIndex[dataItem.id].ind = currentPosition;
-                    }
-                } else {
-                    // New data we haven't seen before.
-                    node = this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
-                    this.nodeIndex[dataItem.id] = {
-                        data: dataItem,
-                        node: node,
-                        ind: currentPosition
-                    };
-                    // Insert it at the current position in the index.
-                    _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
-                }
-            } else {
-                // No ID property, have to re-create every time.
-                node = this.createNode(dataItem, null, InMemoryNodeManager.TOP_LEVEL);
-                _.insertIntoArray(this.rootNode.allLeafChildren, node, currentPosition);
-            }
-            currentPosition++;
-        });
-    }
-    
-
-    private recursiveFunction(rowData: any[], parent: RowNode, level: number): RowNode[] {
-
-        // make sure the rowData is an array and not a string of json - this was a commonly reported problem on the forum
-        if (typeof rowData === 'string') {
-            console.warn('ag-Grid: rowData must be an array, however you passed in a string. If you are loading JSON, make sure you convert the JSON string to JavaScript objects first');
+        var dataKeyProperty = this.gridOptionsWrapper.getRowDataKeyProperty();
+        if (!_.exists(dataKeyProperty)) {
+            console.error('ag-Grid-rx: rowDataKeyProperty must be specified in the options for ag-grid-rx.');
             return;
         }
 
-        var rowNodes: RowNode[] = [];
-        rowData.forEach( (dataItem)=> {
-            var node = this.createNode(dataItem, parent, level);
+        // Create a list of all keys in the index, we'll remove whatever is left
+        // in this array after looping around our new data.
+        let keysToRemove: any[] = Object.keys(this.nodeIndex);
 
-            var nodeChildDetails = this.getNodeChildDetails ? this.getNodeChildDetails(dataItem) : null;
-            if (nodeChildDetails && nodeChildDetails.group) {
-                node.group = true;
-                node.childrenAfterGroup = this.recursiveFunction(nodeChildDetails.children, node, level + 1);
-                node.expanded = nodeChildDetails.expanded === true;
-                node.field = nodeChildDetails.field;
-                node.key = nodeChildDetails.key;
-                // pull out all the leaf children and add to our node
-                this.setLeafChildren(node);
+        // Rebuild allLeafChildren using nodes from our index whenever we can.
+        this.rootNode.allLeafChildren.length = 0;
+
+        rowData.forEach((dataItem)=> {
+            var node: RowNode = null;
+
+            // If we've been given an item that doesn't have the required key property, 
+            // log an error and disregard the item.
+            if (!dataItem.hasOwnProperty(dataKeyProperty)) {
+                console.error('ag-Grid-rx: every item of data passed to ag-grid-rx must have a property named the same as the rowDataKeyProperty option.');
+                return;
             }
 
-            rowNodes.push(node);
+            let key = dataItem[dataKeyProperty];            
+            // Check for existing node.
+            var indexEntry = this.nodeIndex[key];
+
+            if (indexEntry) {
+                // We have an existing node, start with that.
+                node = indexEntry.node;
+
+                // Don't want to remove this entry from the index.
+                keysToRemove.splice(keysToRemove.indexOf(key), 1);
+
+                // If the data object has changed, re-set the data on the node.
+                // This assumes that the objects are being passed are immutable,
+                // so we can avoid updating the data if the object is the same
+                // object we had previously. This will only be true if the 
+                // end user is using NgRx, Redux, being careful, or getting a 
+                // passing a full new set of data every time!
+                if (indexEntry.data != dataItem) {
+                    node.setData(dataItem);
+                    this.nodeIndex[key].data = dataItem;
+                }
+            } else {
+                // No index entry, so create a new node and add it to the index.
+                node = this.createNode(dataItem, InMemoryNodeManager.TOP_LEVEL);
+                this.nodeIndex[key] = {
+                    data: dataItem,
+                    node: node
+                };
+            }
+
+            this.rootNode.allLeafChildren.push(node);
         });
-        return rowNodes;
+
+        // Tidy up our index with any removed items.
+        keysToRemove.forEach((keyToRemove) => {
+            delete this.nodeIndex[keyToRemove];
+        });
+
+        // As we're no longer doing grouping, just set rows after grouping equal
+        // to our updated child leaf set.
+        this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;        
     }
 
-    private createNode(dataItem: any, parent: RowNode, level: number): RowNode {
+    // private correctPositionIfNeeded(node: RowNode, key: any, desiredPosition: number) {
+    //     if (this.nodeIndex[key].ind != desiredPosition) {
+    //         _.removeFromArray(this.rootNode.allLeafChildren, node);
+    //         _.insertIntoArray(this.rootNode.allLeafChildren, node, desiredPosition);
+    //         this.nodeIndex[key].ind = desiredPosition;
+    //     }
+    // }
+
+    private createNode(dataItem: any, level: number): RowNode {
         var node = new RowNode();
         this.context.wireBean(node);
-        var nodeChildDetails = this.getNodeChildDetails ? this.getNodeChildDetails(dataItem) : null;
-        if (nodeChildDetails && nodeChildDetails.group) {
-            node.group = true;
-            node.childrenAfterGroup = this.recursiveFunction(nodeChildDetails.children, node, level + 1);
-            node.expanded = nodeChildDetails.expanded === true;
-            node.field = nodeChildDetails.field;
-            node.key = nodeChildDetails.key;
-            node.canFlower = false;
-            // pull out all the leaf children and add to our node
-            this.setLeafChildren(node);
-        } else {
-            node.group = false;
-            node.canFlower = this.doesDataFlower ? this.doesDataFlower(dataItem) : false;
-            if (node.canFlower) {
-                node.expanded = this.isExpanded(level);
-            }
-        }
-
-        if (parent && !this.suppressParentsInRowNodes) {
-            node.parent = parent;
-        }
         node.level = level;
         node.setDataAndId(dataItem, this.nextId.toString());
 
         this.nextId++;
 
         return node;
-    }
-
-    private isExpanded(level: any) {
-        let expandByDefault = this.gridOptionsWrapper.getGroupDefaultExpanded();
-        if (expandByDefault===-1) {
-            return true;
-        } else {
-            return level < expandByDefault;
-        }
-    }
-
-    private setLeafChildren(node: RowNode): void {
-        node.allLeafChildren = [];
-        if (node.childrenAfterGroup) {
-            node.childrenAfterGroup.forEach( childAfterGroup => {
-                if (childAfterGroup.group) {
-                    if (childAfterGroup.allLeafChildren) {
-                        childAfterGroup.allLeafChildren.forEach( leafChild => node.allLeafChildren.push(leafChild) );
-                    }
-                } else {
-                    node.allLeafChildren.push(childAfterGroup)
-                }
-            });
-        }
     }
 
     public insertItemsAtIndex(index: number, rowData: any[]): RowNode[] {
@@ -254,7 +169,7 @@ export class InMemoryNodeManager {
         // go through the items backwards, otherwise they get added in reverse order
         for (let i = rowData.length - 1; i >= 0; i--) {
             let data = rowData[i];
-            let newNode = this.createNode(data, null, InMemoryNodeManager.TOP_LEVEL);
+            let newNode = this.createNode(data, InMemoryNodeManager.TOP_LEVEL);
             _.insertIntoArray(nodeList, newNode, index);
             newNodes.push(newNode);
         }
@@ -286,13 +201,13 @@ export class InMemoryNodeManager {
     }
 
     public isRowsAlreadyGrouped(): boolean {
-        var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        if (rowsAlreadyGrouped) {
-            console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
-                'supported if providing groups');
-            return true;
-        } else {
+        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        // if (rowsAlreadyGrouped) {
+        //     console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
+        //         'supported if providing groups');
+        //     return true;
+        // } else {
             return false;
-        }
+        // }
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ag-grid-rx",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)",
   "main": "./main.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "angularjs",
     "reactjs"
   ],
-  "author": "Niall Crosby <niall.crosby@ag-grid.com>, rx fork by Mark Hughes",
+  "author": "Niall Crosby <niall.crosby@ag-grid.com>, Mark Hughes (Rx fork) <mrsheepuk@mrsheep.co.uk>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mrsheepuk/ag-grid-rx/issues"

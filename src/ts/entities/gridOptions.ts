@@ -1,3 +1,5 @@
+import {Observable} from "rxjs";
+
 import {RowNode} from "./rowNode";
 import {GridApi} from "../gridApi";
 import {ColumnApi} from "../columnController/columnController";
@@ -153,7 +155,8 @@ export interface GridOptions {
      ****************************************************************/
 
     // changeable with impact
-    rowData?: any[]; // should this be immutable for ag2?
+    rowData?: Observable<any[]>; // should this be immutable for ag2?
+    rowDataKeyProperty?: string;
     floatingTopRowData?: any[]; // should this be immutable ag2?
     floatingBottomRowData?: any[]; // should this be immutable ag2?
     showToolPanel?: boolean;
@@ -195,7 +198,7 @@ export interface GridOptions {
     groupRowAggNodes?(nodes: RowNode[]): any;
     getBusinessKeyForNode?(node: RowNode): string;
     getHeaderCellTemplate?: (params: any) => string | HTMLElement;
-    getNodeChildDetails?: GetNodeChildDetails;
+    // Not supported in ag-grid-rx: getNodeChildDetails?: GetNodeChildDetails;
     getContextMenuItems?: GetContextMenuItems;
     getMainMenuItems?: GetMainMenuItems;
     getRowNodeId?: GetRowNodeIdFunc;

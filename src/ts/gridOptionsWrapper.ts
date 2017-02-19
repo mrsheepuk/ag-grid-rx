@@ -1,3 +1,5 @@
+import {Observable} from 'rxjs';
+
 import {RowNode} from "./entities/rowNode";
 import {
     GridOptions,
@@ -179,7 +181,8 @@ export class GridOptionsWrapper {
     public getPaginationPageSize(): number { return this.gridOptions.paginationPageSize; }
     public getPaginationInitialRowCount(): number { return this.gridOptions.paginationInitialRowCount; }
 
-    public getRowData(): any[] { return this.gridOptions.rowData; }
+    public getRowData(): Observable<any[]> { return this.gridOptions.rowData; }
+    public getRowDataKeyProperty(): string { return this.gridOptions.rowDataKeyProperty; }
     public isGroupUseEntireRow() { return isTrue(this.gridOptions.groupUseEntireRow); }
     public isEnableRtl() { return isTrue(this.gridOptions.enableRtl); }
     public getGroupColumnDef(): ColDef { return this.gridOptions.groupColumnDef; }
@@ -233,7 +236,7 @@ export class GridOptionsWrapper {
 
     public getHeaderCellTemplate() { return this.gridOptions.headerCellTemplate; }
     public getHeaderCellTemplateFunc() { return this.gridOptions.getHeaderCellTemplate; }
-    public getNodeChildDetailsFunc(): ((dataItem: any)=> NodeChildDetails) { return this.gridOptions.getNodeChildDetails; }
+    //public getNodeChildDetailsFunc(): ((dataItem: any)=> NodeChildDetails) { return this.gridOptions.getNodeChildDetails; }
     public getGroupRowAggNodesFunc() { return this.gridOptions.groupRowAggNodes; }
     public getContextMenuItemsFunc(): GetContextMenuItems { return this.gridOptions.getContextMenuItems; }
     public getMainMenuItemsFunc(): GetMainMenuItems { return this.gridOptions.getMainMenuItems; }

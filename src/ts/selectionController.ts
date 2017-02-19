@@ -178,9 +178,9 @@ export class SelectionController {
         // Check selected nodes still present in nodeset, if not, deselect
         // them.
         let changed: boolean = false;
-        this.getSelectedRows().forEach((selectedRow: RowNode) => {
+        _.iterateObject(this.selectedNodes, (key: string, selectedRow: RowNode) => {
             if (!this.rowModel.isRowPresent(selectedRow)) {
-                this.deselectNode(selectedRow);
+                delete this.selectedNodes[key];
                 if (this.lastSelectedNode == selectedRow) this.lastSelectedNode = null;
                 changed = true;
             }

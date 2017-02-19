@@ -141,10 +141,10 @@ export class GridApi {
         }
     }
     
-    public setRowData(rowData: any[] | Observable<any[]>) {
+    public setRowData(rowData: Observable<any[]>) {
         if (this.gridOptionsWrapper.isRowModelDefault()) {
             this.selectionController.reset();
-            this.inMemoryRowModel.setRowData(rowData, true);
+            this.inMemoryRowModel.setRowData(rowData);
         } else {
             console.log('cannot call setRowData unless using normal row model');
         }

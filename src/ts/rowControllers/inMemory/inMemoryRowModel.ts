@@ -8,7 +8,7 @@ import {FilterManager} from "../../filter/filterManager";
 import {RowNode} from "../../entities/rowNode";
 import {EventService} from "../../eventService";
 import {Events, ModelUpdatedEvent} from "../../events";
-import {Bean, Context, Autowired, PostConstruct, Optional} from "../../context/context";
+import {Bean, Context, Autowired, PostConstruct, Optional, PreDestroy} from "../../context/context";
 import {SelectionController} from "../../selectionController";
 import {IRowNodeStage} from "../../interfaces/iRowNodeStage";
 import {IInMemoryRowModel} from "../../interfaces/iInMemoryRowModel";
@@ -63,8 +63,14 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         this.context.wireBean(this.rootNode);
 
         if (this.gridOptionsWrapper.isRowModelDefault()) {
-            this.setRowData(this.gridOptionsWrapper.getRowData(), this.columnController.isReady());
+            this.setRowData(this.gridOptionsWrapper.getRowData());
         }
+    }
+
+    @PreDestroy
+    public destroy(): void {
+        // Unsubscribe from any passed-in observable before destruction.
+        if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
     }
 
     private onRowGroupOpened(): void {
@@ -150,12 +156,12 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     public isEmpty(): boolean {
         var rowsMissing: boolean;
 
-        var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        if (rowsAlreadyGrouped) {
-            rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
-        } else {
+        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        // if (rowsAlreadyGrouped) {
+        //     rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
+        // } else {
             rowsMissing = _.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
-        }
+        // }
 
         var empty = _.missing(this.rootNode) || rowsMissing  || !this.columnController.isReady();
 
@@ -340,8 +346,8 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     private doRowGrouping(groupState: any, newRowNodes: RowNode[]) {
 
         // grouping is enterprise only, so if service missing, skip the step
-        var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        if (rowsAlreadyGrouped) { return; }
+        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        // if (rowsAlreadyGrouped) { return; }
 
         if (this.groupStage) {
 
@@ -397,39 +403,25 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     }
 
     private rowDataSubscription: Subscription = null;
-    // rows: the rows to put into the model
-    // firstId: the first id to use, used for paging, where we are not on the first page
-    public setRowData(rowData: any[] | Observable<any[]>, refresh: boolean, firstId?: number) {
-        // If we're handed an observable, subscribe to it instead of the normal handling.
-        // This will almost certainly break pagination.
-        if (rowData instanceof Observable) {
-            // We have an observable rowData, subscribe to it.
-            if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
-            this.rowDataSubscription = rowData.subscribe((newData: any[]) => {
-                this.updateRowData(newData);
-            });
-            return;
-        }
+    public setRowData(rowData: Observable<any[]>) {
+        // If we're already subscribed to an observable, unsubscribe.
+        if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
 
-        // remember group state, so we can expand groups that should be expanded
-        var groupState = this.getGroupState();
+        // Start with an empty data set for our new observable.
+        this.updateRowData([]);
 
-        this.nodeManager.setRowData(rowData, firstId);
+        // If we've been handed a null observable, nothing more to do. 
+        if (!rowData) return;
 
-        // this event kicks off:
-        // - clears selection
-        // - updates filters
-        // - shows 'no rows' overlay if needed
-        this.eventService.dispatchEvent(Events.EVENT_ROW_DATA_CHANGED);
-
-        if (refresh) {
-            this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState});
-        }
+        // Subcribe to our new rowData source.
+        this.rowDataSubscription = rowData.subscribe((newData: any[]) => {
+            this.updateRowData(newData);
+        });
     }
 
     private updateRowData(newData: any[]) {
         // When the data observable provides new data, handle it in a similar way to
-        // when setRowData is called, but use updateRowData on the nodeManager instead
+        // how setRowData used to work, but use updateRowData on the nodeManager instead
         // of setRowData, and telling anything waiting for data updates that it's cool
         // to keep rendered rows, as we're trying to keep the same row nodes in place
         // wherever possible.
@@ -439,15 +431,17 @@ export class InMemoryRowModel implements IInMemoryRowModel {
 
         this.nodeManager.updateRowData(newData);
 
-        // this event kicks off:
-        // - clears selection
-        // - updates filters
+        // Refresh the model, provided the column controller is ready.
+        if (this.columnController.isReady()) {
+            // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
+            // the same set of nodes wherever possible.
+            this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true});
+        }
+
+        // - update selection
+        // - update filters
         // - shows 'no rows' overlay if needed
         this.eventService.dispatchEvent(Events.EVENT_ROW_DATA_CHANGED);
-
-        // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
-        // the same set of nodes wherever possible.
-        this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true});
     }
 
     private doRowsToDisplay() {

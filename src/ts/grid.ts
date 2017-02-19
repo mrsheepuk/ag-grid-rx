@@ -176,15 +176,16 @@ export class Grid {
     private getRowModelClass(gridOptions: GridOptions): any {
         var rowModelType = gridOptions.rowModelType;
         if (_.exists(rowModelType)) {
-            var rowModelClass = Grid.RowModelClasses[rowModelType];
-            if (_.exists(rowModelClass)) {
-                return rowModelClass;
-            } else {
-                console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
-                if (rowModelType==='viewport') {
-                    console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
-                }
-            }
+            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
+            // var rowModelClass = Grid.RowModelClasses[rowModelType];
+            // if (_.exists(rowModelClass)) {
+            //     return rowModelClass;
+            // } else {
+            //     console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
+            //     if (rowModelType==='viewport') {
+            //         console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
+            //     }
+            // }
         }
         return InMemoryRowModel;
     };
