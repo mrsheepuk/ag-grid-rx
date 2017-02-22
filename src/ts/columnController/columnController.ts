@@ -258,7 +258,7 @@ export class ColumnController {
 
     @PostConstruct
     public init(): void {
-        this.pivotMode = this.gridOptionsWrapper.isPivotMode();
+        this.pivotMode = false; //this.gridOptionsWrapper.isPivotMode();
         if (this.gridOptionsWrapper.getColumnDefs()) {
             this.setColumnDefs(this.gridOptionsWrapper.getColumnDefs());
         }
@@ -1519,12 +1519,6 @@ export class ColumnController {
             columnsForDisplay = _.filter(this.gridColumns, column => column.isVisible() );
         }
 
-        this.createGroupAutoColumn();
-
-        if (this.groupAutoColumnActive) {
-            columnsForDisplay.unshift(this.groupAutoColumn);
-        }
-
         return columnsForDisplay;
     }
 
@@ -1953,61 +1947,6 @@ export class ColumnController {
                 group.calculateDisplayedColumns();
             }
         });
-    }
-
-    private createGroupAutoColumn(): void {
-
-        // see if we need to insert the default grouping column
-        var needAGroupColumn = this.rowGroupColumns.length > 0
-            && !this.gridOptionsWrapper.isGroupSuppressAutoColumn()
-            && !this.gridOptionsWrapper.isGroupUseEntireRow()
-            && !this.gridOptionsWrapper.isGroupSuppressRow();
-
-        this.groupAutoColumnActive = needAGroupColumn;
-
-        // lazy create group auto-column
-        if (needAGroupColumn && !this.groupAutoColumn) {
-            this.createAutoGroupColumn();
-        }
-
-        // if grouping was removed, clan up the auto group column
-        if (!needAGroupColumn && this.groupAutoColumn) {
-            if (!this.groupAutoColumn.isSortNone()) {
-                // this results in column firing a sort event, which only updates
-                // the column header. it doesn't get the row model to update (which
-                // is good).
-                this.groupAutoColumn.setSort(null);
-            }
-        }
-    }
-
-    private createAutoGroupColumn(): void {
-        // if one provided by user, use it, otherwise create one
-        var autoColDef = this.gridOptionsWrapper.getGroupColumnDef();
-        if (!autoColDef) {
-            var localeTextFunc = this.gridOptionsWrapper.getLocaleTextFunc();
-            autoColDef = {
-                headerName: localeTextFunc('group', 'Group'),
-                comparator: defaultGroupComparator,
-                valueGetter: (params: any) => {
-                    if (params.node.group) {
-                        return params.node.key;
-                    } else if (params.data && params.colDef.field) {
-                        return params.data[params.colDef.field];
-                    } else {
-                        return null;
-                    }
-                },
-                cellRenderer: 'group'
-            };
-        }
-        // we never allow moving the group column
-        autoColDef.suppressMovable = true;
-
-        var colId = ColumnController.GROUP_AUTO_COLUMN_ID;
-        this.groupAutoColumn = new Column(autoColDef, colId, true);
-        this.context.wireBean(this.groupAutoColumn);
-
     }
 
     private createValueColumns(): void {

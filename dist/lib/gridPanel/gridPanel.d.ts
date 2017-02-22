@@ -94,7 +94,6 @@ export declare class GridPanel extends BeanStub {
     private addAngularApplyCheck();
     private disableBrowserDragging();
     private addEventListeners();
-    private addDragListeners();
     private addMouseEvents();
     private addKeyboardEvents();
     private addBodyViewportListener();

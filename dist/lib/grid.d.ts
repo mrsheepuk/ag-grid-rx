@@ -18,7 +18,6 @@ export declare class Grid {
     private static enterpriseBeans;
     private static frameworkBeans;
     private static RowModelClasses;
-    static setEnterpriseBeans(enterpriseBeans: any[], rowModelClasses: any): void;
     static setFrameworkBeans(frameworkBeans: any[]): void;
     constructor(eGridDiv: HTMLElement, gridOptions: GridOptions, params?: GridParams);
     private getRowModelClass(gridOptions);

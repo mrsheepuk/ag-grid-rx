@@ -18,20 +18,19 @@ export class ComponentUtil {
         'editType', 'rowDataKeyProperty'];
 
     public static OBJECT_PROPERTIES = [
-        'rowStyle','context','groupColumnDef','localeText','icons','datasource','viewportDatasource',
+        'rowData','rowStyle','context','groupColumnDef','localeText','icons',
         'groupRowRendererParams', 'aggFuncs', 'fullWidthCellRendererParams','defaultColGroupDef','defaultColDef'
-    //,'cellRenderers','cellEditors'
     ];
 
     public static ARRAY_PROPERTIES = [
-        'slaveGrids','rowData','floatingTopRowData','floatingBottomRowData','columnDefs','excelStyles'
+        'slaveGrids','floatingTopRowData','floatingBottomRowData','columnDefs','excelStyles'
     ];
 
     public static NUMBER_PROPERTIES = [
-        'rowHeight','rowBuffer','colWidth','headerHeight','groupDefaultExpanded',
-        'minColWidth','maxColWidth','viewportRowModelPageSize','viewportRowModelBufferSize',
+        'rowHeight','rowBuffer','colWidth','headerHeight',
+        'minColWidth','maxColWidth',
         'layoutInterval','autoSizePadding','maxPagesInCache','maxConcurrentDatasourceRequests',
-        'paginationOverflowSize','paginationPageSize','paginationInitialRowCount','scrollbarWidth'
+        'scrollbarWidth'
     ];
 
     public static BOOLEAN_PROPERTIES = [
@@ -39,13 +38,11 @@ export class ComponentUtil {
         'suppressRowClickSelection','suppressCellSelection','suppressHorizontalScroll','debug',
         'enableColResize','enableCellExpressions','enableSorting','enableServerSideSorting',
         'enableFilter','enableServerSideFilter','angularCompileRows','angularCompileFilters',
-        'angularCompileHeaders','groupSuppressAutoColumn','groupSelectsChildren',
-        'groupIncludeFooter','groupUseEntireRow','groupSuppressRow','groupSuppressBlankHeader','forPrint',
+        'angularCompileHeaders','forPrint',
         'suppressMenuHide','rowDeselection','unSortIcon','suppressMultiSort','suppressScrollLag',
         'singleClickEdit','suppressLoadingOverlay','suppressNoRowsOverlay','suppressAutoSize',
         'suppressParentsInRowNodes','showToolPanel','suppressColumnMoveAnimation','suppressMovableColumns',
-        'suppressFieldDotNotation','enableRangeSelection','suppressEnterprise','rowGroupPanelShow',
-        'pivotPanelShow', 'suppressTouch',
+        'suppressFieldDotNotation','suppressEnterprise','suppressTouch',
         'suppressContextMenu','suppressMenuFilterPanel','suppressMenuMainPanel','suppressMenuColumnPanel',
         'enableStatusBar','rememberGroupStateWhenNewData', 'enableCellChangeFlash', 'suppressDragLeaveHidesColumns',
         'suppressMiddleClickScrolls','suppressPreventDefaultOnMouseWheel', 'suppressUseColIdForGroups',
@@ -60,7 +57,7 @@ export class ComponentUtil {
         'getRowHeight', 'doesExternalFilterPass', 'getRowClass','getRowStyle', 'getHeaderCellTemplate', 'traverseNode',
         'getContextMenuItems', 'getMainMenuItems', 'processRowPostCreate', 'processCellForClipboard',
         'groupRowAggNodes', 'getRowNodeId', 'isFullWidthCell', 'fullWidthCellRenderer',
-        'fullWidthCellRendererFramework', 'doesDataFlower', 'processSecondaryColDef','processSecondaryColGroupDef',
+        'fullWidthCellRendererFramework', 'processSecondaryColDef','processSecondaryColGroupDef',
         'getBusinessKeyForNode', 'sendToClipboard', 'navigateToNextCell', 'tabToNextCell',
         'processCellFromClipboard', 'getDocument'];
 
@@ -184,10 +181,6 @@ export class ComponentUtil {
 
         if (changes.columnDefs) {
             api.setColumnDefs(changes.columnDefs.currentValue);
-        }
-
-        if (changes.datasource) {
-            api.setDatasource(changes.datasource.currentValue);
         }
 
         if (changes.headerHeight) {

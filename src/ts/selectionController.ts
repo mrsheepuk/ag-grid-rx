@@ -43,7 +43,7 @@ export class SelectionController {
 
     @PostConstruct
     public init(): void {
-        this.groupSelectsChildren = this.gridOptionsWrapper.isGroupSelectsChildren();
+        this.groupSelectsChildren = false;
         this.eventService.addEventListener(Events.EVENT_ROW_SELECTED, this.onRowSelected.bind(this));
     }
 

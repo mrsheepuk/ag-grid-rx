@@ -219,15 +219,6 @@ export class RenderedCell extends Component {
         if (this.node.footer) {
             // if footer, we always show the data
             return this.node.data;
-        } else if (this.node.group) {
-            // if header and header is expanded, we show data in footer only
-            var footersEnabled = this.gridOptionsWrapper.isGroupIncludeFooter();
-            var suppressHideHeader = this.gridOptionsWrapper.isGroupSuppressBlankHeader();
-            if (this.node.expanded && footersEnabled && !suppressHideHeader) {
-                return undefined;
-            } else {
-                return this.node.data;
-            }
         } else {
             // otherwise it's a normal node, just return data as normal
             return this.node.data;

@@ -179,11 +179,6 @@ export class FilterManager {
             return null;
         }
 
-        if (this.gridOptionsWrapper.isRowModelVirtual()) {
-            console.warn('ag-grid: cannot do quick filtering when doing virtual paging');
-            return null;
-        }
-
         return newFilter.toUpperCase();
     }
 

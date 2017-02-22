@@ -52,14 +52,12 @@ export class CheckboxSelectionComponent extends Component {
     }
 
     private onCheckedClicked(): number {
-        var groupSelectsFiltered = this.gridOptionsWrapper.isGroupSelectsFiltered();
-        var updatedCount = this.rowNode.setSelectedParams({newValue: false, groupSelectsFiltered: groupSelectsFiltered});
+        var updatedCount = this.rowNode.setSelectedParams({newValue: false, groupSelectsFiltered: false});
         return updatedCount;
      }
 
     private onUncheckedClicked(event: MouseEvent): number {
-        var groupSelectsFiltered = this.gridOptionsWrapper.isGroupSelectsFiltered();
-        var updatedCount = this.rowNode.setSelectedParams({newValue: true, rangeSelect: event.shiftKey, groupSelectsFiltered: groupSelectsFiltered});
+        var updatedCount = this.rowNode.setSelectedParams({newValue: true, rangeSelect: event.shiftKey, groupSelectsFiltered: false});
         return updatedCount;
     }
 

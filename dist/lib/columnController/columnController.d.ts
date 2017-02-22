@@ -260,8 +260,6 @@ export declare class ColumnController {
     sizeColumnsToFit(gridWidth: any): void;
     private buildDisplayedTrees(visibleColumns);
     private updateGroups();
-    private createGroupAutoColumn();
-    private createAutoGroupColumn();
     private createValueColumns();
     private getWidthOfColsInList(columnList);
     getGridBalancedTree(): OriginalColumnGroupChild[];

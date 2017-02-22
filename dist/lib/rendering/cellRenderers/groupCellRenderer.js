@@ -277,9 +277,6 @@ var GroupCellRenderer = (function (_super) {
     };
     GroupCellRenderer.prototype.onExpandOrContract = function () {
         this.rowNode.setExpanded(!this.rowNode.expanded);
-        if (this.gridOptionsWrapper.isGroupIncludeFooter()) {
-            this.gridApi.refreshRows([this.rowNode]);
-        }
     };
     GroupCellRenderer.prototype.showExpandAndContractIcons = function () {
         var reducedLeafNode = this.columnController.isPivotMode() && this.rowNode.leafGroup;

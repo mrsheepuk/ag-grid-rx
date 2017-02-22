@@ -243,7 +243,6 @@ export class GridPanel extends BeanStub {
     private init() {
 
         this.addEventListeners();
-        this.addDragListeners();
 
         this.layout = new BorderLayout({
             overlays: {
@@ -325,31 +324,6 @@ export class GridPanel extends BeanStub {
         this.addDestroyableEventListener(this.eventService, Events.EVENT_ITEMS_REMOVED, this.onRowDataChanged.bind(this));
 
         this.addDestroyableEventListener(this.gridOptionsWrapper, GridOptionsWrapper.PROP_HEADER_HEIGHT, this.setBodyAndHeaderHeights.bind(this));
-    }
-
-    private addDragListeners(): void {
-        if (this.forPrint // no range select when doing 'for print'
-            || !this.gridOptionsWrapper.isEnableRangeSelection() // no range selection if no property
-            || _.missing(this.rangeController)) { // no range selection if not enterprise version
-            return;
-        }
-
-        var containers = [this.ePinnedLeftColsContainer, this.ePinnedRightColsContainer, this.eBodyContainer,
-            this.eFloatingTop, this.eFloatingBottom];
-
-        containers.forEach(container => {
-            var params = <DragListenerParams> {
-                dragStartPixels: 0,
-                eElement: container,
-                onDragStart: this.rangeController.onDragStart.bind(this.rangeController),
-                onDragStop: this.rangeController.onDragStop.bind(this.rangeController),
-                onDragging: this.rangeController.onDragging.bind(this.rangeController)
-            };
-
-            this.dragService.addDragSource(params);
-
-            this.addDestroyFunc( ()=> this.dragService.removeDragSource(params) );
-        });
     }
 
     private addMouseEvents(): void {

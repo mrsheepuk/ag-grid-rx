@@ -118,12 +118,9 @@ export class RenderedRow extends BeanStub {
 
         let isFullWidthCellFunc = this.gridOptionsWrapper.getIsFullWidthCellFunc();
         let isFullWidthCell = isFullWidthCellFunc ? isFullWidthCellFunc(this.rowNode) : false;
-        let isGroupSpanningRow = this.rowNode.group && this.gridOptionsWrapper.isGroupUseEntireRow();
 
         if (isFullWidthCell) {
             this.setupFullWidthContainers(animateInRowTop);
-        } else if (isGroupSpanningRow) {
-            this.setupFullWidthGroupContainers(animateInRowTop);
         } else {
             this.setupNormalContainers(animateInRowTop);
         }

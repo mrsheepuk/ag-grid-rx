@@ -1,7 +1,6 @@
 
 import {GridOptions} from "./entities/gridOptions";
 import {GridOptionsWrapper} from "./gridOptionsWrapper";
-import {PaginationController} from "./rowControllers/paginationController";
 import {ColumnController} from "./columnController/columnController";
 import {RowRenderer} from "./rendering/rowRenderer";
 import {FilterManager} from "./filter/filterManager";
@@ -25,7 +24,6 @@ export class GridCore {
 
     @Autowired('gridOptions') private gridOptions: GridOptions;
     @Autowired('gridOptionsWrapper') private gridOptionsWrapper: GridOptionsWrapper;
-    @Autowired('paginationController') private paginationController: PaginationController;
     @Autowired('rowModel') private rowModel: IRowModel;
     @Autowired('frameworkFactory') private frameworkFactory: IFrameworkFactory;
 
@@ -174,9 +172,8 @@ export class GridCore {
         }
 
         var statusBarEnabled = this.statusBar && this.gridOptionsWrapper.isEnableStatusBar();
-        var paginationPanelEnabled = this.gridOptionsWrapper.isRowModelPagination() && !this.gridOptionsWrapper.isForPrint();
 
-        if (!statusBarEnabled && !paginationPanelEnabled) {
+        if (!statusBarEnabled) {
             return null;
         }
 
@@ -185,28 +182,11 @@ export class GridCore {
             eSouthPanel.appendChild(this.statusBar.getGui());
         }
 
-        if (paginationPanelEnabled) {
-            eSouthPanel.appendChild(this.paginationController.getGui());
-        }
-
         return eSouthPanel;
     }
 
     private onRowGroupChanged(): void {
         if (!this.rowGroupComp) { return; }
-
-        var rowGroupPanelShow = this.gridOptionsWrapper.getRowGroupPanelShow();
-
-        if (rowGroupPanelShow===Constants.ALWAYS) {
-            this.rowGroupComp.setVisible(true);
-        } else if (rowGroupPanelShow===Constants.ONLY_WHEN_GROUPING) {
-            var grouping = !this.columnController.isRowGroupEmpty();
-            this.rowGroupComp.setVisible(grouping);
-        } else {
-            this.rowGroupComp.setVisible(false);
-        }
-
-        this.eRootPanel.doLayout();
     }
     
     private addWindowResizeListener(): void {

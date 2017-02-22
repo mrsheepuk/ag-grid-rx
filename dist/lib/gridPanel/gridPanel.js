@@ -157,7 +157,6 @@ var GridPanel = (function (_super) {
     };
     GridPanel.prototype.init = function () {
         this.addEventListeners();
-        this.addDragListeners();
         this.layout = new borderLayout_1.BorderLayout({
             overlays: {
                 loading: utils_1.Utils.loadTemplate(this.createLoadingOverlayTemplate()),
@@ -227,27 +226,6 @@ var GridPanel = (function (_super) {
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_ITEMS_ADDED, this.onRowDataChanged.bind(this));
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_ITEMS_REMOVED, this.onRowDataChanged.bind(this));
         this.addDestroyableEventListener(this.gridOptionsWrapper, gridOptionsWrapper_1.GridOptionsWrapper.PROP_HEADER_HEIGHT, this.setBodyAndHeaderHeights.bind(this));
-    };
-    GridPanel.prototype.addDragListeners = function () {
-        var _this = this;
-        if (this.forPrint // no range select when doing 'for print'
-            || !this.gridOptionsWrapper.isEnableRangeSelection() // no range selection if no property
-            || utils_1.Utils.missing(this.rangeController)) {
-            return;
-        }
-        var containers = [this.ePinnedLeftColsContainer, this.ePinnedRightColsContainer, this.eBodyContainer,
-            this.eFloatingTop, this.eFloatingBottom];
-        containers.forEach(function (container) {
-            var params = {
-                dragStartPixels: 0,
-                eElement: container,
-                onDragStart: _this.rangeController.onDragStart.bind(_this.rangeController),
-                onDragStop: _this.rangeController.onDragStop.bind(_this.rangeController),
-                onDragging: _this.rangeController.onDragging.bind(_this.rangeController)
-            };
-            _this.dragService.addDragSource(params);
-            _this.addDestroyFunc(function () { return _this.dragService.removeDragSource(params); });
-        });
     };
     GridPanel.prototype.addMouseEvents = function () {
         var _this = this;

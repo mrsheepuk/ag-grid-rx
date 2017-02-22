@@ -71,20 +71,11 @@ export interface GridOptions {
     suppressCopyRowsToClipboard?: boolean;
     suppressAggFuncInHeader?: boolean;
     suppressFocusAfterRefresh?: boolean;
-    rowModelType?: string;
-    pivotMode?: boolean;
-    enableRangeSelection?: boolean;
-    suppressEnterprise?: boolean;
-    // enterprise only
-    rowGroupPanelShow?: string;
-    pivotPanelShow?: string;
     suppressContextMenu?: boolean;
     suppressMenuFilterPanel?: boolean;
     suppressMenuMainPanel?: boolean;
     suppressMenuColumnPanel?: boolean;
     rememberGroupStateWhenNewData?: boolean;
-    viewportRowModelPageSize?: number;
-    viewportRowModelBufferSize?: number;
     enableCellChangeFlash?: boolean;
     quickFilterText?: string;
     aggFuncs?: {[key: string]: IAggFunc};
@@ -94,14 +85,9 @@ export interface GridOptions {
     functionsPassive?: boolean;
     maxConcurrentDatasourceRequests?: number;
     maxPagesInCache?: number;
-    paginationOverflowSize?: number;
-    paginationInitialRowCount?: number;
-    paginationPageSize?: number;
     editType?: string;
     suppressTouch?: boolean;
     embedFullWidthRows?: boolean;
-    //This is an array of ExcelStyle, but because that class lives on the enterprise project is referenced as any from the client project
-    excelStyles?: any[];
 
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. GOD DAMN IT!*
@@ -111,10 +97,6 @@ export interface GridOptions {
     localeText?: any;
     localeTextFunc?: Function;
     suppressScrollLag?: boolean;
-    /* a map of strings (cellRenderer keys) to cellRenderers (that can be ICellRenderer or ICellRendererFunc) */
-    // cellRenderers?: {[key: string]: {new(): ICellRenderer} | ICellRendererFunc};
-    /* a map of strings (cellEditor keys) to cellEditors */
-    // cellEditors?: {[key: string]: {new(): ICellEditor}};
     defaultColGroupDef?: ColGroupDef;
     defaultColDef?: ColDef;
 
@@ -122,16 +104,7 @@ export interface GridOptions {
      * Don't forget to update ComponentUtil if changing this class. FOR FUCKS SAKE! *
      ****************************************************************/
 
-    groupSuppressAutoColumn?: boolean;
-    groupSelectsChildren?: boolean;
-    groupSelectsFiltered?: boolean;
-    groupIncludeFooter?: boolean;
-    groupUseEntireRow?: boolean;
-    groupRemoveSingleChildren?: boolean;
-    groupSuppressRow?: boolean;
-    groupSuppressBlankHeader?: boolean;
     forPrint?: boolean;
-    groupColumnDef?: ColDef;
 
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. YOU'VE BEEN WARNED*
@@ -141,7 +114,6 @@ export interface GridOptions {
     context?: any;
     rowStyle?: any;
     rowClass?: any;
-    groupDefaultExpanded?: number;
     slaveGrids?: GridOptions[];
     rowSelection?: string;
     rowDeselection?: boolean;
@@ -155,14 +127,12 @@ export interface GridOptions {
      ****************************************************************/
 
     // changeable with impact
-    rowData?: Observable<any[]>; // should this be immutable for ag2?
+    rowData?: Observable<any[]>; 
     rowDataKeyProperty?: string;
-    floatingTopRowData?: any[]; // should this be immutable ag2?
-    floatingBottomRowData?: any[]; // should this be immutable ag2?
+    floatingTopRowData?: any[]; 
+    floatingBottomRowData?: any[]; 
     showToolPanel?: boolean;
     columnDefs?: (ColDef|ColGroupDef)[];
-    datasource?: IDatasource;
-    viewportDatasource?: IViewportDatasource;
     // in properties
     headerHeight?: number;
 
@@ -198,11 +168,9 @@ export interface GridOptions {
     groupRowAggNodes?(nodes: RowNode[]): any;
     getBusinessKeyForNode?(node: RowNode): string;
     getHeaderCellTemplate?: (params: any) => string | HTMLElement;
-    // Not supported in ag-grid-rx: getNodeChildDetails?: GetNodeChildDetails;
     getContextMenuItems?: GetContextMenuItems;
     getMainMenuItems?: GetMainMenuItems;
     getRowNodeId?: GetRowNodeIdFunc;
-    doesDataFlower?(dataItem: any): boolean;
     processRowPostCreate?(params: ProcessRowParams): void;
     processCellForClipboard?(params: ProcessCellForExportParams): any;
     processCellFromClipboard?(params: ProcessCellForExportParams): any;
@@ -228,10 +196,8 @@ export interface GridOptions {
     onColumnResized?(event?: any): void;
     onDisplayedColumnsChanged?(event?: any): void;
     onVirtualColumnsChanged?(event?: any): void;
-    onRowGroupOpened?(event?: any): void;
     onRowDataChanged?(event?: any): void;
     onFloatingRowDataChanged?(event?: any): void;
-    onRangeSelectionChanged?(event?: any): void;
     onColumnRowGroupAddRequest?(event?: any): void;
     onColumnRowGroupRemoveRequest?(event?: any): void;
     onColumnPivotAddRequest?(event?: any): void;

@@ -44,7 +44,6 @@ import {FilterStage} from "./rowControllers/inMemory/filterStage";
 import {FlattenStage} from "./rowControllers/inMemory/flattenStage";
 import {SortStage} from "./rowControllers/inMemory/sortStage";
 import {FloatingRowModel} from "./rowControllers/floatingRowModel";
-import {PaginationController} from "./rowControllers/paginationController";
 import {Component} from "./widgets/component";
 import {CellNavigationService} from "./cellNavigationService";
 import {ColumnChangeEvent} from "./columnChangeEvent";
@@ -65,7 +64,6 @@ import {ValueService} from "./valueService";
 import {PopupService} from "./widgets/popupService";
 import {GridRow} from "./entities/gridRow";
 import {InMemoryRowModel} from "./rowControllers/inMemory/inMemoryRowModel";
-import {VirtualPageRowModel} from "./rowControllers/virtualPagination/virtualPageRowModel";
 import {AnimateSlideCellRenderer} from "./rendering/cellRenderers/animateSlideCellRenderer";
 import {CellEditorFactory} from "./rendering/cellEditorFactory";
 import {PopupEditorWrapper} from "./rendering/cellEditors/popupEditorWrapper";
@@ -89,8 +87,6 @@ import {RenderedCell} from "./rendering/renderedCell";
 import {HeaderRowComp} from "./headerRendering/headerRowComp";
 import {AnimateShowChangeCellRenderer} from "./rendering/cellRenderers/animateShowChangeCellRenderer";
 import {InMemoryNodeManager} from "./rowControllers/inMemory/inMemoryNodeManager";
-import {VirtualPageCache} from "./rowControllers/virtualPagination/virtualPageCache";
-import {VirtualPage} from "./rowControllers/virtualPagination/virtualPage";
 import {BaseFrameworkFactory} from "./baseFrameworkFactory";
 import {MethodNotImplementedException} from "./misc/methodNotImplementedException";
 import {TouchListener} from "./widgets/touchListener";
@@ -211,10 +207,6 @@ export function populateClientExports(exports: any): void {
 
     // rowControllers
     exports.FloatingRowModel = FloatingRowModel;
-    exports.PaginationController = PaginationController;
-    exports.VirtualPageRowModel = VirtualPageRowModel;
-    exports.VirtualPageCache = VirtualPageCache;
-    exports.VirtualPage = VirtualPage;
 
     //styling
     exports.StylingService = StylingService;

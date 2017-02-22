@@ -86,7 +86,7 @@ var InMemoryNodeManager = (function () {
             }
             else {
                 // No index entry, so create a new node and add it to the index.
-                node = _this.createNode(dataItem, InMemoryNodeManager.TOP_LEVEL);
+                node = _this.createNode(dataItem);
                 _this.nodeIndex[key] = {
                     data: dataItem,
                     node: node
@@ -102,69 +102,13 @@ var InMemoryNodeManager = (function () {
         // to our updated child leaf set.
         this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
     };
-    // private correctPositionIfNeeded(node: RowNode, key: any, desiredPosition: number) {
-    //     if (this.nodeIndex[key].ind != desiredPosition) {
-    //         _.removeFromArray(this.rootNode.allLeafChildren, node);
-    //         _.insertIntoArray(this.rootNode.allLeafChildren, node, desiredPosition);
-    //         this.nodeIndex[key].ind = desiredPosition;
-    //     }
-    // }
-    InMemoryNodeManager.prototype.createNode = function (dataItem, level) {
+    InMemoryNodeManager.prototype.createNode = function (dataItem) {
         var node = new rowNode_1.RowNode();
         this.context.wireBean(node);
-        node.level = level;
+        node.level = 0;
         node.setDataAndId(dataItem, this.nextId.toString());
         this.nextId++;
         return node;
-    };
-    InMemoryNodeManager.prototype.insertItemsAtIndex = function (index, rowData) {
-        if (this.isRowsAlreadyGrouped()) {
-            return null;
-        }
-        var nodeList = this.rootNode.allLeafChildren;
-        if (index > nodeList.length) {
-            console.warn("ag-Grid: invalid index " + index + ", max index is " + nodeList.length);
-            return;
-        }
-        var newNodes = [];
-        // go through the items backwards, otherwise they get added in reverse order
-        for (var i = rowData.length - 1; i >= 0; i--) {
-            var data = rowData[i];
-            var newNode = this.createNode(data, InMemoryNodeManager.TOP_LEVEL);
-            utils_1.Utils.insertIntoArray(nodeList, newNode, index);
-            newNodes.push(newNode);
-        }
-        return newNodes.length > 0 ? newNodes : null;
-    };
-    InMemoryNodeManager.prototype.removeItems = function (rowNodes) {
-        if (this.isRowsAlreadyGrouped()) {
-            return;
-        }
-        var nodeList = this.rootNode.allLeafChildren;
-        var removedNodes = [];
-        rowNodes.forEach(function (rowNode) {
-            var indexOfNode = nodeList.indexOf(rowNode);
-            if (indexOfNode >= 0) {
-                rowNode.setSelected(false);
-                nodeList.splice(indexOfNode, 1);
-            }
-            removedNodes.push(rowNode);
-        });
-        return removedNodes.length > 0 ? removedNodes : null;
-    };
-    InMemoryNodeManager.prototype.addItems = function (items) {
-        var nodeList = this.rootNode.allLeafChildren;
-        return this.insertItemsAtIndex(nodeList.length, items);
-    };
-    InMemoryNodeManager.prototype.isRowsAlreadyGrouped = function () {
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) {
-        //     console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
-        //         'supported if providing groups');
-        //     return true;
-        // } else {
-        return false;
-        // }
     };
     return InMemoryNodeManager;
 }());

@@ -1,6 +1,5 @@
 import {GridOptions} from "./entities/gridOptions";
 import {GridOptionsWrapper} from "./gridOptionsWrapper";
-import {PaginationController} from "./rowControllers/paginationController";
 import {FloatingRowModel} from "./rowControllers/floatingRowModel";
 import {SelectionController} from "./selectionController";
 import {ColumnController, ColumnApi} from "./columnController/columnController";
@@ -39,7 +38,6 @@ import {FlattenStage} from "./rowControllers/inMemory/flattenStage";
 import {FocusService} from "./misc/focusService";
 import {CellEditorFactory} from "./rendering/cellEditorFactory";
 import {Events} from "./events";
-import {VirtualPageRowModel} from "./rowControllers/virtualPagination/virtualPageRowModel";
 import {InMemoryRowModel} from "./rowControllers/inMemory/inMemoryRowModel";
 import {CellRendererFactory} from "./rendering/cellRendererFactory";
 import {CellRendererService} from "./rendering/cellRendererService";
@@ -79,20 +77,10 @@ export class Grid {
     private static enterpriseBeans: any[];
     private static frameworkBeans: any[];
 
-    // the default is InMemoryRowModel, which is also used for pagination.
-    // the enterprise adds viewport to this list.
+    // Only supported option is InMemoryRowModel for ag-grid-rx.
     private static RowModelClasses: any = {
-        virtual: VirtualPageRowModel,
-        pagination: InMemoryRowModel,
         normal: InMemoryRowModel
     };
-
-    public static setEnterpriseBeans(enterpriseBeans: any[], rowModelClasses: any): void {
-        this.enterpriseBeans = enterpriseBeans;
-
-        // the enterprise can inject additional row models. this is how it injects the viewportRowModel
-        _.iterateObject(rowModelClasses, (key: string, value: any)=> Grid.RowModelClasses[key] = value );
-    }
 
     public static setFrameworkBeans(frameworkBeans: any[]): void {
         this.frameworkBeans = frameworkBeans;
@@ -148,7 +136,7 @@ export class Grid {
                 HeaderRenderer, ExpressionService, BalancedColumnTreeBuilder, CsvCreator, Downloader, XmlFactory,
                 GridSerializer, TemplateService, GridPanel, PopupService, ValueService, MasterSlaveService,
                 LoggerFactory, ColumnUtils, AutoWidthCalculator,
-                PaginationController, PopupService, GridCore, StandardMenuFactory,
+                PopupService, GridCore, StandardMenuFactory,
                 DragAndDropService, SortController, ColumnApi, FocusedCellController, MouseEventService,
                 CellNavigationService, FilterStage, SortStage, FlattenStage, FocusService,
                 CellEditorFactory, CellRendererService, ValueFormatterService, StylingService, ScrollVisibleService,
@@ -174,19 +162,6 @@ export class Grid {
     }
 
     private getRowModelClass(gridOptions: GridOptions): any {
-        var rowModelType = gridOptions.rowModelType;
-        if (_.exists(rowModelType)) {
-            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
-            // var rowModelClass = Grid.RowModelClasses[rowModelType];
-            // if (_.exists(rowModelClass)) {
-            //     return rowModelClass;
-            // } else {
-            //     console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
-            //     if (rowModelType==='viewport') {
-            //         console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
-            //     }
-            // }
-        }
         return InMemoryRowModel;
     };
 

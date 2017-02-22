@@ -92,7 +92,7 @@ function webpackTask(minify, styles) {
     }
     var mainFile = styles ? './main-with-styles.js' : './main.js';
 
-    var fileName = 'ag-grid';
+    var fileName = 'ag-grid-rx';
     fileName += minify ? '.min' : '';
     fileName += styles ? '' : '.noStyle';
     fileName += '.js';
@@ -105,7 +105,7 @@ function webpackTask(minify, styles) {
             output: {
                 path: path.join(__dirname, "dist"),
                 filename: fileName,
-                library: ["agGrid"],
+                library: ["agGridRx"],
                 libraryTarget: "umd"
             },
             //devtool: 'inline-source-map',

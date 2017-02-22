@@ -569,15 +569,15 @@ export class RowRenderer {
                 break;
             }
 
-            var skipGroupRows = this.gridOptionsWrapper.isGroupUseEntireRow();
-            if (skipGroupRows) {
-                var rowNode = this.rowModel.getRow(nextCell.rowIndex);
-                if (!rowNode.group) {
-                    break;
-                }
-            } else {
-                break;
-            }
+            // var skipGroupRows = this.gridOptionsWrapper.isGroupUseEntireRow();
+            // if (skipGroupRows) {
+            //     var rowNode = this.rowModel.getRow(nextCell.rowIndex);
+            //     if (!rowNode.group) {
+            //         break;
+            //     }
+            // } else {
+            //     break;
+            // }
         }
 
         // allow user to override what cell to go to next

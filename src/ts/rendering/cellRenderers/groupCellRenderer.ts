@@ -299,10 +299,6 @@ export class GroupCellRenderer extends Component implements ICellRenderer {
 
     public onExpandOrContract(): void {
         this.rowNode.setExpanded(!this.rowNode.expanded);
-
-        if (this.gridOptionsWrapper.isGroupIncludeFooter()) {
-            this.gridApi.refreshRows([this.rowNode]);
-        }
     }
 
     private showExpandAndContractIcons(): void {

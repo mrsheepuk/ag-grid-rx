@@ -6,7 +6,6 @@
  */
 "use strict";
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
-var paginationController_1 = require("./rowControllers/paginationController");
 var floatingRowModel_1 = require("./rowControllers/floatingRowModel");
 var selectionController_1 = require("./selectionController");
 var columnController_1 = require("./columnController/columnController");
@@ -45,7 +44,6 @@ var flattenStage_1 = require("./rowControllers/inMemory/flattenStage");
 var focusService_1 = require("./misc/focusService");
 var cellEditorFactory_1 = require("./rendering/cellEditorFactory");
 var events_1 = require("./events");
-var virtualPageRowModel_1 = require("./rowControllers/virtualPagination/virtualPageRowModel");
 var inMemoryRowModel_1 = require("./rowControllers/inMemory/inMemoryRowModel");
 var cellRendererFactory_1 = require("./rendering/cellRendererFactory");
 var cellRendererService_1 = require("./rendering/cellRendererService");
@@ -103,7 +101,7 @@ var Grid = (function () {
                 headerRenderer_1.HeaderRenderer, expressionService_1.ExpressionService, balancedColumnTreeBuilder_1.BalancedColumnTreeBuilder, csvCreator_1.CsvCreator, downloader_1.Downloader, xmlFactory_1.XmlFactory,
                 gridSerializer_1.GridSerializer, templateService_1.TemplateService, gridPanel_1.GridPanel, popupService_1.PopupService, valueService_1.ValueService, masterSlaveService_1.MasterSlaveService,
                 logger_1.LoggerFactory, columnUtils_1.ColumnUtils, autoWidthCalculator_1.AutoWidthCalculator,
-                paginationController_1.PaginationController, popupService_1.PopupService, gridCore_1.GridCore, standardMenu_1.StandardMenuFactory,
+                popupService_1.PopupService, gridCore_1.GridCore, standardMenu_1.StandardMenuFactory,
                 dragAndDropService_1.DragAndDropService, sortController_1.SortController, columnController_1.ColumnApi, focusedCellController_1.FocusedCellController, mouseEventService_1.MouseEventService,
                 cellNavigationService_1.CellNavigationService, filterStage_1.FilterStage, sortStage_1.SortStage, flattenStage_1.FlattenStage, focusService_1.FocusService,
                 cellEditorFactory_1.CellEditorFactory, cellRendererService_1.CellRendererService, valueFormatterService_1.ValueFormatterService, stylingService_1.StylingService, scrollVisibleService_1.ScrollVisibleService,
@@ -124,19 +122,10 @@ var Grid = (function () {
             console.log('ag-Grid -> initialised successfully, enterprise = ' + enterprise);
         }
     }
-    Grid.setEnterpriseBeans = function (enterpriseBeans, rowModelClasses) {
-        this.enterpriseBeans = enterpriseBeans;
-        // the enterprise can inject additional row models. this is how it injects the viewportRowModel
-        utils_1.Utils.iterateObject(rowModelClasses, function (key, value) { return Grid.RowModelClasses[key] = value; });
-    };
     Grid.setFrameworkBeans = function (frameworkBeans) {
         this.frameworkBeans = frameworkBeans;
     };
     Grid.prototype.getRowModelClass = function (gridOptions) {
-        var rowModelType = gridOptions.rowModelType;
-        if (utils_1.Utils.exists(rowModelType)) {
-            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
-        }
         return inMemoryRowModel_1.InMemoryRowModel;
     };
     ;
@@ -145,11 +134,8 @@ var Grid = (function () {
     };
     return Grid;
 }());
-// the default is InMemoryRowModel, which is also used for pagination.
-// the enterprise adds viewport to this list.
+// Only supported option is InMemoryRowModel for ag-grid-rx.
 Grid.RowModelClasses = {
-    virtual: virtualPageRowModel_1.VirtualPageRowModel,
-    pagination: inMemoryRowModel_1.InMemoryRowModel,
     normal: inMemoryRowModel_1.InMemoryRowModel
 };
 exports.Grid = Grid;

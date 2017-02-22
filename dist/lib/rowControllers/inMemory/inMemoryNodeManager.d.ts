@@ -13,14 +13,8 @@ export declare class InMemoryNodeManager {
     private context;
     private eventService;
     private nextId;
-    private getNodeChildDetails;
-    private doesDataFlower;
     private suppressParentsInRowNodes;
     constructor(rootNode: RowNode, gridOptionsWrapper: GridOptionsWrapper, context: Context, eventService: EventService);
     updateRowData(rowData: any[]): void;
-    private createNode(dataItem, level);
-    insertItemsAtIndex(index: number, rowData: any[]): RowNode[];
-    removeItems(rowNodes: RowNode[]): RowNode[];
-    addItems(items: any): RowNode[];
-    isRowsAlreadyGrouped(): boolean;
+    private createNode(dataItem);
 }

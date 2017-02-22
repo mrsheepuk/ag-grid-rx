@@ -61,32 +61,10 @@ export class FlattenStage implements IRowNodeStage {
                                           nextRowTop: NumberWrapper, reduce: boolean) {
         if (_.missingOrEmpty(rowsToFlatten)) { return; }
 
-        var groupSuppressRow = this.gridOptionsWrapper.isGroupSuppressRow();
         for (var i = 0; i < rowsToFlatten.length; i++) {
             var rowNode = rowsToFlatten[i];
 
-            var skipBecauseSuppressRow = groupSuppressRow && rowNode.group;
-            var skipBecauseReduce = reduce && !rowNode.group;
-            var skipGroupNode = skipBecauseReduce || skipBecauseSuppressRow;
-
-            if (!skipGroupNode) {
-                this.addRowNodeToRowsToDisplay(rowNode, result, nextRowTop);
-            }
-            if (rowNode.group) {
-                if (rowNode.expanded) {
-                    this.recursivelyAddToRowsToDisplay(rowNode.childrenAfterSort, result, nextRowTop, reduce);
-
-                    // put a footer in if user is looking for it
-                    if (this.gridOptionsWrapper.isGroupIncludeFooter()) {
-                        this.ensureFooterNodeExists(rowNode);
-                        this.addRowNodeToRowsToDisplay(rowNode.sibling, result, nextRowTop);
-                    }
-                }
-            }
-            if (rowNode.canFlower && rowNode.expanded) {
-                var flowerNode = this.createFlowerNode(rowNode);
-                this.addRowNodeToRowsToDisplay(flowerNode, result, nextRowTop);
-            }
+            this.addRowNodeToRowsToDisplay(rowNode, result, nextRowTop);
         }
     }
 

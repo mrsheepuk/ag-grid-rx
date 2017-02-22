@@ -453,16 +453,6 @@ var RowRenderer = (function () {
             if (utils_1.Utils.missing(nextCell)) {
                 break;
             }
-            var skipGroupRows = this.gridOptionsWrapper.isGroupUseEntireRow();
-            if (skipGroupRows) {
-                var rowNode = this.rowModel.getRow(nextCell.rowIndex);
-                if (!rowNode.group) {
-                    break;
-                }
-            }
-            else {
-                break;
-            }
         }
         // allow user to override what cell to go to next
         var userFunc = this.gridOptionsWrapper.getNavigateToNextCellFunc();

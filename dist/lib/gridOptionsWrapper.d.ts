@@ -7,9 +7,7 @@ import { GridOptions, GetContextMenuItems, GetMainMenuItems, ProcessRowParams, P
 import { GridApi } from "./gridApi";
 import { ColDef, IAggFunc, ColGroupDef } from "./entities/colDef";
 import { ColumnApi } from "./columnController/columnController";
-import { IViewportDatasource } from "./interfaces/iViewportDatasource";
 import { ICellRendererFunc, ICellRendererComp } from "./rendering/cellRenderers/iCellRenderer";
-import { IDatasource } from "./rowControllers/iDatasource";
 import { GridCellDef } from "./entities/gridCell";
 export declare class GridOptionsWrapper {
     private static MIN_COL_WIDTH;
@@ -43,10 +41,6 @@ export declare class GridOptionsWrapper {
     isRowDeselection(): boolean;
     isRowSelectionMulti(): boolean;
     getContext(): any;
-    isPivotMode(): boolean;
-    isRowModelPagination(): boolean;
-    isRowModelVirtual(): boolean;
-    isRowModelViewport(): boolean;
     isRowModelDefault(): boolean;
     isFullRowEdit(): boolean;
     isSuppressFocusAfterRefresh(): boolean;
@@ -57,15 +51,9 @@ export declare class GridOptionsWrapper {
     isToolPanelSuppressPivotMode(): boolean;
     isSuppressTouch(): boolean;
     isEnableCellChangeFlash(): boolean;
-    isGroupSelectsChildren(): boolean;
-    isGroupSelectsFiltered(): boolean;
-    isGroupRemoveSingleChildren(): boolean;
-    isGroupIncludeFooter(): boolean;
-    isGroupSuppressBlankHeader(): boolean;
     isSuppressRowClickSelection(): boolean;
     isSuppressCellSelection(): boolean;
     isSuppressMultiSort(): boolean;
-    isGroupSuppressAutoColumn(): boolean;
     isSuppressDragLeaveHidesColumns(): boolean;
     isForPrint(): boolean;
     isSuppressHorizontalScroll(): boolean;
@@ -84,7 +72,6 @@ export declare class GridOptionsWrapper {
     getRowClass(): any;
     getRowStyleFunc(): Function;
     getRowClassFunc(): Function;
-    getDoesDataFlowerFunc(): (data: any) => boolean;
     getIsFullWidthCellFunc(): (rowNode: RowNode) => boolean;
     getFullWidthCellRendererParams(): any;
     isEmbedFullWidthRows(): boolean;
@@ -95,28 +82,17 @@ export declare class GridOptionsWrapper {
     isEnableColResize(): boolean;
     isSingleClickEdit(): boolean;
     isSuppressClickEdit(): boolean;
-    getGroupDefaultExpanded(): number;
     getAutoSizePadding(): number;
     getMaxConcurrentDatasourceRequests(): number;
     getMaxPagesInCache(): number;
-    getPaginationOverflowSize(): number;
-    getPaginationPageSize(): number;
-    getPaginationInitialRowCount(): number;
     getRowData(): Observable<any[]>;
     getRowDataKeyProperty(): string;
-    isGroupUseEntireRow(): boolean;
     isEnableRtl(): boolean;
-    getGroupColumnDef(): ColDef;
-    isGroupSuppressRow(): boolean;
-    getRowGroupPanelShow(): string;
-    getPivotPanelShow(): string;
     isAngularCompileRows(): boolean;
     isAngularCompileFilters(): boolean;
     isAngularCompileHeaders(): boolean;
     isDebug(): boolean;
     getColumnDefs(): (ColGroupDef | ColDef)[];
-    getDatasource(): IDatasource;
-    getViewportDatasource(): IViewportDatasource;
     isEnableSorting(): boolean;
     isEnableCellExpressions(): boolean;
     isEnableGroupEdit(): boolean;
@@ -137,7 +113,6 @@ export declare class GridOptionsWrapper {
     isSuppressUseColIdForGroups(): boolean;
     isSuppressAggFuncInHeader(): boolean;
     isSuppressMenuMainPanel(): boolean;
-    isEnableRangeSelection(): boolean;
     isRememberGroupStateWhenNewData(): boolean;
     getIcons(): any;
     getAggFuncs(): {
@@ -168,8 +143,6 @@ export declare class GridOptionsWrapper {
     getSendToClipboardFunc(): (params: any) => void;
     getProcessCellForClipboardFunc(): (params: ProcessCellForExportParams) => any;
     getProcessCellFromClipboardFunc(): (params: ProcessCellForExportParams) => any;
-    getViewportRowModelPageSize(): number;
-    getViewportRowModelBufferSize(): number;
     setProperty(key: string, value: any): void;
     addEventListener(key: string, listener: Function): void;
     removeEventListener(key: string, listener: Function): void;

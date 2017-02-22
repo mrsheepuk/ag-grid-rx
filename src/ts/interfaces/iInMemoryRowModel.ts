@@ -20,8 +20,6 @@ export interface IInMemoryRowModel extends IRowModel {
     /** InMemory model only. */
     forEachPivotNode(callback: (rowNode: RowNode)=>void): void;
     /** InMemory model only. */
-    expandOrCollapseAll(expand: boolean): void;
-    /** InMemory model only. */
     setRowData(rows: Observable<any[]>): void;
     /** When the row height was changed for a row node */
     onRowHeightChanged(): void;

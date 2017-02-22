@@ -154,10 +154,6 @@ var FilterManager = (function () {
         if (utils_1.Utils.missing(newFilter) || newFilter === "") {
             return null;
         }
-        if (this.gridOptionsWrapper.isRowModelVirtual()) {
-            console.warn('ag-grid: cannot do quick filtering when doing virtual paging');
-            return null;
-        }
         return newFilter.toUpperCase();
     };
     // returns true if it has changed (not just same value again)

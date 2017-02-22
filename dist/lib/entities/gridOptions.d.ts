@@ -6,10 +6,8 @@ import { RowNode } from "./rowNode";
 import { GridApi } from "../gridApi";
 import { ColumnApi } from "../columnController/columnController";
 import { Column } from "./column";
-import { IViewportDatasource } from "../interfaces/iViewportDatasource";
 import { ICellRendererFunc, ICellRendererComp } from "../rendering/cellRenderers/iCellRenderer";
 import { IAggFunc, ColGroupDef, ColDef } from "./colDef";
-import { IDatasource } from "../rowControllers/iDatasource";
 import { GridCellDef } from "./gridCell";
 import { IDateComp } from "../rendering/dateComponent";
 /****************************************************************
@@ -69,19 +67,11 @@ export interface GridOptions {
     suppressCopyRowsToClipboard?: boolean;
     suppressAggFuncInHeader?: boolean;
     suppressFocusAfterRefresh?: boolean;
-    rowModelType?: string;
-    pivotMode?: boolean;
-    enableRangeSelection?: boolean;
-    suppressEnterprise?: boolean;
-    rowGroupPanelShow?: string;
-    pivotPanelShow?: string;
     suppressContextMenu?: boolean;
     suppressMenuFilterPanel?: boolean;
     suppressMenuMainPanel?: boolean;
     suppressMenuColumnPanel?: boolean;
     rememberGroupStateWhenNewData?: boolean;
-    viewportRowModelPageSize?: number;
-    viewportRowModelBufferSize?: number;
     enableCellChangeFlash?: boolean;
     quickFilterText?: string;
     aggFuncs?: {
@@ -93,13 +83,9 @@ export interface GridOptions {
     functionsPassive?: boolean;
     maxConcurrentDatasourceRequests?: number;
     maxPagesInCache?: number;
-    paginationOverflowSize?: number;
-    paginationInitialRowCount?: number;
-    paginationPageSize?: number;
     editType?: string;
     suppressTouch?: boolean;
     embedFullWidthRows?: boolean;
-    excelStyles?: any[];
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. GOD DAMN IT!*
      ****************************************************************/
@@ -111,23 +97,13 @@ export interface GridOptions {
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. FOR FUCKS SAKE! *
      ****************************************************************/
-    groupSuppressAutoColumn?: boolean;
-    groupSelectsChildren?: boolean;
-    groupSelectsFiltered?: boolean;
-    groupIncludeFooter?: boolean;
-    groupUseEntireRow?: boolean;
-    groupRemoveSingleChildren?: boolean;
-    groupSuppressRow?: boolean;
-    groupSuppressBlankHeader?: boolean;
     forPrint?: boolean;
-    groupColumnDef?: ColDef;
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. YOU'VE BEEN WARNED*
      ****************************************************************/
     context?: any;
     rowStyle?: any;
     rowClass?: any;
-    groupDefaultExpanded?: number;
     slaveGrids?: GridOptions[];
     rowSelection?: string;
     rowDeselection?: boolean;
@@ -144,8 +120,6 @@ export interface GridOptions {
     floatingBottomRowData?: any[];
     showToolPanel?: boolean;
     columnDefs?: (ColDef | ColGroupDef)[];
-    datasource?: IDatasource;
-    viewportDatasource?: IViewportDatasource;
     headerHeight?: number;
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. *
@@ -186,7 +160,6 @@ export interface GridOptions {
     getContextMenuItems?: GetContextMenuItems;
     getMainMenuItems?: GetMainMenuItems;
     getRowNodeId?: GetRowNodeIdFunc;
-    doesDataFlower?(dataItem: any): boolean;
     processRowPostCreate?(params: ProcessRowParams): void;
     processCellForClipboard?(params: ProcessCellForExportParams): any;
     processCellFromClipboard?(params: ProcessCellForExportParams): any;
@@ -209,10 +182,8 @@ export interface GridOptions {
     onColumnResized?(event?: any): void;
     onDisplayedColumnsChanged?(event?: any): void;
     onVirtualColumnsChanged?(event?: any): void;
-    onRowGroupOpened?(event?: any): void;
     onRowDataChanged?(event?: any): void;
     onFloatingRowDataChanged?(event?: any): void;
-    onRangeSelectionChanged?(event?: any): void;
     onColumnRowGroupAddRequest?(event?: any): void;
     onColumnRowGroupRemoveRequest?(event?: any): void;
     onColumnPivotAddRequest?(event?: any): void;

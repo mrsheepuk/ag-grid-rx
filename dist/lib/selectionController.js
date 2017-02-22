@@ -41,7 +41,7 @@ var SelectionController = (function () {
         }
     };
     SelectionController.prototype.init = function () {
-        this.groupSelectsChildren = this.gridOptionsWrapper.isGroupSelectsChildren();
+        this.groupSelectsChildren = false;
         this.eventService.addEventListener(events_1.Events.EVENT_ROW_SELECTED, this.onRowSelected.bind(this));
     };
     SelectionController.prototype.setLastSelectedNode = function (rowNode) {

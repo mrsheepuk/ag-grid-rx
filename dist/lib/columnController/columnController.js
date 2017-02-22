@@ -32,7 +32,6 @@ var events_1 = require("../events");
 var columnChangeEvent_1 = require("../columnChangeEvent");
 var originalColumnGroup_1 = require("../entities/originalColumnGroup");
 var groupInstanceIdCreator_1 = require("./groupInstanceIdCreator");
-var functions_1 = require("../functions");
 var context_1 = require("../context/context");
 var gridPanel_1 = require("../gridPanel/gridPanel");
 var columnAnimationService_1 = require("../rendering/columnAnimationService");
@@ -174,7 +173,7 @@ ColumnApi = __decorate([
     context_1.Bean('columnApi')
 ], ColumnApi);
 exports.ColumnApi = ColumnApi;
-var ColumnController = ColumnController_1 = (function () {
+var ColumnController = (function () {
     function ColumnController() {
         // header row count, based on user provided columns
         this.primaryHeaderRowCount = 0;
@@ -202,7 +201,7 @@ var ColumnController = ColumnController_1 = (function () {
         this.bodyWidthDirty = true;
     }
     ColumnController.prototype.init = function () {
-        this.pivotMode = this.gridOptionsWrapper.isPivotMode();
+        this.pivotMode = false; //this.gridOptionsWrapper.isPivotMode();
         if (this.gridOptionsWrapper.getColumnDefs()) {
             this.setColumnDefs(this.gridOptionsWrapper.getColumnDefs());
         }
@@ -1296,10 +1295,6 @@ var ColumnController = ColumnController_1 = (function () {
             // or secondary columns, whatever the gridColumns are set to
             columnsForDisplay = utils_1.Utils.filter(this.gridColumns, function (column) { return column.isVisible(); });
         }
-        this.createGroupAutoColumn();
-        if (this.groupAutoColumnActive) {
-            columnsForDisplay.unshift(this.groupAutoColumn);
-        }
         return columnsForDisplay;
     };
     ColumnController.prototype.createColumnsToDisplayFromValueColumns = function () {
@@ -1680,55 +1675,6 @@ var ColumnController = ColumnController_1 = (function () {
             }
         });
     };
-    ColumnController.prototype.createGroupAutoColumn = function () {
-        // see if we need to insert the default grouping column
-        var needAGroupColumn = this.rowGroupColumns.length > 0
-            && !this.gridOptionsWrapper.isGroupSuppressAutoColumn()
-            && !this.gridOptionsWrapper.isGroupUseEntireRow()
-            && !this.gridOptionsWrapper.isGroupSuppressRow();
-        this.groupAutoColumnActive = needAGroupColumn;
-        // lazy create group auto-column
-        if (needAGroupColumn && !this.groupAutoColumn) {
-            this.createAutoGroupColumn();
-        }
-        // if grouping was removed, clan up the auto group column
-        if (!needAGroupColumn && this.groupAutoColumn) {
-            if (!this.groupAutoColumn.isSortNone()) {
-                // this results in column firing a sort event, which only updates
-                // the column header. it doesn't get the row model to update (which
-                // is good).
-                this.groupAutoColumn.setSort(null);
-            }
-        }
-    };
-    ColumnController.prototype.createAutoGroupColumn = function () {
-        // if one provided by user, use it, otherwise create one
-        var autoColDef = this.gridOptionsWrapper.getGroupColumnDef();
-        if (!autoColDef) {
-            var localeTextFunc = this.gridOptionsWrapper.getLocaleTextFunc();
-            autoColDef = {
-                headerName: localeTextFunc('group', 'Group'),
-                comparator: functions_1.defaultGroupComparator,
-                valueGetter: function (params) {
-                    if (params.node.group) {
-                        return params.node.key;
-                    }
-                    else if (params.data && params.colDef.field) {
-                        return params.data[params.colDef.field];
-                    }
-                    else {
-                        return null;
-                    }
-                },
-                cellRenderer: 'group'
-            };
-        }
-        // we never allow moving the group column
-        autoColDef.suppressMovable = true;
-        var colId = ColumnController_1.GROUP_AUTO_COLUMN_ID;
-        this.groupAutoColumn = new column_1.Column(autoColDef, colId, true);
-        this.context.wireBean(this.groupAutoColumn);
-    };
     ColumnController.prototype.createValueColumns = function () {
         this.valueColumns.forEach(function (column) { return column.setValueActive(false); });
         this.valueColumns = [];
@@ -1811,8 +1757,7 @@ __decorate([
     __metadata("design:paramtypes", [logger_1.LoggerFactory]),
     __metadata("design:returntype", void 0)
 ], ColumnController.prototype, "setBeans", null);
-ColumnController = ColumnController_1 = __decorate([
+ColumnController = __decorate([
     context_1.Bean('columnController')
 ], ColumnController);
 exports.ColumnController = ColumnController;
-var ColumnController_1;

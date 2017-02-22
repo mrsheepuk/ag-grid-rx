@@ -316,14 +316,10 @@ export class RowNode {
     // to make calling code more readable, this is the same method as setSelected except it takes names parameters
     public setSelectedParams(params: SetSelectedParams): number {
 
-        var groupSelectsChildren = this.gridOptionsWrapper.isGroupSelectsChildren();
-
         var newValue = params.newValue === true;
         var clearSelection = params.clearSelection === true;
         var tailingNodeInSequence = params.tailingNodeInSequence === true;
         var rangeSelect = params.rangeSelect === true;
-        // groupSelectsFiltered only makes sense when group selects children
-        var groupSelectsFiltered = groupSelectsChildren && (params.groupSelectsFiltered === true);
 
         if (this.id===undefined) {
             console.warn('ag-Grid: cannot select node until id for node is known');
@@ -353,20 +349,6 @@ export class RowNode {
 
         let updatedCount = 0;
 
-        // when groupSelectsFiltered, then this node may end up intermediate despite
-        // trying to set it to true / false. this group will be calculated further on
-        // down when we call calculatedSelectedForAllGroupNodes(). we need to skip it
-        // here, otherwise the updatedCount would include it.
-        let skipThisNode = groupSelectsFiltered && this.group;
-        if (!skipThisNode) {
-            var thisNodeWasSelected = this.selectThisNode(newValue);
-            if (thisNodeWasSelected) { updatedCount++; }
-        }
-
-        if (groupSelectsChildren && this.group) {
-            updatedCount += this.selectChildNodes(newValue, groupSelectsFiltered);
-        }
-
         // clear other nodes if not doing multi select
         var actionWasOnThisNode = !tailingNodeInSequence;
         if (actionWasOnThisNode) {
@@ -377,22 +359,6 @@ export class RowNode {
 
             // only if we selected something, then update groups and fire events
             if (updatedCount>0) {
-
-                // update groups
-                if (groupSelectsFiltered) {
-                    // if the group was selecting filtered, then all nodes above and or below
-                    // this node could have check, unchecked or intermediate, so easiest is to
-                    // recalculate selected state for all group nodes
-                    this.calculatedSelectedForAllGroupNodes();
-                } else {
-                    // if no selecting filtered, then everything below the group node was either
-                    // selected or not selected, no intermediate, so no need to check items below
-                    // this one, just the parents all the way up to the root
-                    if (groupSelectsChildren && this.parent) {
-                        this.parent.calculateSelectedFromChildrenBubbleUp();
-                    }
-                }
-
                 // fire events
 
                 // this is the very end of the 'action node', so we are finished all the updates,
@@ -420,8 +386,6 @@ export class RowNode {
         var lastRowHit = false;
         var lastRow: RowNode;
 
-        var groupsSelectChildren = this.gridOptionsWrapper.isGroupSelectsChildren();
-
         let updatedCount = 0;
 
         var inMemoryRowModel = <InMemoryRowModel> this.rowModel;
@@ -436,14 +400,11 @@ export class RowNode {
                 }
             }
 
-            var skipThisGroupNode = rowNode.group && groupsSelectChildren;
-            if (!skipThisGroupNode) {
-                var inRange = firstRowHit && !lastRowHit;
-                var childOfLastRow = rowNode.isParentOfNode(lastRow);
-                let nodeWasSelected = rowNode.selectThisNode(inRange || childOfLastRow);
-                if (nodeWasSelected) {
-                    updatedCount++;
-                }
+            var inRange = firstRowHit && !lastRowHit;
+            var childOfLastRow = rowNode.isParentOfNode(lastRow);
+            let nodeWasSelected = rowNode.selectThisNode(inRange || childOfLastRow);
+            if (nodeWasSelected) {
+                updatedCount++;
             }
 
             if (lookingForLastRow) {
@@ -458,10 +419,6 @@ export class RowNode {
                 }
             }
         });
-
-        if (groupsSelectChildren) {
-            this.calculatedSelectedForAllGroupNodes();
-        }
 
         this.mainEventService.dispatchEvent(Events.EVENT_SELECTION_CHANGED);
 

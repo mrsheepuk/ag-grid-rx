@@ -18,14 +18,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
-var paginationController_1 = require("./rowControllers/paginationController");
 var columnController_1 = require("./columnController/columnController");
 var rowRenderer_1 = require("./rendering/rowRenderer");
 var filterManager_1 = require("./filter/filterManager");
 var eventService_1 = require("./eventService");
 var gridPanel_1 = require("./gridPanel/gridPanel");
 var logger_1 = require("./logger");
-var constants_1 = require("./constants");
 var popupService_1 = require("./widgets/popupService");
 var events_1 = require("./events");
 var utils_1 = require("./utils");
@@ -124,16 +122,12 @@ var GridCore = (function () {
             console.warn('ag-Grid: status bar is only available in ag-Grid-Enterprise');
         }
         var statusBarEnabled = this.statusBar && this.gridOptionsWrapper.isEnableStatusBar();
-        var paginationPanelEnabled = this.gridOptionsWrapper.isRowModelPagination() && !this.gridOptionsWrapper.isForPrint();
-        if (!statusBarEnabled && !paginationPanelEnabled) {
+        if (!statusBarEnabled) {
             return null;
         }
         var eSouthPanel = document.createElement('div');
         if (statusBarEnabled) {
             eSouthPanel.appendChild(this.statusBar.getGui());
-        }
-        if (paginationPanelEnabled) {
-            eSouthPanel.appendChild(this.paginationController.getGui());
         }
         return eSouthPanel;
     };
@@ -141,18 +135,6 @@ var GridCore = (function () {
         if (!this.rowGroupComp) {
             return;
         }
-        var rowGroupPanelShow = this.gridOptionsWrapper.getRowGroupPanelShow();
-        if (rowGroupPanelShow === constants_1.Constants.ALWAYS) {
-            this.rowGroupComp.setVisible(true);
-        }
-        else if (rowGroupPanelShow === constants_1.Constants.ONLY_WHEN_GROUPING) {
-            var grouping = !this.columnController.isRowGroupEmpty();
-            this.rowGroupComp.setVisible(grouping);
-        }
-        else {
-            this.rowGroupComp.setVisible(false);
-        }
-        this.eRootPanel.doLayout();
     };
     GridCore.prototype.addWindowResizeListener = function () {
         var eventListener = this.doLayout.bind(this);
@@ -254,10 +236,6 @@ __decorate([
     context_1.Autowired('gridOptionsWrapper'),
     __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
 ], GridCore.prototype, "gridOptionsWrapper", void 0);
-__decorate([
-    context_1.Autowired('paginationController'),
-    __metadata("design:type", paginationController_1.PaginationController)
-], GridCore.prototype, "paginationController", void 0);
 __decorate([
     context_1.Autowired('rowModel'),
     __metadata("design:type", Object)

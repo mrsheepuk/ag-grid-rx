@@ -44,18 +44,17 @@ export class InMemoryRowModel implements IInMemoryRowModel {
 
     private nodeManager: InMemoryNodeManager;
 
+    // Current subscription to a supplied observable.
+    private rowDataSubscription: Subscription = null;
+
     @PostConstruct
     public init(): void {
 
         this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_EVERYTHING_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_EVERYTHING} ));
-        this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_EVERYTHING} ));
         this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_VALUE_CHANGED, this.onValueChanged.bind(this));
-        this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_PIVOT_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_PIVOT} ));
 
-        this.eventService.addModalPriorityEventListener(Events.EVENT_ROW_GROUP_OPENED, this.onRowGroupOpened.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_FILTER_CHANGED, this.onFilterChanged.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_SORT_CHANGED, this.onSortChanged.bind(this));
-        this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_PIVOT_MODE_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_PIVOT} ));
 
         this.rootNode = new RowNode();
         this.nodeManager = new InMemoryNodeManager(this.rootNode, this.gridOptionsWrapper, this.context, this.eventService);
@@ -71,11 +70,6 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     public destroy(): void {
         // Unsubscribe from any passed-in observable before destruction.
         if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
-    }
-
-    private onRowGroupOpened(): void {
-        let animate = this.gridOptionsWrapper.isAnimateRows();
-        this.refreshModel({step: Constants.STEP_MAP, keepRenderedRows: true, animate: animate});
     }
 
     private onFilterChanged(): void {
@@ -97,11 +91,7 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     }
 
     private onValueChanged(): void {
-        if (this.columnController.isPivotActive()) {
-            this.refreshModel({step: Constants.STEP_PIVOT});
-        } else {
-            this.refreshModel({step: Constants.STEP_AGGREGATE});
-        }
+        this.refreshModel({step: Constants.STEP_AGGREGATE});
     }
 
     public refreshModel(params: {step: number, groupState?: any, keepRenderedRows?: boolean, animate?: boolean, keepEditingRows?: boolean, newRowNodes?: RowNode[]}): void {
@@ -127,8 +117,6 @@ export class InMemoryRowModel implements IInMemoryRowModel {
                 // start = new Date().getTime();
                 this.doFilter();
                 // console.log('filter = ' + (new Date().getTime() - start));
-            case constants.STEP_PIVOT:
-                this.doPivot();
             case constants.STEP_AGGREGATE: // depends on agg fields
                 // start = new Date().getTime();
                 this.doAggregate();
@@ -156,12 +144,7 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     public isEmpty(): boolean {
         var rowsMissing: boolean;
 
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) {
-        //     rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
-        // } else {
-            rowsMissing = _.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
-        // }
+        rowsMissing = _.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
 
         var empty = _.missing(this.rootNode) || rowsMissing  || !this.columnController.isReady();
 
@@ -319,55 +302,13 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         }
     }
 
-    // + gridApi.expandAll()
-    // + gridApi.collapseAll()
-    public expandOrCollapseAll(expand: boolean): void {
-
-        if (this.rootNode){
-            recursiveExpandOrCollapse(this.rootNode.childrenAfterGroup);
-        }
-
-        function recursiveExpandOrCollapse(rowNodes: RowNode[]): void {
-            if (!rowNodes) { return; }
-            rowNodes.forEach( (rowNode: RowNode) => {
-                if (rowNode.group) {
-                    rowNode.expanded = expand;
-                    recursiveExpandOrCollapse(rowNode.childrenAfterGroup);
-                }
-            });
-        }
-        this.refreshModel({step: Constants.STEP_MAP});
-    }
-
     private doSort() {
         this.sortStage.execute({rowNode: this.rootNode});
     }
 
     private doRowGrouping(groupState: any, newRowNodes: RowNode[]) {
-
-        // grouping is enterprise only, so if service missing, skip the step
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) { return; }
-
-        if (this.groupStage) {
-
-            if (newRowNodes) {
-                this.groupStage.execute({rowNode: this.rootNode, newRowNodes: newRowNodes});
-            } else {
-                // groups are about to get disposed, so need to deselect any that are selected
-                this.selectionController.removeGroupsFromSelection();
-                this.groupStage.execute({rowNode: this.rootNode});
-                // set open/closed state on groups
-                this.restoreGroupState(groupState);
-            }
-
-            if (this.gridOptionsWrapper.isGroupSelectsChildren()) {
-                this.selectionController.updateGroupsFromChildrenSelections();
-            }
-
-        } else {
-            this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
-        }
+        // No grouping support in ag-grid-rx
+        this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
     }
 
     private restoreGroupState(groupState: any): void {
@@ -402,7 +343,6 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         return result;
     }
 
-    private rowDataSubscription: Subscription = null;
     public setRowData(rowData: Observable<any[]>) {
         // If we're already subscribed to an observable, unsubscribe.
         if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
@@ -448,15 +388,6 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         this.rowsToDisplay = <RowNode[]> this.flattenStage.execute({rowNode: this.rootNode});
     }
 
-    public insertItemsAtIndex(index: number, items: any[], skipRefresh: boolean): void {
-        // remember group state, so we can expand groups that should be expanded
-        var groupState = this.getGroupState();
-        var newNodes = this.nodeManager.insertItemsAtIndex(index, items);
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_ADDED, newNodes, groupState);
-        }
-    }
-
     public onRowHeightChanged(): void {
         this.refreshModel({step: Constants.STEP_MAP, keepRenderedRows: true, keepEditingRows: true});
     }
@@ -465,34 +396,4 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         this.forEachNode( (rowNode: RowNode) => rowNode.setRowHeight(null) );
         this.onRowHeightChanged();
     }
-
-    public removeItems(rowNodes: RowNode[], skipRefresh: boolean): void {
-        var groupState = this.getGroupState();
-        var removedNodes = this.nodeManager.removeItems(rowNodes);
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_REMOVED, removedNodes, groupState);
-        }
-    }
-
-    public addItems(items: any[], skipRefresh: boolean): void {
-        var groupState = this.getGroupState();
-        var newNodes = this.nodeManager.addItems(items);
-
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_ADDED, newNodes, groupState);
-        }
-
-        // if (newNodes) {
-        //     this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, newRowNodes: newNodes});
-        //     this.eventService.dispatchEvent(Events.EVENT_ITEMS_ADDED, {rowNodes: newNodes})
-        // }
-    }
-
-    private refreshAndFireEvent(eventName: string, rowNodes: RowNode[], groupState: any): void {
-        if (rowNodes) {
-            this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState});
-            this.eventService.dispatchEvent(eventName, {rowNodes: rowNodes})
-        }
-    }
-
 }

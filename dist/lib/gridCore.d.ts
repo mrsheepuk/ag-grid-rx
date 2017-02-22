@@ -5,7 +5,6 @@ import { LoggerFactory } from "./logger";
 export declare class GridCore {
     private gridOptions;
     private gridOptionsWrapper;
-    private paginationController;
     private rowModel;
     private frameworkFactory;
     private columnController;

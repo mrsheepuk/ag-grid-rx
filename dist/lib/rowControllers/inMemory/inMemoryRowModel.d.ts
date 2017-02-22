@@ -21,9 +21,9 @@ export declare class InMemoryRowModel implements IInMemoryRowModel {
     private rootNode;
     private rowsToDisplay;
     private nodeManager;
+    private rowDataSubscription;
     init(): void;
     destroy(): void;
-    private onRowGroupOpened();
     private onFilterChanged();
     private onSortChanged();
     getType(): string;
@@ -55,21 +55,15 @@ export declare class InMemoryRowModel implements IInMemoryRowModel {
     forEachPivotNode(callback: Function): void;
     private recursivelyWalkNodesAndCallback(nodes, callback, recursionType, index);
     doAggregate(): void;
-    expandOrCollapseAll(expand: boolean): void;
     private doSort();
     private doRowGrouping(groupState, newRowNodes);
     private restoreGroupState(groupState);
     private doFilter();
     private doPivot();
     private getGroupState();
-    private rowDataSubscription;
     setRowData(rowData: Observable<any[]>): void;
     private updateRowData(newData);
     private doRowsToDisplay();
-    insertItemsAtIndex(index: number, items: any[], skipRefresh: boolean): void;
     onRowHeightChanged(): void;
     resetRowHeights(): void;
-    removeItems(rowNodes: RowNode[], skipRefresh: boolean): void;
-    addItems(items: any[], skipRefresh: boolean): void;
-    private refreshAndFireEvent(eventName, rowNodes, groupState);
 }

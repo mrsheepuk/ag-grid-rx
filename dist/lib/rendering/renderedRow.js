@@ -67,12 +67,8 @@ var RenderedRow = (function (_super) {
     RenderedRow.prototype.setupRowContainers = function (animateInRowTop) {
         var isFullWidthCellFunc = this.gridOptionsWrapper.getIsFullWidthCellFunc();
         var isFullWidthCell = isFullWidthCellFunc ? isFullWidthCellFunc(this.rowNode) : false;
-        var isGroupSpanningRow = this.rowNode.group && this.gridOptionsWrapper.isGroupUseEntireRow();
         if (isFullWidthCell) {
             this.setupFullWidthContainers(animateInRowTop);
-        }
-        else if (isGroupSpanningRow) {
-            this.setupFullWidthGroupContainers(animateInRowTop);
         }
         else {
             this.setupNormalContainers(animateInRowTop);

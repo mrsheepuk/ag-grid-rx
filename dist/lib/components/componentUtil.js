@@ -114,9 +114,6 @@ var ComponentUtil = (function () {
         if (changes.columnDefs) {
             api.setColumnDefs(changes.columnDefs.currentValue);
         }
-        if (changes.datasource) {
-            api.setDatasource(changes.datasource.currentValue);
-        }
         if (changes.headerHeight) {
             api.setHeaderHeight(ComponentUtil.toNumber(changes.headerHeight.currentValue));
         }
@@ -158,30 +155,28 @@ ComponentUtil.STRING_PROPERTIES = [
     'editType', 'rowDataKeyProperty'
 ];
 ComponentUtil.OBJECT_PROPERTIES = [
-    'rowStyle', 'context', 'groupColumnDef', 'localeText', 'icons', 'datasource', 'viewportDatasource',
+    'rowData', 'rowStyle', 'context', 'groupColumnDef', 'localeText', 'icons',
     'groupRowRendererParams', 'aggFuncs', 'fullWidthCellRendererParams', 'defaultColGroupDef', 'defaultColDef'
 ];
 ComponentUtil.ARRAY_PROPERTIES = [
-    'slaveGrids', 'rowData', 'floatingTopRowData', 'floatingBottomRowData', 'columnDefs', 'excelStyles'
+    'slaveGrids', 'floatingTopRowData', 'floatingBottomRowData', 'columnDefs', 'excelStyles'
 ];
 ComponentUtil.NUMBER_PROPERTIES = [
-    'rowHeight', 'rowBuffer', 'colWidth', 'headerHeight', 'groupDefaultExpanded',
-    'minColWidth', 'maxColWidth', 'viewportRowModelPageSize', 'viewportRowModelBufferSize',
+    'rowHeight', 'rowBuffer', 'colWidth', 'headerHeight',
+    'minColWidth', 'maxColWidth',
     'layoutInterval', 'autoSizePadding', 'maxPagesInCache', 'maxConcurrentDatasourceRequests',
-    'paginationOverflowSize', 'paginationPageSize', 'paginationInitialRowCount', 'scrollbarWidth'
+    'scrollbarWidth'
 ];
 ComponentUtil.BOOLEAN_PROPERTIES = [
     'toolPanelSuppressRowGroups', 'toolPanelSuppressValues', 'toolPanelSuppressPivots', 'toolPanelSuppressPivotMode',
     'suppressRowClickSelection', 'suppressCellSelection', 'suppressHorizontalScroll', 'debug',
     'enableColResize', 'enableCellExpressions', 'enableSorting', 'enableServerSideSorting',
     'enableFilter', 'enableServerSideFilter', 'angularCompileRows', 'angularCompileFilters',
-    'angularCompileHeaders', 'groupSuppressAutoColumn', 'groupSelectsChildren',
-    'groupIncludeFooter', 'groupUseEntireRow', 'groupSuppressRow', 'groupSuppressBlankHeader', 'forPrint',
+    'angularCompileHeaders', 'forPrint',
     'suppressMenuHide', 'rowDeselection', 'unSortIcon', 'suppressMultiSort', 'suppressScrollLag',
     'singleClickEdit', 'suppressLoadingOverlay', 'suppressNoRowsOverlay', 'suppressAutoSize',
     'suppressParentsInRowNodes', 'showToolPanel', 'suppressColumnMoveAnimation', 'suppressMovableColumns',
-    'suppressFieldDotNotation', 'enableRangeSelection', 'suppressEnterprise', 'rowGroupPanelShow',
-    'pivotPanelShow', 'suppressTouch',
+    'suppressFieldDotNotation', 'suppressEnterprise', 'suppressTouch',
     'suppressContextMenu', 'suppressMenuFilterPanel', 'suppressMenuMainPanel', 'suppressMenuColumnPanel',
     'enableStatusBar', 'rememberGroupStateWhenNewData', 'enableCellChangeFlash', 'suppressDragLeaveHidesColumns',
     'suppressMiddleClickScrolls', 'suppressPreventDefaultOnMouseWheel', 'suppressUseColIdForGroups',
@@ -195,7 +190,7 @@ ComponentUtil.FUNCTION_PROPERTIES = ['headerCellRenderer', 'localeTextFunc', 'gr
     'getRowHeight', 'doesExternalFilterPass', 'getRowClass', 'getRowStyle', 'getHeaderCellTemplate', 'traverseNode',
     'getContextMenuItems', 'getMainMenuItems', 'processRowPostCreate', 'processCellForClipboard',
     'groupRowAggNodes', 'getRowNodeId', 'isFullWidthCell', 'fullWidthCellRenderer',
-    'fullWidthCellRendererFramework', 'doesDataFlower', 'processSecondaryColDef', 'processSecondaryColGroupDef',
+    'fullWidthCellRendererFramework', 'processSecondaryColDef', 'processSecondaryColGroupDef',
     'getBusinessKeyForNode', 'sendToClipboard', 'navigateToNextCell', 'tabToNextCell',
     'processCellFromClipboard', 'getDocument'];
 ComponentUtil.ALL_PROPERTIES = ComponentUtil.ARRAY_PROPERTIES

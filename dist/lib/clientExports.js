@@ -51,7 +51,6 @@ var filterStage_1 = require("./rowControllers/inMemory/filterStage");
 var flattenStage_1 = require("./rowControllers/inMemory/flattenStage");
 var sortStage_1 = require("./rowControllers/inMemory/sortStage");
 var floatingRowModel_1 = require("./rowControllers/floatingRowModel");
-var paginationController_1 = require("./rowControllers/paginationController");
 var component_1 = require("./widgets/component");
 var cellNavigationService_1 = require("./cellNavigationService");
 var columnChangeEvent_1 = require("./columnChangeEvent");
@@ -72,7 +71,6 @@ var valueService_1 = require("./valueService");
 var popupService_1 = require("./widgets/popupService");
 var gridRow_1 = require("./entities/gridRow");
 var inMemoryRowModel_1 = require("./rowControllers/inMemory/inMemoryRowModel");
-var virtualPageRowModel_1 = require("./rowControllers/virtualPagination/virtualPageRowModel");
 var animateSlideCellRenderer_1 = require("./rendering/cellRenderers/animateSlideCellRenderer");
 var cellEditorFactory_1 = require("./rendering/cellEditorFactory");
 var popupEditorWrapper_1 = require("./rendering/cellEditors/popupEditorWrapper");
@@ -96,8 +94,6 @@ var renderedCell_1 = require("./rendering/renderedCell");
 var headerRowComp_1 = require("./headerRendering/headerRowComp");
 var animateShowChangeCellRenderer_1 = require("./rendering/cellRenderers/animateShowChangeCellRenderer");
 var inMemoryNodeManager_1 = require("./rowControllers/inMemory/inMemoryNodeManager");
-var virtualPageCache_1 = require("./rowControllers/virtualPagination/virtualPageCache");
-var virtualPage_1 = require("./rowControllers/virtualPagination/virtualPage");
 var baseFrameworkFactory_1 = require("./baseFrameworkFactory");
 var methodNotImplementedException_1 = require("./misc/methodNotImplementedException");
 var touchListener_1 = require("./widgets/touchListener");
@@ -201,10 +197,6 @@ function populateClientExports(exports) {
     exports.InMemoryNodeManager = inMemoryNodeManager_1.InMemoryNodeManager;
     // rowControllers
     exports.FloatingRowModel = floatingRowModel_1.FloatingRowModel;
-    exports.PaginationController = paginationController_1.PaginationController;
-    exports.VirtualPageRowModel = virtualPageRowModel_1.VirtualPageRowModel;
-    exports.VirtualPageCache = virtualPageCache_1.VirtualPageCache;
-    exports.VirtualPage = virtualPage_1.VirtualPage;
     //styling
     exports.StylingService = stylingService_1.StylingService;
     // widgets
