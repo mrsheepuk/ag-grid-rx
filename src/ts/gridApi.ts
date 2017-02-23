@@ -26,6 +26,7 @@ import {IRangeController, RangeSelection, AddRangeSelectionParams} from "./inter
 import {GridCell, GridCellDef} from "./entities/gridCell";
 import {IClipboardService} from "./interfaces/iClipboardService";
 import {IInMemoryRowModel} from "./interfaces/iInMemoryRowModel";
+import {IObservableInMemoryRowModel} from "./interfaces/iObservableInMemoryRowModel";
 import {Utils as _} from "./utils";
 import {IViewportDatasource} from "./interfaces/iViewportDatasource";
 import {IMenuFactory} from "./interfaces/iMenuFactory";
@@ -74,6 +75,7 @@ export class GridApi {
     @Autowired('cellEditorFactory') private cellEditorFactory: CellEditorFactory;
 
     private inMemoryRowModel: IInMemoryRowModel;
+    private observableRowModel: IObservableInMemoryRowModel;
     private virtualPageRowModel: VirtualPageRowModel;
 
     @PostConstruct
@@ -82,6 +84,9 @@ export class GridApi {
             case Constants.ROW_MODEL_TYPE_NORMAL:
             case Constants.ROW_MODEL_TYPE_PAGINATION:
                 this.inMemoryRowModel = <IInMemoryRowModel> this.rowModel;
+                break;
+            case Constants.ROW_MODEL_TYPE_OBSERVABLE:
+                this.observableRowModel = <IObservableInMemoryRowModel> this.rowModel;
                 break;
             case Constants.ROW_MODEL_TYPE_VIRTUAL:
                 this.virtualPageRowModel = <VirtualPageRowModel> this.rowModel;
@@ -141,10 +146,19 @@ export class GridApi {
         }
     }
     
-    public setRowData(rowData: Observable<any[]>) {
+    public setRowData(rowData: any[]) {
         if (this.gridOptionsWrapper.isRowModelDefault()) {
             this.selectionController.reset();
-            this.inMemoryRowModel.setRowData(rowData);
+            this.inMemoryRowModel.setRowData(rowData, true);
+        } else {
+            console.log('cannot call setRowData unless using normal row model');
+        }
+    }
+
+    public setRowDataSource(rowData: Observable<any[]>) {
+        if (this.gridOptionsWrapper.isRowModelObservable()) {
+            this.selectionController.reset();
+            this.observableRowModel.setRowDataSource(rowData);
         } else {
             console.log('cannot call setRowData unless using normal row model');
         }

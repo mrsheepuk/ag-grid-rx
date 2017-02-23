@@ -120,7 +120,8 @@ export class GridOptionsWrapper {
     public isRowModelPagination() { return this.gridOptions.rowModelType === Constants.ROW_MODEL_TYPE_PAGINATION; }
     public isRowModelVirtual() { return this.gridOptions.rowModelType === Constants.ROW_MODEL_TYPE_VIRTUAL; }
     public isRowModelViewport() { return this.gridOptions.rowModelType === Constants.ROW_MODEL_TYPE_VIEWPORT; }
-    public isRowModelDefault() { return !(this.isRowModelPagination() || this.isRowModelVirtual() || this.isRowModelViewport()); }
+    public isRowModelObservable() { return this.gridOptions.rowModelType === Constants.ROW_MODEL_TYPE_OBSERVABLE; }
+    public isRowModelDefault() { return !(this.isRowModelPagination() || this.isRowModelVirtual() || this.isRowModelViewport()|| this.isRowModelObservable()); }
 
     public isFullRowEdit() { return this.gridOptions.editType === 'fullRow'; }
     public isSuppressFocusAfterRefresh() { return isTrue(this.gridOptions.suppressFocusAfterRefresh); }
@@ -181,8 +182,9 @@ export class GridOptionsWrapper {
     public getPaginationPageSize(): number { return this.gridOptions.paginationPageSize; }
     public getPaginationInitialRowCount(): number { return this.gridOptions.paginationInitialRowCount; }
 
-    public getRowData(): Observable<any[]> { return this.gridOptions.rowData; }
-    public getRowDataKeyProperty(): string { return this.gridOptions.rowDataKeyProperty; }
+    public getRowData(): any[] { return this.gridOptions.rowData; }
+    public getRowDataSource(): Observable<any[]> { return this.gridOptions.rowDataSource; }
+    public getRowDataSourceKeyProperty(): string { return this.gridOptions.rowDataSourceKeyProperty; }
     public isGroupUseEntireRow() { return isTrue(this.gridOptions.groupUseEntireRow); }
     public isEnableRtl() { return isTrue(this.gridOptions.enableRtl); }
     public getGroupColumnDef(): ColDef { return this.gridOptions.groupColumnDef; }
@@ -237,7 +239,7 @@ export class GridOptionsWrapper {
 
     public getHeaderCellTemplate() { return this.gridOptions.headerCellTemplate; }
     public getHeaderCellTemplateFunc() { return this.gridOptions.getHeaderCellTemplate; }
-    //public getNodeChildDetailsFunc(): ((dataItem: any)=> NodeChildDetails) { return this.gridOptions.getNodeChildDetails; }
+    public getNodeChildDetailsFunc(): ((dataItem: any)=> NodeChildDetails) { return this.gridOptions.getNodeChildDetails; }
     public getGroupRowAggNodesFunc() { return this.gridOptions.groupRowAggNodes; }
     public getContextMenuItemsFunc(): GetContextMenuItems { return this.gridOptions.getContextMenuItems; }
     public getMainMenuItemsFunc(): GetMainMenuItems { return this.gridOptions.getMainMenuItems; }
