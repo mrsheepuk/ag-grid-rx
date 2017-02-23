@@ -1,6 +1,6 @@
 {
   "name": "ag-grid-rx",
-  "version": "8.0.3",
+  "version": "8.1.0",
   "description": "Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)",
   "main": "./main.js",
   "scripts": {
