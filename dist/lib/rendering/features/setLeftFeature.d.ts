@@ -1,5 +1,5 @@
-// Type definitions for ag-grid v8.1.0
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.0
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { ColumnGroupChild } from "../../entities/columnGroupChild";
 import { BeanStub } from "../../context/beanStub";

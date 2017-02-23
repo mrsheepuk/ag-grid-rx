@@ -1,6 +1,7 @@
-// Type definitions for ag-grid v8.1.0
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.0
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
+import { Observable } from "rxjs";
 import { RowNode } from "../entities/rowNode";
 import { IRowModel } from "./iRowModel";
 export interface IInMemoryRowModel extends IRowModel {
@@ -26,7 +27,7 @@ export interface IInMemoryRowModel extends IRowModel {
     /** InMemory model only. */
     expandOrCollapseAll(expand: boolean): void;
     /** InMemory model only. */
-    setRowData(rows: any[], refresh: boolean, firstId?: number): void;
+    setRowData(rows: Observable<any[]>): void;
     /** When the row height was changed for a row node */
     onRowHeightChanged(): void;
     /** When all row heights should be reset */

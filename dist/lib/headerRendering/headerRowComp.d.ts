@@ -1,8 +1,13 @@
-// Type definitions for ag-grid v8.1.0
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.0
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { Component } from "../widgets/component";
 import { DropTarget } from "../dragAndDrop/dragAndDropService";
+export declare enum HeaderRowType {
+    COLUMN_GROUP = 0,
+    COLUMN = 1,
+    FLOATING_FILTER = 2,
+}
 export declare class HeaderRowComp extends Component {
     private gridOptionsWrapper;
     private columnController;
@@ -13,8 +18,8 @@ export declare class HeaderRowComp extends Component {
     private headerElements;
     private eRoot;
     private dropTarget;
-    private showingGroups;
-    constructor(dept: number, showingGroups: boolean, pinned: string, eRoot: HTMLElement, dropTarget: DropTarget);
+    private type;
+    constructor(dept: number, type: HeaderRowType, pinned: string, eRoot: HTMLElement, dropTarget: DropTarget);
     forEachHeaderElement(callback: (comp: Component) => void): void;
     destroy(): void;
     private removeAndDestroyChildComponents(idsToDestroy);

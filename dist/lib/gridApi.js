@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -25,12 +25,12 @@ var gridPanel_1 = require("./gridPanel/gridPanel");
 var valueService_1 = require("./valueService");
 var masterSlaveService_1 = require("./masterSlaveService");
 var eventService_1 = require("./eventService");
-var floatingRowModel_1 = require("./rowControllers/floatingRowModel");
+var floatingRowModel_1 = require("./rowModels/floatingRowModel");
 var constants_1 = require("./constants");
 var context_1 = require("./context/context");
 var gridCore_1 = require("./gridCore");
 var sortController_1 = require("./sortController");
-var paginationController_1 = require("./rowControllers/paginationController");
+var paginationController_1 = require("./rowModels/paginationController");
 var focusedCellController_1 = require("./focusedCellController");
 var gridCell_1 = require("./entities/gridCell");
 var utils_1 = require("./utils");
@@ -103,7 +103,7 @@ var GridApi = (function () {
     GridApi.prototype.setRowData = function (rowData) {
         if (this.gridOptionsWrapper.isRowModelDefault()) {
             this.selectionController.reset();
-            this.inMemoryRowModel.setRowData(rowData, true);
+            this.inMemoryRowModel.setRowData(rowData);
         }
         else {
             console.log('cannot call setRowData unless using normal row model');

@@ -4,6 +4,9 @@ ag-grid-angular {
 ag-grid-ng2 {
   display: inline-block;
 }
+ag-grid-rx {
+  display: inline-block;
+}
 .ag-rtl {
   direction: rtl;
 }
@@ -113,6 +116,13 @@ ag-grid-ng2 {
   display: inline-block;
   height: 100%;
   position: absolute;
+}
+.ag-floating-filter {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  display: inline-block;
 }
 .ag-dnd-ghost {
   font-size: 14px;

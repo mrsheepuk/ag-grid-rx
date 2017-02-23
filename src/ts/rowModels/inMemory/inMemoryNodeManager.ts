@@ -136,14 +136,6 @@ export class InMemoryNodeManager {
         this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;        
     }
 
-    // private correctPositionIfNeeded(node: RowNode, key: any, desiredPosition: number) {
-    //     if (this.nodeIndex[key].ind != desiredPosition) {
-    //         _.removeFromArray(this.rootNode.allLeafChildren, node);
-    //         _.insertIntoArray(this.rootNode.allLeafChildren, node, desiredPosition);
-    //         this.nodeIndex[key].ind = desiredPosition;
-    //     }
-    // }
-
     private createNode(dataItem: any, level: number): RowNode {
         var node = new RowNode();
         this.context.wireBean(node);
@@ -201,13 +193,6 @@ export class InMemoryNodeManager {
     }
 
     public isRowsAlreadyGrouped(): boolean {
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) {
-        //     console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
-        //         'supported if providing groups');
-        //     return true;
-        // } else {
-            return false;
-        // }
+        return false;
     }
 }

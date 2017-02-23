@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -24,19 +24,27 @@ var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var columnGroup_1 = require("../entities/columnGroup");
 var columnController_1 = require("../columnController/columnController");
+var column_1 = require("../entities/column");
 var renderedHeaderCell_1 = require("./deprecated/renderedHeaderCell");
 var eventService_1 = require("../eventService");
 var events_1 = require("../events");
 var utils_1 = require("../utils");
 var headerWrapperComp_1 = require("./header/headerWrapperComp");
 var headerGroupWrapperComp_1 = require("./headerGroup/headerGroupWrapperComp");
+var setLeftFeature_1 = require("../rendering/features/setLeftFeature");
+var HeaderRowType;
+(function (HeaderRowType) {
+    HeaderRowType[HeaderRowType["COLUMN_GROUP"] = 0] = "COLUMN_GROUP";
+    HeaderRowType[HeaderRowType["COLUMN"] = 1] = "COLUMN";
+    HeaderRowType[HeaderRowType["FLOATING_FILTER"] = 2] = "FLOATING_FILTER";
+})(HeaderRowType = exports.HeaderRowType || (exports.HeaderRowType = {}));
 var HeaderRowComp = (function (_super) {
     __extends(HeaderRowComp, _super);
-    function HeaderRowComp(dept, showingGroups, pinned, eRoot, dropTarget) {
+    function HeaderRowComp(dept, type, pinned, eRoot, dropTarget) {
         var _this = _super.call(this, "<div class=\"ag-header-row\"/>") || this;
         _this.headerElements = {};
         _this.dept = dept;
-        _this.showingGroups = showingGroups;
+        _this.type = type;
         _this.pinned = pinned;
         _this.eRoot = eRoot;
         _this.dropTarget = dropTarget;
@@ -100,8 +108,8 @@ var HeaderRowComp = (function (_super) {
     HeaderRowComp.prototype.onVirtualColumnsChanged = function () {
         var _this = this;
         var currentChildIds = Object.keys(this.headerElements);
-        var nodesAtDept = this.columnController.getVirtualHeaderGroupRow(this.pinned, this.dept);
-        nodesAtDept.forEach(function (child) {
+        var itemsAtDepth = this.columnController.getVirtualHeaderGroupRow(this.pinned, this.dept);
+        itemsAtDepth.forEach(function (child) {
             var idOfChild = child.getUniqueId();
             // if we already have this cell rendered, do nothing
             if (currentChildIds.indexOf(idOfChild) >= 0) {
@@ -137,22 +145,27 @@ var HeaderRowComp = (function (_super) {
     };
     HeaderRowComp.prototype.createHeaderElement = function (columnGroupChild) {
         var result;
-        if (columnGroupChild instanceof columnGroup_1.ColumnGroup) {
-            result = new headerGroupWrapperComp_1.HeaderGroupWrapperComp(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
-        }
-        else {
-            if (this.isUsingOldHeaderRenderer(columnGroupChild)) {
-                ////// DEPRECATED - TAKE THIS OUT IN V9
-                if (!warningGiven) {
-                    console.warn('ag-Grid: since v8, custom headers are now done using components. Please refer to the documentation https://www.ag-grid.com/javascript-grid-header-rendering/. Support for the old way will be dropped in v9.');
-                    warningGiven = true;
+        switch (this.type) {
+            case HeaderRowType.COLUMN:
+                if (this.isUsingOldHeaderRenderer(columnGroupChild)) {
+                    ////// DEPRECATED - TAKE THIS OUT IN V9
+                    if (!warningGiven) {
+                        console.warn('ag-Grid: since v8, custom headers are now done using components. Please refer to the documentation https://www.ag-grid.com/javascript-grid-header-rendering/. Support for the old way will be dropped in v9.');
+                        warningGiven = true;
+                    }
+                    result = new renderedHeaderCell_1.RenderedHeaderCell(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
                 }
-                result = new renderedHeaderCell_1.RenderedHeaderCell(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
-            }
-            else {
-                // the future!!!
-                result = new headerWrapperComp_1.HeaderWrapperComp(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
-            }
+                else {
+                    // the future!!!
+                    result = new headerWrapperComp_1.HeaderWrapperComp(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
+                }
+                break;
+            case HeaderRowType.COLUMN_GROUP:
+                result = new headerGroupWrapperComp_1.HeaderGroupWrapperComp(columnGroupChild, this.eRoot, this.dropTarget, this.pinned);
+                break;
+            case HeaderRowType.FLOATING_FILTER:
+                result = new FloatingFilterComp(columnGroupChild);
+                break;
         }
         this.context.wireBean(result);
         return result;
@@ -182,5 +195,43 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], HeaderRowComp.prototype, "init", null);
 exports.HeaderRowComp = HeaderRowComp;
+var FloatingFilterComp = (function (_super) {
+    __extends(FloatingFilterComp, _super);
+    function FloatingFilterComp(column) {
+        var _this = _super.call(this, '<div class="ag-floating-filter">YEA!!!!!</div>') || this;
+        _this.column = column;
+        return _this;
+    }
+    FloatingFilterComp.prototype.postConstruct = function () {
+        this.setupWidth();
+        this.addFeature(this.context, new setLeftFeature_1.SetLeftFeature(this.column, this.getGui()));
+    };
+    FloatingFilterComp.prototype.setupWidth = function () {
+        this.addDestroyableEventListener(this.column, column_1.Column.EVENT_WIDTH_CHANGED, this.onColumnWidthChanged.bind(this));
+        this.onColumnWidthChanged();
+    };
+    FloatingFilterComp.prototype.onColumnWidthChanged = function () {
+        this.getGui().style.width = this.column.getActualWidth() + 'px';
+    };
+    return FloatingFilterComp;
+}(component_1.Component));
+__decorate([
+    context_1.Autowired('gridOptionsWrapper'),
+    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
+], FloatingFilterComp.prototype, "gridOptionsWrapper", void 0);
+__decorate([
+    context_1.Autowired('columnController'),
+    __metadata("design:type", columnController_1.ColumnController)
+], FloatingFilterComp.prototype, "columnController", void 0);
+__decorate([
+    context_1.Autowired('context'),
+    __metadata("design:type", context_1.Context)
+], FloatingFilterComp.prototype, "context", void 0);
+__decorate([
+    context_1.PostConstruct,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], FloatingFilterComp.prototype, "postConstruct", null);
 // remove this in v9, when we take out support for the old headers
 var warningGiven = false;

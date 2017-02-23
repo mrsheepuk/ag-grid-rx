@@ -1,5 +1,5 @@
-// Type definitions for ag-grid v8.1.0
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.0
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 export interface SetFilterParameters {
     /** Same as cell renderer for grid (you can use the same one in both locations). Setting it separatly here allows for the value to be rendered differently in the filter. */

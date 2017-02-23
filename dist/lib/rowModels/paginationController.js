@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -149,7 +149,10 @@ var PaginationController = (function () {
     PaginationController.prototype.pageLoaded = function (rows, lastRowIndex) {
         lastRowIndex = utils_1.Utils.cleanNumber(lastRowIndex);
         var firstId = this.currentPage * this.pageSize;
-        this.inMemoryRowModel.setRowData(rows, true, firstId);
+        // This is broken by the Rx implementation, pagination is 
+        // NOT supported in this version of ag-Grid-rx.
+        console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
+        //this.inMemoryRowModel.setRowData(rows, true, firstId);
         // see if we hit the last row
         if (!this.foundMaxRow && lastRowIndex >= 0) {
             this.foundMaxRow = true;
@@ -234,7 +237,8 @@ var PaginationController = (function () {
             // set in an empty set of rows, this will at
             // least get rid of the loading panel, and
             // stop blocking things
-            that.inMemoryRowModel.setRowData([], true);
+            console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
+            // that.inMemoryRowModel.setRowData([], true);
         }
     };
     PaginationController.prototype.isCallDaemon = function (versionCopy) {

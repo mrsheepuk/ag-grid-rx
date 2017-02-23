@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -27,7 +27,7 @@ var masterSlaveService_1 = require("../masterSlaveService");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var columnController_1 = require("../columnController/columnController");
 var rowRenderer_1 = require("../rendering/rowRenderer");
-var floatingRowModel_1 = require("../rowControllers/floatingRowModel");
+var floatingRowModel_1 = require("../rowModels/floatingRowModel");
 var borderLayout_1 = require("../layout/borderLayout");
 var logger_1 = require("../logger");
 var context_1 = require("../context/context");
@@ -1198,6 +1198,9 @@ var GridPanel = (function (_super) {
         var headerHeight = this.gridOptionsWrapper.getHeaderHeight();
         var numberOfRowsInHeader = this.columnController.getHeaderRowCount();
         var totalHeaderHeight = headerHeight * numberOfRowsInHeader;
+        if (this.gridOptionsWrapper.isFloatingFilter()) {
+            totalHeaderHeight += 20;
+        }
         this.eHeader.style['height'] = totalHeaderHeight + 'px';
         // padding top covers the header and the floating rows on top
         var floatingTopHeight = this.floatingRowModel.getFloatingTopTotalHeight();

@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -35,6 +35,7 @@ var RecursionType;
 ;
 var InMemoryRowModel = (function () {
     function InMemoryRowModel() {
+        this.rowDataSubscription = null;
     }
     InMemoryRowModel.prototype.init = function () {
         this.eventService.addModalPriorityEventListener(events_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED, this.refreshModel.bind(this, { step: constants_1.Constants.STEP_EVERYTHING }));
@@ -49,8 +50,13 @@ var InMemoryRowModel = (function () {
         this.nodeManager = new inMemoryNodeManager_1.InMemoryNodeManager(this.rootNode, this.gridOptionsWrapper, this.context, this.eventService);
         this.context.wireBean(this.rootNode);
         if (this.gridOptionsWrapper.isRowModelDefault()) {
-            this.setRowData(this.gridOptionsWrapper.getRowData(), this.columnController.isReady());
+            this.setRowData(this.gridOptionsWrapper.getRowData());
         }
+    };
+    InMemoryRowModel.prototype.destroy = function () {
+        // Unsubscribe from any passed-in observable before destruction.
+        if (this.rowDataSubscription)
+            this.rowDataSubscription.unsubscribe();
     };
     InMemoryRowModel.prototype.onRowGroupOpened = function () {
         var animate = this.gridOptionsWrapper.isAnimateRows();
@@ -125,13 +131,12 @@ var InMemoryRowModel = (function () {
     };
     InMemoryRowModel.prototype.isEmpty = function () {
         var rowsMissing;
-        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        if (rowsAlreadyGrouped) {
-            rowsMissing = utils_1.Utils.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0;
-        }
-        else {
-            rowsMissing = utils_1.Utils.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
-        }
+        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        // if (rowsAlreadyGrouped) {
+        //     rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
+        // } else {
+        rowsMissing = utils_1.Utils.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
+        // }
         var empty = utils_1.Utils.missing(this.rootNode) || rowsMissing || !this.columnController.isReady();
         return empty;
     };
@@ -297,10 +302,8 @@ var InMemoryRowModel = (function () {
     };
     InMemoryRowModel.prototype.doRowGrouping = function (groupState, newRowNodes) {
         // grouping is enterprise only, so if service missing, skip the step
-        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        if (rowsAlreadyGrouped) {
-            return;
-        }
+        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        // if (rowsAlreadyGrouped) { return; }
         if (this.groupStage) {
             if (newRowNodes) {
                 this.groupStage.execute({ rowNode: this.rootNode, newRowNodes: newRowNodes });
@@ -349,20 +352,40 @@ var InMemoryRowModel = (function () {
         utils_1.Utils.traverseNodesWithKey(this.rootNode.childrenAfterGroup, function (node, key) { return result[key] = node.expanded; });
         return result;
     };
-    // rows: the rows to put into the model
-    // firstId: the first id to use, used for paging, where we are not on the first page
-    InMemoryRowModel.prototype.setRowData = function (rowData, refresh, firstId) {
+    InMemoryRowModel.prototype.setRowData = function (rowData) {
+        var _this = this;
+        // If we're already subscribed to an observable, unsubscribe.
+        if (this.rowDataSubscription)
+            this.rowDataSubscription.unsubscribe();
+        // Start with an empty data set for our new observable.
+        this.updateRowData([]);
+        // If we've been handed a null observable, nothing more to do. 
+        if (!rowData)
+            return;
+        // Subcribe to our new rowData source.
+        this.rowDataSubscription = rowData.subscribe(function (newData) {
+            _this.updateRowData(newData);
+        });
+    };
+    InMemoryRowModel.prototype.updateRowData = function (newData) {
+        // When the data observable provides new data, handle it in a similar way to
+        // how setRowData used to work, but use updateRowData on the nodeManager instead
+        // of setRowData, and telling anything waiting for data updates that it's cool
+        // to keep rendered rows, as we're trying to keep the same row nodes in place
+        // wherever possible.
         // remember group state, so we can expand groups that should be expanded
         var groupState = this.getGroupState();
-        this.nodeManager.setRowData(rowData, firstId);
-        // this event kicks off:
-        // - clears selection
-        // - updates filters
+        this.nodeManager.updateRowData(newData);
+        // Refresh the model, provided the column controller is ready.
+        if (this.columnController.isReady()) {
+            // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
+            // the same set of nodes wherever possible.
+            this.refreshModel({ step: constants_1.Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true });
+        }
+        // - update selection
+        // - update filters
         // - shows 'no rows' overlay if needed
         this.eventService.dispatchEvent(events_1.Events.EVENT_ROW_DATA_CHANGED);
-        if (refresh) {
-            this.refreshModel({ step: constants_1.Constants.STEP_EVERYTHING, groupState: groupState });
-        }
     };
     InMemoryRowModel.prototype.doRowsToDisplay = function () {
         this.rowsToDisplay = this.flattenStage.execute({ rowNode: this.rootNode });
@@ -466,6 +489,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], InMemoryRowModel.prototype, "init", null);
+__decorate([
+    context_1.PreDestroy,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], InMemoryRowModel.prototype, "destroy", null);
 InMemoryRowModel = __decorate([
     context_1.Bean('rowModel')
 ], InMemoryRowModel);

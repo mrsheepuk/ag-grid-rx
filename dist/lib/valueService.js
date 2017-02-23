@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -27,7 +27,7 @@ var ValueService = (function () {
     }
     ValueService.prototype.init = function () {
         this.cellExpressions = this.gridOptionsWrapper.isEnableCellExpressions();
-        this.userProvidedTheGroups = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        this.userProvidedTheGroups = false; //rx: don't support child grouping etc - _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
         this.suppressUseColIdForGroups = this.gridOptionsWrapper.isSuppressUseColIdForGroups();
         this.initialised = true;
     };

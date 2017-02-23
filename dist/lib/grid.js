@@ -1,13 +1,13 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.0
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
-var paginationController_1 = require("./rowControllers/paginationController");
-var floatingRowModel_1 = require("./rowControllers/floatingRowModel");
+var paginationController_1 = require("./rowModels/paginationController");
+var floatingRowModel_1 = require("./rowModels/floatingRowModel");
 var selectionController_1 = require("./selectionController");
 var columnController_1 = require("./columnController/columnController");
 var rowRenderer_1 = require("./rendering/rowRenderer");
@@ -39,14 +39,14 @@ var focusedCellController_1 = require("./focusedCellController");
 var mouseEventService_1 = require("./gridPanel/mouseEventService");
 var cellNavigationService_1 = require("./cellNavigationService");
 var utils_1 = require("./utils");
-var filterStage_1 = require("./rowControllers/inMemory/filterStage");
-var sortStage_1 = require("./rowControllers/inMemory/sortStage");
-var flattenStage_1 = require("./rowControllers/inMemory/flattenStage");
+var filterStage_1 = require("./rowModels/inMemory/filterStage");
+var sortStage_1 = require("./rowModels/inMemory/sortStage");
+var flattenStage_1 = require("./rowModels/inMemory/flattenStage");
 var focusService_1 = require("./misc/focusService");
 var cellEditorFactory_1 = require("./rendering/cellEditorFactory");
 var events_1 = require("./events");
-var virtualPageRowModel_1 = require("./rowControllers/virtualPagination/virtualPageRowModel");
-var inMemoryRowModel_1 = require("./rowControllers/inMemory/inMemoryRowModel");
+var virtualPageRowModel_1 = require("./rowModels/infinateScrolling/virtualPageRowModel");
+var inMemoryRowModel_1 = require("./rowModels/inMemory/inMemoryRowModel");
 var cellRendererFactory_1 = require("./rendering/cellRendererFactory");
 var cellRendererService_1 = require("./rendering/cellRendererService");
 var valueFormatterService_1 = require("./rendering/valueFormatterService");
@@ -135,16 +135,7 @@ var Grid = (function () {
     Grid.prototype.getRowModelClass = function (gridOptions) {
         var rowModelType = gridOptions.rowModelType;
         if (utils_1.Utils.exists(rowModelType)) {
-            var rowModelClass = Grid.RowModelClasses[rowModelType];
-            if (utils_1.Utils.exists(rowModelClass)) {
-                return rowModelClass;
-            }
-            else {
-                console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
-                if (rowModelType === 'viewport') {
-                    console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
-                }
-            }
+            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
         }
         return inMemoryRowModel_1.InMemoryRowModel;
     };
