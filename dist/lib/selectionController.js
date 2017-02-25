@@ -34,6 +34,9 @@ var SelectionController = (function () {
         this.logger = loggerFactory.create('SelectionController');
         this.reset();
         if (this.gridOptionsWrapper.isRowModelDefault()) {
+            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.reset.bind(this));
+        }
+        else if (this.gridOptionsWrapper.isRowModelObservable()) {
             this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.rowDataChanged.bind(this));
         }
         else {
