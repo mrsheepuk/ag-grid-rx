@@ -1,7 +1,7 @@
 /**
- * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.3
- * @link https://github.com/mrsheepuk/ag-grid-rx
+ * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * @version v8.1.1
+ * @link http://www.ag-grid.com/
  * @license MIT
  */
 "use strict";
@@ -9,9 +9,6 @@ var rowNode_1 = require("../../entities/rowNode");
 var utils_1 = require("../../utils");
 var InMemoryNodeManager = (function () {
     function InMemoryNodeManager(rootNode, gridOptionsWrapper, context, eventService) {
-        // Keep an index of existing nodes, so we can find them rapidly when
-        // data updates come in.
-        this.nodeIndex = {};
         this.nextId = 0;
         this.rootNode = rootNode;
         this.gridOptionsWrapper = gridOptionsWrapper;
@@ -24,98 +21,108 @@ var InMemoryNodeManager = (function () {
         this.rootNode.childrenAfterSort = [];
         this.rootNode.childrenAfterFilter = [];
     }
-    InMemoryNodeManager.prototype.updateRowData = function (rowData) {
-        // This is intended to be called for observable data updates, where the data 
-        // supplied is likely to be similar to the data we already have. Therefore,
-        // it attempts to keep, wherever possible, the exsiting RowNodes, rather than
-        // binning the whole lot and starting again.
-        var _this = this;
-        // Clear out the grouped / filtered / sorted views of the data, no simple way
-        // to keep those.
+    InMemoryNodeManager.prototype.setRowData = function (rowData, firstId) {
         this.rootNode.childrenAfterFilter = null;
         this.rootNode.childrenAfterGroup = null;
         this.rootNode.childrenAfterSort = null;
         this.rootNode.childrenMapped = null;
-        // We never reset nextId in here, so it should always strictly ascend as 
-        // rownodes are created by createNode (unless we've got empty data, in 
-        // which case we'll reset to zero).
-        // this.nextId = 0;
-        // If we have no rowData, reset everything.
-        if (!rowData || rowData.length == 0) {
+        this.nextId = utils_1.Utils.exists(firstId) ? firstId : 0;
+        if (!rowData) {
             this.rootNode.allLeafChildren = [];
             this.rootNode.childrenAfterGroup = [];
-            this.nextId = 0;
             return;
         }
-        var dataKeyProperty = this.gridOptionsWrapper.getRowDataKeyProperty();
-        if (!utils_1.Utils.exists(dataKeyProperty)) {
-            console.error('ag-Grid-rx: rowDataKeyProperty must be specified in the options for ag-grid-rx.');
-            return;
+        // func below doesn't have 'this' pointer, so need to pull out these bits
+        this.getNodeChildDetails = this.gridOptionsWrapper.getNodeChildDetailsFunc();
+        this.suppressParentsInRowNodes = this.gridOptionsWrapper.isSuppressParentsInRowNodes();
+        this.doesDataFlower = this.gridOptionsWrapper.getDoesDataFlowerFunc();
+        var rowsAlreadyGrouped = utils_1.Utils.exists(this.getNodeChildDetails);
+        // kick off recursion
+        var result = this.recursiveFunction(rowData, null, InMemoryNodeManager.TOP_LEVEL);
+        if (rowsAlreadyGrouped) {
+            this.rootNode.childrenAfterGroup = result;
+            this.setLeafChildren(this.rootNode);
         }
-        // Create a list of all keys in the index, we'll remove whatever is left
-        // in this array after looping around our new data.
-        var keysToRemove = Object.keys(this.nodeIndex);
-        // Rebuild allLeafChildren using nodes from our index whenever we can.
-        this.rootNode.allLeafChildren.length = 0;
-        rowData.forEach(function (dataItem) {
-            var node = null;
-            // If we've been given an item that doesn't have the required key property, 
-            // log an error and disregard the item.
-            if (!dataItem.hasOwnProperty(dataKeyProperty)) {
-                console.error('ag-Grid-rx: every item of data passed to ag-grid-rx must have a property named the same as the rowDataKeyProperty option.');
-                return;
-            }
-            var key = dataItem[dataKeyProperty];
-            // Check for existing node.
-            var indexEntry = _this.nodeIndex[key];
-            if (indexEntry) {
-                // We have an existing node, start with that.
-                node = indexEntry.node;
-                // Don't want to remove this entry from the index.
-                keysToRemove.splice(keysToRemove.indexOf(key), 1);
-                // If the data object has changed, re-set the data on the node.
-                // This assumes that the objects are being passed are immutable,
-                // so we can avoid updating the data if the object is the same
-                // object we had previously. This will only be true if the 
-                // end user is using NgRx, Redux, being careful, or getting a 
-                // passing a full new set of data every time!
-                if (indexEntry.data != dataItem) {
-                    node.setData(dataItem);
-                    _this.nodeIndex[key].data = dataItem;
-                }
-            }
-            else {
-                // No index entry, so create a new node and add it to the index.
-                node = _this.createNode(dataItem, InMemoryNodeManager.TOP_LEVEL);
-                _this.nodeIndex[key] = {
-                    data: dataItem,
-                    node: node
-                };
-            }
-            _this.rootNode.allLeafChildren.push(node);
-        });
-        // Tidy up our index with any removed items.
-        keysToRemove.forEach(function (keyToRemove) {
-            delete _this.nodeIndex[keyToRemove];
-        });
-        // As we're no longer doing grouping, just set rows after grouping equal
-        // to our updated child leaf set.
-        this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
+        else {
+            this.rootNode.allLeafChildren = result;
+        }
     };
-    // private correctPositionIfNeeded(node: RowNode, key: any, desiredPosition: number) {
-    //     if (this.nodeIndex[key].ind != desiredPosition) {
-    //         _.removeFromArray(this.rootNode.allLeafChildren, node);
-    //         _.insertIntoArray(this.rootNode.allLeafChildren, node, desiredPosition);
-    //         this.nodeIndex[key].ind = desiredPosition;
-    //     }
-    // }
-    InMemoryNodeManager.prototype.createNode = function (dataItem, level) {
+    InMemoryNodeManager.prototype.recursiveFunction = function (rowData, parent, level) {
+        var _this = this;
+        // make sure the rowData is an array and not a string of json - this was a commonly reported problem on the forum
+        if (typeof rowData === 'string') {
+            console.warn('ag-Grid: rowData must be an array, however you passed in a string. If you are loading JSON, make sure you convert the JSON string to JavaScript objects first');
+            return;
+        }
+        var rowNodes = [];
+        rowData.forEach(function (dataItem) {
+            var node = _this.createNode(dataItem, parent, level);
+            var nodeChildDetails = _this.getNodeChildDetails ? _this.getNodeChildDetails(dataItem) : null;
+            if (nodeChildDetails && nodeChildDetails.group) {
+                node.group = true;
+                node.childrenAfterGroup = _this.recursiveFunction(nodeChildDetails.children, node, level + 1);
+                node.expanded = nodeChildDetails.expanded === true;
+                node.field = nodeChildDetails.field;
+                node.key = nodeChildDetails.key;
+                // pull out all the leaf children and add to our node
+                _this.setLeafChildren(node);
+            }
+            rowNodes.push(node);
+        });
+        return rowNodes;
+    };
+    InMemoryNodeManager.prototype.createNode = function (dataItem, parent, level) {
         var node = new rowNode_1.RowNode();
         this.context.wireBean(node);
+        var nodeChildDetails = this.getNodeChildDetails ? this.getNodeChildDetails(dataItem) : null;
+        if (nodeChildDetails && nodeChildDetails.group) {
+            node.group = true;
+            node.childrenAfterGroup = this.recursiveFunction(nodeChildDetails.children, node, level + 1);
+            node.expanded = nodeChildDetails.expanded === true;
+            node.field = nodeChildDetails.field;
+            node.key = nodeChildDetails.key;
+            node.canFlower = false;
+            // pull out all the leaf children and add to our node
+            this.setLeafChildren(node);
+        }
+        else {
+            node.group = false;
+            node.canFlower = this.doesDataFlower ? this.doesDataFlower(dataItem) : false;
+            if (node.canFlower) {
+                node.expanded = this.isExpanded(level);
+            }
+        }
+        if (parent && !this.suppressParentsInRowNodes) {
+            node.parent = parent;
+        }
         node.level = level;
         node.setDataAndId(dataItem, this.nextId.toString());
         this.nextId++;
         return node;
+    };
+    InMemoryNodeManager.prototype.isExpanded = function (level) {
+        var expandByDefault = this.gridOptionsWrapper.getGroupDefaultExpanded();
+        if (expandByDefault === -1) {
+            return true;
+        }
+        else {
+            return level < expandByDefault;
+        }
+    };
+    InMemoryNodeManager.prototype.setLeafChildren = function (node) {
+        node.allLeafChildren = [];
+        if (node.childrenAfterGroup) {
+            node.childrenAfterGroup.forEach(function (childAfterGroup) {
+                if (childAfterGroup.group) {
+                    if (childAfterGroup.allLeafChildren) {
+                        childAfterGroup.allLeafChildren.forEach(function (leafChild) { return node.allLeafChildren.push(leafChild); });
+                    }
+                }
+                else {
+                    node.allLeafChildren.push(childAfterGroup);
+                }
+            });
+        }
     };
     InMemoryNodeManager.prototype.insertItemsAtIndex = function (index, rowData) {
         if (this.isRowsAlreadyGrouped()) {
@@ -130,7 +137,7 @@ var InMemoryNodeManager = (function () {
         // go through the items backwards, otherwise they get added in reverse order
         for (var i = rowData.length - 1; i >= 0; i--) {
             var data = rowData[i];
-            var newNode = this.createNode(data, InMemoryNodeManager.TOP_LEVEL);
+            var newNode = this.createNode(data, null, InMemoryNodeManager.TOP_LEVEL);
             utils_1.Utils.insertIntoArray(nodeList, newNode, index);
             newNodes.push(newNode);
         }
@@ -157,14 +164,15 @@ var InMemoryNodeManager = (function () {
         return this.insertItemsAtIndex(nodeList.length, items);
     };
     InMemoryNodeManager.prototype.isRowsAlreadyGrouped = function () {
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) {
-        //     console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
-        //         'supported if providing groups');
-        //     return true;
-        // } else {
-        return false;
-        // }
+        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+        if (rowsAlreadyGrouped) {
+            console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
+                'supported if providing groups');
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     return InMemoryNodeManager;
 }());

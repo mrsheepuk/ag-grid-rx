@@ -7,7 +7,7 @@ import {Column} from "./column";
 import {IViewportDatasource} from "../interfaces/iViewportDatasource";
 import {ICellRendererFunc, ICellRenderer, ICellRendererComp} from "../rendering/cellRenderers/iCellRenderer";
 import {IAggFunc, ColGroupDef, ColDef} from "./colDef";
-import {IDatasource} from "../rowControllers/iDatasource";
+import {IDatasource} from "../rowModels/iDatasource";
 import {GridCellDef} from "./gridCell";
 import {IDateComp} from "../rendering/dateComponent";
 
@@ -155,8 +155,10 @@ export interface GridOptions {
      ****************************************************************/
 
     // changeable with impact
-    rowData?: Observable<any[]>; // should this be immutable for ag2?
-    rowDataKeyProperty?: string;
+    rowData?: any[]; // should this be immutable for ag2?
+    // Rx data source:
+    rowDataSource?: Observable<any[]>;
+    rowDataSourceKeyProperty?: string;
     floatingTopRowData?: any[]; // should this be immutable ag2?
     floatingBottomRowData?: any[]; // should this be immutable ag2?
     showToolPanel?: boolean;
@@ -198,7 +200,7 @@ export interface GridOptions {
     groupRowAggNodes?(nodes: RowNode[]): any;
     getBusinessKeyForNode?(node: RowNode): string;
     getHeaderCellTemplate?: (params: any) => string | HTMLElement;
-    // Not supported in ag-grid-rx: getNodeChildDetails?: GetNodeChildDetails;
+    getNodeChildDetails?: GetNodeChildDetails;
     getContextMenuItems?: GetContextMenuItems;
     getMainMenuItems?: GetMainMenuItems;
     getRowNodeId?: GetRowNodeIdFunc;

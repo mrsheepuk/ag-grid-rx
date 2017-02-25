@@ -189,10 +189,7 @@ export class PaginationController {
     private pageLoaded(rows: any, lastRowIndex: any) {
         lastRowIndex = _.cleanNumber(lastRowIndex);
         var firstId = this.currentPage * this.pageSize;
-        // This is broken by the Rx implementation, pagination is 
-        // NOT supported in this version of ag-Grid-rx.
-        console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
-        //this.inMemoryRowModel.setRowData(rows, true, firstId);
+        this.inMemoryRowModel.setRowData(rows, true, firstId);
         // see if we hit the last row
         if (!this.foundMaxRow && lastRowIndex >= 0) {
             this.foundMaxRow = true;
@@ -288,8 +285,7 @@ export class PaginationController {
             // set in an empty set of rows, this will at
             // least get rid of the loading panel, and
             // stop blocking things
-            console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
-            // that.inMemoryRowModel.setRowData([], true);
+            that.inMemoryRowModel.setRowData([], true);
         }
     }
 

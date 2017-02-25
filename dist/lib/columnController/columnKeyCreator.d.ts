@@ -1,5 +1,5 @@
-// Type definitions for ag-grid-rx v8.0.3
-// Project: https://github.com/mrsheepuk/ag-grid-rx
+// Type definitions for ag-grid v8.1.1
+// Project: http://www.ag-grid.com/
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 export declare class ColumnKeyCreator {
     private existingKeys;

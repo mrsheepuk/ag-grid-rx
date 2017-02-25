@@ -1,7 +1,7 @@
 import {GridOptions} from "./entities/gridOptions";
 import {GridOptionsWrapper} from "./gridOptionsWrapper";
-import {PaginationController} from "./rowControllers/paginationController";
-import {FloatingRowModel} from "./rowControllers/floatingRowModel";
+import {PaginationController} from "./rowModels/paginationController";
+import {FloatingRowModel} from "./rowModels/floatingRowModel";
 import {SelectionController} from "./selectionController";
 import {ColumnController, ColumnApi} from "./columnController/columnController";
 import {RowRenderer} from "./rendering/rowRenderer";
@@ -33,14 +33,15 @@ import {FocusedCellController} from "./focusedCellController";
 import {MouseEventService} from "./gridPanel/mouseEventService";
 import {CellNavigationService} from "./cellNavigationService";
 import {Utils as _} from "./utils";
-import {FilterStage} from "./rowControllers/inMemory/filterStage";
-import {SortStage} from "./rowControllers/inMemory/sortStage";
-import {FlattenStage} from "./rowControllers/inMemory/flattenStage";
+import {FilterStage} from "./rowModels/inMemory/filterStage";
+import {SortStage} from "./rowModels/inMemory/sortStage";
+import {FlattenStage} from "./rowModels/inMemory/flattenStage";
 import {FocusService} from "./misc/focusService";
 import {CellEditorFactory} from "./rendering/cellEditorFactory";
 import {Events} from "./events";
-import {VirtualPageRowModel} from "./rowControllers/virtualPagination/virtualPageRowModel";
-import {InMemoryRowModel} from "./rowControllers/inMemory/inMemoryRowModel";
+import {VirtualPageRowModel} from "./rowModels/infinateScrolling/virtualPageRowModel";
+import {InMemoryRowModel} from "./rowModels/inMemory/inMemoryRowModel";
+import {ObservableInMemoryRowModel} from "./rowModels/inMemory/observableInMemoryRowModel";
 import {CellRendererFactory} from "./rendering/cellRendererFactory";
 import {CellRendererService} from "./rendering/cellRendererService";
 import {ValueFormatterService} from "./rendering/valueFormatterService";
@@ -84,7 +85,8 @@ export class Grid {
     private static RowModelClasses: any = {
         virtual: VirtualPageRowModel,
         pagination: InMemoryRowModel,
-        normal: InMemoryRowModel
+        normal: InMemoryRowModel,
+        observable: ObservableInMemoryRowModel
     };
 
     public static setEnterpriseBeans(enterpriseBeans: any[], rowModelClasses: any): void {
@@ -176,16 +178,15 @@ export class Grid {
     private getRowModelClass(gridOptions: GridOptions): any {
         var rowModelType = gridOptions.rowModelType;
         if (_.exists(rowModelType)) {
-            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
-            // var rowModelClass = Grid.RowModelClasses[rowModelType];
-            // if (_.exists(rowModelClass)) {
-            //     return rowModelClass;
-            // } else {
-            //     console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
-            //     if (rowModelType==='viewport') {
-            //         console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
-            //     }
-            // }
+            var rowModelClass = Grid.RowModelClasses[rowModelType];
+            if (_.exists(rowModelClass)) {
+                return rowModelClass;
+            } else {
+                console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
+                if (rowModelType==='viewport') {
+                    console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
+                }
+            }
         }
         return InMemoryRowModel;
     };

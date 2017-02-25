@@ -1,7 +1,7 @@
 /**
- * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.3
- * @link https://github.com/mrsheepuk/ag-grid-rx
+ * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * @version v8.1.1
+ * @link http://www.ag-grid.com/
  * @license MIT
  */
 "use strict";
@@ -808,7 +808,7 @@ var Utils = (function () {
         if (!toEscape)
             return null;
         if (!toEscape.replace)
-            return null;
+            return toEscape;
         return toEscape.replace(reUnescapedHtml, function (chr) { return HTML_ESCAPES[chr]; });
     };
     // Taken from here: https://github.com/facebook/fixed-data-table/blob/master/src/vendor_upstream/dom/normalizeWheel.js

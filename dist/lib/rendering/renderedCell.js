@@ -1,7 +1,7 @@
 /**
- * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.3
- * @link https://github.com/mrsheepuk/ag-grid-rx
+ * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * @version v8.1.1
+ * @link http://www.ag-grid.com/
  * @license MIT
  */
 "use strict";
@@ -874,6 +874,8 @@ var RenderedCell = (function (_super) {
         if (animate) {
             this.animateCellWithDataChanged();
         }
+        // need to check rules. note, we ignore colDef classes and styles, these are assumed to be static
+        this.addClassesFromRules();
         function doRefresh() {
             // if the cell renderer has a refresh method, we call this instead of doing a refresh
             // note: should pass in params here instead of value?? so that client has formattedValue
@@ -881,8 +883,6 @@ var RenderedCell = (function (_super) {
             var cellRendererParams = that.column.getColDef().cellRendererParams;
             var params = that.createRendererAndRefreshParams(valueFormatted, cellRendererParams);
             that.cellRenderer.refresh(params);
-            // need to check rules. note, we ignore colDef classes and styles, these are assumed to be static
-            that.addClassesFromRules();
         }
         function doReplace() {
             // otherwise we rip out the cell and replace it

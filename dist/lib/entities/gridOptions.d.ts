@@ -1,7 +1,6 @@
-// Type definitions for ag-grid-rx v8.0.3
-// Project: https://github.com/mrsheepuk/ag-grid-rx
+// Type definitions for ag-grid v8.1.1
+// Project: http://www.ag-grid.com/
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
-import { Observable } from "rxjs";
 import { RowNode } from "./rowNode";
 import { GridApi } from "../gridApi";
 import { ColumnApi } from "../columnController/columnController";
@@ -138,8 +137,7 @@ export interface GridOptions {
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. *
      ****************************************************************/
-    rowData?: Observable<any[]>;
-    rowDataKeyProperty?: string;
+    rowData?: any[];
     floatingTopRowData?: any[];
     floatingBottomRowData?: any[];
     showToolPanel?: boolean;
@@ -183,6 +181,7 @@ export interface GridOptions {
     groupRowAggNodes?(nodes: RowNode[]): any;
     getBusinessKeyForNode?(node: RowNode): string;
     getHeaderCellTemplate?: (params: any) => string | HTMLElement;
+    getNodeChildDetails?: GetNodeChildDetails;
     getContextMenuItems?: GetContextMenuItems;
     getMainMenuItems?: GetMainMenuItems;
     getRowNodeId?: GetRowNodeIdFunc;

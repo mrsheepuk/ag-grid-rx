@@ -1,7 +1,7 @@
 /**
- * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.0.3
- * @link https://github.com/mrsheepuk/ag-grid-rx
+ * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * @version v8.1.1
+ * @link http://www.ag-grid.com/
  * @license MIT
  */
 "use strict";
@@ -34,7 +34,7 @@ var SelectionController = (function () {
         this.logger = loggerFactory.create('SelectionController');
         this.reset();
         if (this.gridOptionsWrapper.isRowModelDefault()) {
-            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.rowDataChanged.bind(this));
+            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.reset.bind(this));
         }
         else {
             this.logger.log('dont know what to do here');
@@ -161,22 +161,6 @@ var SelectionController = (function () {
         this.logger.log('reset');
         this.selectedNodes = {};
         this.lastSelectedNode = null;
-    };
-    SelectionController.prototype.rowDataChanged = function () {
-        var _this = this;
-        // Check selected nodes still present in nodeset, if not, deselect
-        // them.
-        var changed = false;
-        utils_1.Utils.iterateObject(this.selectedNodes, function (key, selectedRow) {
-            if (!_this.rowModel.isRowPresent(selectedRow)) {
-                delete _this.selectedNodes[key];
-                if (_this.lastSelectedNode == selectedRow)
-                    _this.lastSelectedNode = null;
-                changed = true;
-            }
-        });
-        if (changed)
-            this.eventService.dispatchEvent(events_1.Events.EVENT_SELECTION_CHANGED);
     };
     // returns a list of all nodes at 'best cost' - a feature to be used
     // with groups / trees. if a group has all it's children selected,

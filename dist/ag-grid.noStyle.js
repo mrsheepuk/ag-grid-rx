@@ -1,4 +1,4 @@
-// ag-grid-rx v8.0.3
+// ag-grid v8.1.1
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -67,9 +67,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -322,9 +322,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -458,7 +458,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Grid.prototype.getRowModelClass = function (gridOptions) {
 	        var rowModelType = gridOptions.rowModelType;
 	        if (utils_1.Utils.exists(rowModelType)) {
-	            console.error('ag-Grid-rx: only default (InMemory) row model supported for ag-Grid-rx, remove rowModelType option from settings.');
+	            var rowModelClass = Grid.RowModelClasses[rowModelType];
+	            if (utils_1.Utils.exists(rowModelClass)) {
+	                return rowModelClass;
+	            }
+	            else {
+	                console.error('ag-Grid: count not find matching row model for rowModelType ' + rowModelType);
+	                if (rowModelType === 'viewport') {
+	                    console.error('ag-Grid: rowModelType viewport is only available in ag-Grid Enterprise');
+	                }
+	            }
 	        }
 	        return inMemoryRowModel_1.InMemoryRowModel;
 	    };
@@ -483,9 +492,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -628,7 +637,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    GridOptionsWrapper.prototype.getPaginationPageSize = function () { return this.gridOptions.paginationPageSize; };
 	    GridOptionsWrapper.prototype.getPaginationInitialRowCount = function () { return this.gridOptions.paginationInitialRowCount; };
 	    GridOptionsWrapper.prototype.getRowData = function () { return this.gridOptions.rowData; };
-	    GridOptionsWrapper.prototype.getRowDataKeyProperty = function () { return this.gridOptions.rowDataKeyProperty; };
 	    GridOptionsWrapper.prototype.isGroupUseEntireRow = function () { return isTrue(this.gridOptions.groupUseEntireRow); };
 	    GridOptionsWrapper.prototype.isEnableRtl = function () { return isTrue(this.gridOptions.enableRtl); };
 	    GridOptionsWrapper.prototype.getGroupColumnDef = function () { return this.gridOptions.groupColumnDef; };
@@ -680,7 +688,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    GridOptionsWrapper.prototype.getDefaultColGroupDef = function () { return this.gridOptions.defaultColGroupDef; };
 	    GridOptionsWrapper.prototype.getHeaderCellTemplate = function () { return this.gridOptions.headerCellTemplate; };
 	    GridOptionsWrapper.prototype.getHeaderCellTemplateFunc = function () { return this.gridOptions.getHeaderCellTemplate; };
-	    //public getNodeChildDetailsFunc(): ((dataItem: any)=> NodeChildDetails) { return this.gridOptions.getNodeChildDetails; }
+	    GridOptionsWrapper.prototype.getNodeChildDetailsFunc = function () { return this.gridOptions.getNodeChildDetails; };
 	    GridOptionsWrapper.prototype.getGroupRowAggNodesFunc = function () { return this.gridOptions.groupRowAggNodes; };
 	    GridOptionsWrapper.prototype.getContextMenuItemsFunc = function () { return this.gridOptions.getContextMenuItems; };
 	    GridOptionsWrapper.prototype.getMainMenuItemsFunc = function () { return this.gridOptions.getMainMenuItems; };
@@ -957,9 +965,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -1066,9 +1074,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -1128,9 +1136,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -1445,9 +1453,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -2254,7 +2262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!toEscape)
 	            return null;
 	        if (!toEscape.replace)
-	            return null;
+	            return toEscape;
 	        return toEscape.replace(reUnescapedHtml, function (chr) { return HTML_ESCAPES[chr]; });
 	    };
 	    // Taken from here: https://github.com/facebook/fixed-data-table/blob/master/src/vendor_upstream/dom/normalizeWheel.js
@@ -2442,9 +2450,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -2560,9 +2568,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -2716,7 +2724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	ComponentUtil.STRING_PROPERTIES = [
 	    'sortingOrder', 'rowClass', 'rowSelection', 'overlayLoadingTemplate',
 	    'overlayNoRowsTemplate', 'headerCellTemplate', 'quickFilterText', 'rowModelType',
-	    'editType', 'rowDataKeyProperty'
+	    'editType'
 	];
 	ComponentUtil.OBJECT_PROPERTIES = [
 	    'rowStyle', 'context', 'groupColumnDef', 'localeText', 'icons', 'datasource', 'viewportDatasource',
@@ -2755,7 +2763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'dateComponent', 'dateComponentFramework', 'groupRowRenderer', 'groupRowRendererFramework', 'isScrollLag', 'isExternalFilterPresent',
 	    'getRowHeight', 'doesExternalFilterPass', 'getRowClass', 'getRowStyle', 'getHeaderCellTemplate', 'traverseNode',
 	    'getContextMenuItems', 'getMainMenuItems', 'processRowPostCreate', 'processCellForClipboard',
-	    'groupRowAggNodes', 'getRowNodeId', 'isFullWidthCell', 'fullWidthCellRenderer',
+	    'getNodeChildDetails', 'groupRowAggNodes', 'getRowNodeId', 'isFullWidthCell', 'fullWidthCellRenderer',
 	    'fullWidthCellRendererFramework', 'doesDataFlower', 'processSecondaryColDef', 'processSecondaryColGroupDef',
 	    'getBusinessKeyForNode', 'sendToClipboard', 'navigateToNextCell', 'tabToNextCell',
 	    'processCellFromClipboard', 'getDocument'];
@@ -2784,9 +2792,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -2902,9 +2910,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -3006,7 +3014,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    GridApi.prototype.setRowData = function (rowData) {
 	        if (this.gridOptionsWrapper.isRowModelDefault()) {
 	            this.selectionController.reset();
-	            this.inMemoryRowModel.setRowData(rowData);
+	            this.inMemoryRowModel.setRowData(rowData, true);
 	        }
 	        else {
 	            console.log('cannot call setRowData unless using normal row model');
@@ -3614,9 +3622,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -3782,9 +3790,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -4045,9 +4053,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -5869,9 +5877,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -6123,9 +6131,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -6533,9 +6541,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -6690,9 +6698,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -6807,9 +6815,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -6891,9 +6899,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -7092,9 +7100,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -7145,9 +7153,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -7339,9 +7347,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -7478,9 +7486,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -8235,9 +8243,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -9791,9 +9799,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -10004,9 +10012,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -10161,9 +10169,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -10608,9 +10616,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -10643,7 +10651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.logger = loggerFactory.create('SelectionController');
 	        this.reset();
 	        if (this.gridOptionsWrapper.isRowModelDefault()) {
-	            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.rowDataChanged.bind(this));
+	            this.eventService.addEventListener(events_1.Events.EVENT_ROW_DATA_CHANGED, this.reset.bind(this));
 	        }
 	        else {
 	            this.logger.log('dont know what to do here');
@@ -10770,22 +10778,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.logger.log('reset');
 	        this.selectedNodes = {};
 	        this.lastSelectedNode = null;
-	    };
-	    SelectionController.prototype.rowDataChanged = function () {
-	        var _this = this;
-	        // Check selected nodes still present in nodeset, if not, deselect
-	        // them.
-	        var changed = false;
-	        utils_1.Utils.iterateObject(this.selectedNodes, function (key, selectedRow) {
-	            if (!_this.rowModel.isRowPresent(selectedRow)) {
-	                delete _this.selectedNodes[key];
-	                if (_this.lastSelectedNode == selectedRow)
-	                    _this.lastSelectedNode = null;
-	                changed = true;
-	            }
-	        });
-	        if (changed)
-	            this.eventService.dispatchEvent(events_1.Events.EVENT_SELECTION_CHANGED);
 	    };
 	    // returns a list of all nodes at 'best cost' - a feature to be used
 	    // with groups / trees. if a group has all it's children selected,
@@ -10930,9 +10922,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -10958,7 +10950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    ValueService.prototype.init = function () {
 	        this.cellExpressions = this.gridOptionsWrapper.isEnableCellExpressions();
-	        this.userProvidedTheGroups = false; //rx: don't support child grouping etc - _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+	        this.userProvidedTheGroups = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
 	        this.suppressUseColIdForGroups = this.gridOptionsWrapper.isSuppressUseColIdForGroups();
 	        this.initialised = true;
 	    };
@@ -11121,9 +11113,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -11383,9 +11375,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -11636,9 +11628,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -11692,9 +11684,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -11885,9 +11877,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -11925,9 +11917,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -12001,9 +11993,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -12090,9 +12082,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -12161,9 +12153,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -12232,9 +12224,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -12323,9 +12315,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -13341,9 +13333,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -14216,6 +14208,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (animate) {
 	            this.animateCellWithDataChanged();
 	        }
+	        // need to check rules. note, we ignore colDef classes and styles, these are assumed to be static
+	        this.addClassesFromRules();
 	        function doRefresh() {
 	            // if the cell renderer has a refresh method, we call this instead of doing a refresh
 	            // note: should pass in params here instead of value?? so that client has formattedValue
@@ -14223,8 +14217,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var cellRendererParams = that.column.getColDef().cellRendererParams;
 	            var params = that.createRendererAndRefreshParams(valueFormatted, cellRendererParams);
 	            that.cellRenderer.refresh(params);
-	            // need to check rules. note, we ignore colDef classes and styles, these are assumed to be static
-	            that.addClassesFromRules();
 	        }
 	        function doReplace() {
 	            // otherwise we rip out the cell and replace it
@@ -14456,9 +14448,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -14591,9 +14583,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -14939,9 +14931,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -15089,10 +15081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    PaginationController.prototype.pageLoaded = function (rows, lastRowIndex) {
 	        lastRowIndex = utils_1.Utils.cleanNumber(lastRowIndex);
 	        var firstId = this.currentPage * this.pageSize;
-	        // This is broken by the Rx implementation, pagination is 
-	        // NOT supported in this version of ag-Grid-rx.
-	        console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
-	        //this.inMemoryRowModel.setRowData(rows, true, firstId);
+	        this.inMemoryRowModel.setRowData(rows, true, firstId);
 	        // see if we hit the last row
 	        if (!this.foundMaxRow && lastRowIndex >= 0) {
 	            this.foundMaxRow = true;
@@ -15177,8 +15166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // set in an empty set of rows, this will at
 	            // least get rid of the loading panel, and
 	            // stop blocking things
-	            console.error('ag-Grid-rx: Pagination is NOT supported by the Rx fork of ag-grid. Please de-configure it, it will not work correctly.');
-	            // that.inMemoryRowModel.setRowData([], true);
+	            that.inMemoryRowModel.setRowData([], true);
 	        }
 	    };
 	    PaginationController.prototype.isCallDaemon = function (versionCopy) {
@@ -15302,9 +15290,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -15493,9 +15481,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -15974,9 +15962,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -16237,9 +16225,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -16430,9 +16418,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -16668,9 +16656,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -16735,9 +16723,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -16943,9 +16931,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -17209,9 +17197,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -17325,9 +17313,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -17451,9 +17439,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -17753,9 +17741,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -17851,9 +17839,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18060,9 +18048,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18169,9 +18157,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18264,9 +18252,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18333,9 +18321,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18415,9 +18403,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18445,9 +18433,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18475,9 +18463,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18543,9 +18531,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18628,9 +18616,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18717,9 +18705,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -18819,9 +18807,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19160,9 +19148,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19268,9 +19256,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19330,9 +19318,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19460,9 +19448,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19553,9 +19541,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19667,9 +19655,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19686,9 +19674,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19771,9 +19759,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -19838,9 +19826,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -20084,9 +20072,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -20225,9 +20213,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -20377,9 +20365,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -20749,9 +20737,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -20941,9 +20929,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -21345,9 +21333,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -21449,9 +21437,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -21552,9 +21540,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -21615,9 +21603,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -21905,9 +21893,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -22073,9 +22061,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -22264,9 +22252,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -22561,9 +22549,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -22681,9 +22669,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -22989,9 +22977,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23095,9 +23083,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23190,9 +23178,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23234,9 +23222,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23267,9 +23255,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23316,9 +23304,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23416,9 +23404,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23517,9 +23505,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23623,9 +23611,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -23794,9 +23782,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -24067,9 +24055,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -24398,9 +24386,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -24598,9 +24586,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -24634,7 +24622,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 	var InMemoryRowModel = (function () {
 	    function InMemoryRowModel() {
-	        this.rowDataSubscription = null;
 	    }
 	    InMemoryRowModel.prototype.init = function () {
 	        this.eventService.addModalPriorityEventListener(events_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED, this.refreshModel.bind(this, { step: constants_1.Constants.STEP_EVERYTHING }));
@@ -24649,13 +24636,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.nodeManager = new inMemoryNodeManager_1.InMemoryNodeManager(this.rootNode, this.gridOptionsWrapper, this.context, this.eventService);
 	        this.context.wireBean(this.rootNode);
 	        if (this.gridOptionsWrapper.isRowModelDefault()) {
-	            this.setRowData(this.gridOptionsWrapper.getRowData());
+	            this.setRowData(this.gridOptionsWrapper.getRowData(), this.columnController.isReady());
 	        }
-	    };
-	    InMemoryRowModel.prototype.destroy = function () {
-	        // Unsubscribe from any passed-in observable before destruction.
-	        if (this.rowDataSubscription)
-	            this.rowDataSubscription.unsubscribe();
 	    };
 	    InMemoryRowModel.prototype.onRowGroupOpened = function () {
 	        var animate = this.gridOptionsWrapper.isAnimateRows();
@@ -24730,12 +24712,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    InMemoryRowModel.prototype.isEmpty = function () {
 	        var rowsMissing;
-	        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-	        // if (rowsAlreadyGrouped) {
-	        //     rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
-	        // } else {
-	        rowsMissing = utils_1.Utils.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
-	        // }
+	        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+	        if (rowsAlreadyGrouped) {
+	            rowsMissing = utils_1.Utils.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0;
+	        }
+	        else {
+	            rowsMissing = utils_1.Utils.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
+	        }
 	        var empty = utils_1.Utils.missing(this.rootNode) || rowsMissing || !this.columnController.isReady();
 	        return empty;
 	    };
@@ -24901,8 +24884,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    InMemoryRowModel.prototype.doRowGrouping = function (groupState, newRowNodes) {
 	        // grouping is enterprise only, so if service missing, skip the step
-	        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-	        // if (rowsAlreadyGrouped) { return; }
+	        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+	        if (rowsAlreadyGrouped) {
+	            return;
+	        }
 	        if (this.groupStage) {
 	            if (newRowNodes) {
 	                this.groupStage.execute({ rowNode: this.rootNode, newRowNodes: newRowNodes });
@@ -24951,40 +24936,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        utils_1.Utils.traverseNodesWithKey(this.rootNode.childrenAfterGroup, function (node, key) { return result[key] = node.expanded; });
 	        return result;
 	    };
-	    InMemoryRowModel.prototype.setRowData = function (rowData) {
-	        var _this = this;
-	        // If we're already subscribed to an observable, unsubscribe.
-	        if (this.rowDataSubscription)
-	            this.rowDataSubscription.unsubscribe();
-	        // Start with an empty data set for our new observable.
-	        this.updateRowData([]);
-	        // If we've been handed a null observable, nothing more to do. 
-	        if (!rowData)
-	            return;
-	        // Subcribe to our new rowData source.
-	        this.rowDataSubscription = rowData.subscribe(function (newData) {
-	            _this.updateRowData(newData);
-	        });
-	    };
-	    InMemoryRowModel.prototype.updateRowData = function (newData) {
-	        // When the data observable provides new data, handle it in a similar way to
-	        // how setRowData used to work, but use updateRowData on the nodeManager instead
-	        // of setRowData, and telling anything waiting for data updates that it's cool
-	        // to keep rendered rows, as we're trying to keep the same row nodes in place
-	        // wherever possible.
+	    // rows: the rows to put into the model
+	    // firstId: the first id to use, used for paging, where we are not on the first page
+	    InMemoryRowModel.prototype.setRowData = function (rowData, refresh, firstId) {
 	        // remember group state, so we can expand groups that should be expanded
 	        var groupState = this.getGroupState();
-	        this.nodeManager.updateRowData(newData);
-	        // Refresh the model, provided the column controller is ready.
-	        if (this.columnController.isReady()) {
-	            // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
-	            // the same set of nodes wherever possible.
-	            this.refreshModel({ step: constants_1.Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true });
-	        }
-	        // - update selection
-	        // - update filters
+	        this.nodeManager.setRowData(rowData, firstId);
+	        // this event kicks off:
+	        // - clears selection
+	        // - updates filters
 	        // - shows 'no rows' overlay if needed
 	        this.eventService.dispatchEvent(events_1.Events.EVENT_ROW_DATA_CHANGED);
+	        if (refresh) {
+	            this.refreshModel({ step: constants_1.Constants.STEP_EVERYTHING, groupState: groupState });
+	        }
 	    };
 	    InMemoryRowModel.prototype.doRowsToDisplay = function () {
 	        this.rowsToDisplay = this.flattenStage.execute({ rowNode: this.rootNode });
@@ -25088,12 +25053,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __metadata("design:paramtypes", []),
 	    __metadata("design:returntype", void 0)
 	], InMemoryRowModel.prototype, "init", null);
-	__decorate([
-	    context_1.PreDestroy,
-	    __metadata("design:type", Function),
-	    __metadata("design:paramtypes", []),
-	    __metadata("design:returntype", void 0)
-	], InMemoryRowModel.prototype, "destroy", null);
 	InMemoryRowModel = __decorate([
 	    context_1.Bean('rowModel')
 	], InMemoryRowModel);
@@ -25105,9 +25064,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25115,9 +25074,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var utils_1 = __webpack_require__(7);
 	var InMemoryNodeManager = (function () {
 	    function InMemoryNodeManager(rootNode, gridOptionsWrapper, context, eventService) {
-	        // Keep an index of existing nodes, so we can find them rapidly when
-	        // data updates come in.
-	        this.nodeIndex = {};
 	        this.nextId = 0;
 	        this.rootNode = rootNode;
 	        this.gridOptionsWrapper = gridOptionsWrapper;
@@ -25130,98 +25086,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.rootNode.childrenAfterSort = [];
 	        this.rootNode.childrenAfterFilter = [];
 	    }
-	    InMemoryNodeManager.prototype.updateRowData = function (rowData) {
-	        // This is intended to be called for observable data updates, where the data 
-	        // supplied is likely to be similar to the data we already have. Therefore,
-	        // it attempts to keep, wherever possible, the exsiting RowNodes, rather than
-	        // binning the whole lot and starting again.
-	        var _this = this;
-	        // Clear out the grouped / filtered / sorted views of the data, no simple way
-	        // to keep those.
+	    InMemoryNodeManager.prototype.setRowData = function (rowData, firstId) {
 	        this.rootNode.childrenAfterFilter = null;
 	        this.rootNode.childrenAfterGroup = null;
 	        this.rootNode.childrenAfterSort = null;
 	        this.rootNode.childrenMapped = null;
-	        // We never reset nextId in here, so it should always strictly ascend as 
-	        // rownodes are created by createNode (unless we've got empty data, in 
-	        // which case we'll reset to zero).
-	        // this.nextId = 0;
-	        // If we have no rowData, reset everything.
-	        if (!rowData || rowData.length == 0) {
+	        this.nextId = utils_1.Utils.exists(firstId) ? firstId : 0;
+	        if (!rowData) {
 	            this.rootNode.allLeafChildren = [];
 	            this.rootNode.childrenAfterGroup = [];
-	            this.nextId = 0;
 	            return;
 	        }
-	        var dataKeyProperty = this.gridOptionsWrapper.getRowDataKeyProperty();
-	        if (!utils_1.Utils.exists(dataKeyProperty)) {
-	            console.error('ag-Grid-rx: rowDataKeyProperty must be specified in the options for ag-grid-rx.');
-	            return;
+	        // func below doesn't have 'this' pointer, so need to pull out these bits
+	        this.getNodeChildDetails = this.gridOptionsWrapper.getNodeChildDetailsFunc();
+	        this.suppressParentsInRowNodes = this.gridOptionsWrapper.isSuppressParentsInRowNodes();
+	        this.doesDataFlower = this.gridOptionsWrapper.getDoesDataFlowerFunc();
+	        var rowsAlreadyGrouped = utils_1.Utils.exists(this.getNodeChildDetails);
+	        // kick off recursion
+	        var result = this.recursiveFunction(rowData, null, InMemoryNodeManager.TOP_LEVEL);
+	        if (rowsAlreadyGrouped) {
+	            this.rootNode.childrenAfterGroup = result;
+	            this.setLeafChildren(this.rootNode);
 	        }
-	        // Create a list of all keys in the index, we'll remove whatever is left
-	        // in this array after looping around our new data.
-	        var keysToRemove = Object.keys(this.nodeIndex);
-	        // Rebuild allLeafChildren using nodes from our index whenever we can.
-	        this.rootNode.allLeafChildren.length = 0;
-	        rowData.forEach(function (dataItem) {
-	            var node = null;
-	            // If we've been given an item that doesn't have the required key property, 
-	            // log an error and disregard the item.
-	            if (!dataItem.hasOwnProperty(dataKeyProperty)) {
-	                console.error('ag-Grid-rx: every item of data passed to ag-grid-rx must have a property named the same as the rowDataKeyProperty option.');
-	                return;
-	            }
-	            var key = dataItem[dataKeyProperty];
-	            // Check for existing node.
-	            var indexEntry = _this.nodeIndex[key];
-	            if (indexEntry) {
-	                // We have an existing node, start with that.
-	                node = indexEntry.node;
-	                // Don't want to remove this entry from the index.
-	                keysToRemove.splice(keysToRemove.indexOf(key), 1);
-	                // If the data object has changed, re-set the data on the node.
-	                // This assumes that the objects are being passed are immutable,
-	                // so we can avoid updating the data if the object is the same
-	                // object we had previously. This will only be true if the 
-	                // end user is using NgRx, Redux, being careful, or getting a 
-	                // passing a full new set of data every time!
-	                if (indexEntry.data != dataItem) {
-	                    node.setData(dataItem);
-	                    _this.nodeIndex[key].data = dataItem;
-	                }
-	            }
-	            else {
-	                // No index entry, so create a new node and add it to the index.
-	                node = _this.createNode(dataItem, InMemoryNodeManager.TOP_LEVEL);
-	                _this.nodeIndex[key] = {
-	                    data: dataItem,
-	                    node: node
-	                };
-	            }
-	            _this.rootNode.allLeafChildren.push(node);
-	        });
-	        // Tidy up our index with any removed items.
-	        keysToRemove.forEach(function (keyToRemove) {
-	            delete _this.nodeIndex[keyToRemove];
-	        });
-	        // As we're no longer doing grouping, just set rows after grouping equal
-	        // to our updated child leaf set.
-	        this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
+	        else {
+	            this.rootNode.allLeafChildren = result;
+	        }
 	    };
-	    // private correctPositionIfNeeded(node: RowNode, key: any, desiredPosition: number) {
-	    //     if (this.nodeIndex[key].ind != desiredPosition) {
-	    //         _.removeFromArray(this.rootNode.allLeafChildren, node);
-	    //         _.insertIntoArray(this.rootNode.allLeafChildren, node, desiredPosition);
-	    //         this.nodeIndex[key].ind = desiredPosition;
-	    //     }
-	    // }
-	    InMemoryNodeManager.prototype.createNode = function (dataItem, level) {
+	    InMemoryNodeManager.prototype.recursiveFunction = function (rowData, parent, level) {
+	        var _this = this;
+	        // make sure the rowData is an array and not a string of json - this was a commonly reported problem on the forum
+	        if (typeof rowData === 'string') {
+	            console.warn('ag-Grid: rowData must be an array, however you passed in a string. If you are loading JSON, make sure you convert the JSON string to JavaScript objects first');
+	            return;
+	        }
+	        var rowNodes = [];
+	        rowData.forEach(function (dataItem) {
+	            var node = _this.createNode(dataItem, parent, level);
+	            var nodeChildDetails = _this.getNodeChildDetails ? _this.getNodeChildDetails(dataItem) : null;
+	            if (nodeChildDetails && nodeChildDetails.group) {
+	                node.group = true;
+	                node.childrenAfterGroup = _this.recursiveFunction(nodeChildDetails.children, node, level + 1);
+	                node.expanded = nodeChildDetails.expanded === true;
+	                node.field = nodeChildDetails.field;
+	                node.key = nodeChildDetails.key;
+	                // pull out all the leaf children and add to our node
+	                _this.setLeafChildren(node);
+	            }
+	            rowNodes.push(node);
+	        });
+	        return rowNodes;
+	    };
+	    InMemoryNodeManager.prototype.createNode = function (dataItem, parent, level) {
 	        var node = new rowNode_1.RowNode();
 	        this.context.wireBean(node);
+	        var nodeChildDetails = this.getNodeChildDetails ? this.getNodeChildDetails(dataItem) : null;
+	        if (nodeChildDetails && nodeChildDetails.group) {
+	            node.group = true;
+	            node.childrenAfterGroup = this.recursiveFunction(nodeChildDetails.children, node, level + 1);
+	            node.expanded = nodeChildDetails.expanded === true;
+	            node.field = nodeChildDetails.field;
+	            node.key = nodeChildDetails.key;
+	            node.canFlower = false;
+	            // pull out all the leaf children and add to our node
+	            this.setLeafChildren(node);
+	        }
+	        else {
+	            node.group = false;
+	            node.canFlower = this.doesDataFlower ? this.doesDataFlower(dataItem) : false;
+	            if (node.canFlower) {
+	                node.expanded = this.isExpanded(level);
+	            }
+	        }
+	        if (parent && !this.suppressParentsInRowNodes) {
+	            node.parent = parent;
+	        }
 	        node.level = level;
 	        node.setDataAndId(dataItem, this.nextId.toString());
 	        this.nextId++;
 	        return node;
+	    };
+	    InMemoryNodeManager.prototype.isExpanded = function (level) {
+	        var expandByDefault = this.gridOptionsWrapper.getGroupDefaultExpanded();
+	        if (expandByDefault === -1) {
+	            return true;
+	        }
+	        else {
+	            return level < expandByDefault;
+	        }
+	    };
+	    InMemoryNodeManager.prototype.setLeafChildren = function (node) {
+	        node.allLeafChildren = [];
+	        if (node.childrenAfterGroup) {
+	            node.childrenAfterGroup.forEach(function (childAfterGroup) {
+	                if (childAfterGroup.group) {
+	                    if (childAfterGroup.allLeafChildren) {
+	                        childAfterGroup.allLeafChildren.forEach(function (leafChild) { return node.allLeafChildren.push(leafChild); });
+	                    }
+	                }
+	                else {
+	                    node.allLeafChildren.push(childAfterGroup);
+	                }
+	            });
+	        }
 	    };
 	    InMemoryNodeManager.prototype.insertItemsAtIndex = function (index, rowData) {
 	        if (this.isRowsAlreadyGrouped()) {
@@ -25236,7 +25202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // go through the items backwards, otherwise they get added in reverse order
 	        for (var i = rowData.length - 1; i >= 0; i--) {
 	            var data = rowData[i];
-	            var newNode = this.createNode(data, InMemoryNodeManager.TOP_LEVEL);
+	            var newNode = this.createNode(data, null, InMemoryNodeManager.TOP_LEVEL);
 	            utils_1.Utils.insertIntoArray(nodeList, newNode, index);
 	            newNodes.push(newNode);
 	        }
@@ -25263,14 +25229,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.insertItemsAtIndex(nodeList.length, items);
 	    };
 	    InMemoryNodeManager.prototype.isRowsAlreadyGrouped = function () {
-	        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-	        // if (rowsAlreadyGrouped) {
-	        //     console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
-	        //         'supported if providing groups');
-	        //     return true;
-	        // } else {
-	        return false;
-	        // }
+	        var rowsAlreadyGrouped = utils_1.Utils.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
+	        if (rowsAlreadyGrouped) {
+	            console.warn('ag-Grid: adding and removing rows is not supported when using nodeChildDetailsFunc, ie it is not ' +
+	                'supported if providing groups');
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
 	    };
 	    return InMemoryNodeManager;
 	}());
@@ -25283,9 +25250,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25330,9 +25297,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25403,9 +25370,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25449,9 +25416,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25567,9 +25534,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";
@@ -25671,9 +25638,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.0.3
-	 * @link https://github.com/mrsheepuk/ag-grid-rx
+	 * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+	 * @version v8.1.1
+	 * @link http://www.ag-grid.com/
 	 * @license MIT
 	 */
 	"use strict";

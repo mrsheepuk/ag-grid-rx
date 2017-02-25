@@ -11,13 +11,13 @@ import {Events, ModelUpdatedEvent} from "../../events";
 import {Bean, Context, Autowired, PostConstruct, Optional, PreDestroy} from "../../context/context";
 import {SelectionController} from "../../selectionController";
 import {IRowNodeStage} from "../../interfaces/iRowNodeStage";
-import {IInMemoryRowModel} from "../../interfaces/iInMemoryRowModel";
-import {InMemoryNodeManager} from "./inMemoryNodeManager";
+import {IObservableInMemoryRowModel} from "../../interfaces/iObservableInMemoryRowModel";
+import {ObservableInMemoryNodeManager} from "./observableInMemoryNodeManager";
 
 enum RecursionType {Normal, AfterFilter, AfterFilterAndSort, PivotNodes};
 
 @Bean('rowModel')
-export class InMemoryRowModel implements IInMemoryRowModel {
+export class ObservableInMemoryRowModel implements IObservableInMemoryRowModel {
 
     @Autowired('gridOptionsWrapper') private gridOptionsWrapper: GridOptionsWrapper;
     @Autowired('columnController') private columnController: ColumnController;
@@ -32,17 +32,14 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     @Autowired('sortStage') private sortStage: IRowNodeStage;
     @Autowired('flattenStage') private flattenStage: IRowNodeStage;
 
-    // enterprise stages
-    @Optional('groupStage') private groupStage: IRowNodeStage;
-    @Optional('aggregationStage') private aggregationStage: IRowNodeStage;
-    @Optional('pivotStage') private pivotStage: IRowNodeStage;
-
     // top most node of the tree. the children are the user provided data.
     private rootNode: RowNode;
 
     private rowsToDisplay: RowNode[]; // the rows mapped to rows to display
 
-    private nodeManager: InMemoryNodeManager;
+    private nodeManager: ObservableInMemoryNodeManager;
+
+    private rowDataSubscription: Subscription = null;
 
     @PostConstruct
     public init(): void {
@@ -52,18 +49,17 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_VALUE_CHANGED, this.onValueChanged.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_PIVOT_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_PIVOT} ));
 
-        this.eventService.addModalPriorityEventListener(Events.EVENT_ROW_GROUP_OPENED, this.onRowGroupOpened.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_FILTER_CHANGED, this.onFilterChanged.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_SORT_CHANGED, this.onSortChanged.bind(this));
         this.eventService.addModalPriorityEventListener(Events.EVENT_COLUMN_PIVOT_MODE_CHANGED, this.refreshModel.bind(this, {step: Constants.STEP_PIVOT} ));
 
         this.rootNode = new RowNode();
-        this.nodeManager = new InMemoryNodeManager(this.rootNode, this.gridOptionsWrapper, this.context, this.eventService);
+        this.nodeManager = new ObservableInMemoryNodeManager(this.rootNode, this.gridOptionsWrapper, this.context, this.eventService);
 
         this.context.wireBean(this.rootNode);
 
-        if (this.gridOptionsWrapper.isRowModelDefault()) {
-            this.setRowData(this.gridOptionsWrapper.getRowData());
+        if (this.gridOptionsWrapper.isRowModelObservable()) {
+            this.setRowDataSource(this.gridOptionsWrapper.getRowDataSource());
         }
     }
 
@@ -71,11 +67,6 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     public destroy(): void {
         // Unsubscribe from any passed-in observable before destruction.
         if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
-    }
-
-    private onRowGroupOpened(): void {
-        let animate = this.gridOptionsWrapper.isAnimateRows();
-        this.refreshModel({step: Constants.STEP_MAP, keepRenderedRows: true, animate: animate});
     }
 
     private onFilterChanged(): void {
@@ -116,31 +107,16 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         // eg if STEP_FILTER, then all steps below this
         // step get done
         // var start: number;
-        // console.log('======= start =======');
 
         switch (params.step) {
             case constants.STEP_EVERYTHING:
-                // start = new Date().getTime();
-                this.doRowGrouping(params.groupState, params.newRowNodes);
-                // console.log('rowGrouping = ' + (new Date().getTime() - start));
+                this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
             case constants.STEP_FILTER:
-                // start = new Date().getTime();
                 this.doFilter();
-                // console.log('filter = ' + (new Date().getTime() - start));
-            case constants.STEP_PIVOT:
-                this.doPivot();
-            case constants.STEP_AGGREGATE: // depends on agg fields
-                // start = new Date().getTime();
-                this.doAggregate();
-                // console.log('aggregation = ' + (new Date().getTime() - start));
             case constants.STEP_SORT:
-                // start = new Date().getTime();
                 this.doSort();
-                // console.log('sort = ' + (new Date().getTime() - start));
             case constants.STEP_MAP:
-                // start = new Date().getTime();
                 this.doRowsToDisplay();
-                // console.log('rowsToDisplay = ' + (new Date().getTime() - start));
         }
 
         let event: ModelUpdatedEvent = {animate: params.animate, keepRenderedRows: params.keepRenderedRows};
@@ -155,13 +131,7 @@ export class InMemoryRowModel implements IInMemoryRowModel {
 
     public isEmpty(): boolean {
         var rowsMissing: boolean;
-
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) {
-        //     rowsMissing = _.missing(this.rootNode.childrenAfterGroup) || this.rootNode.childrenAfterGroup.length === 0
-        // } else {
-            rowsMissing = _.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
-        // }
+        rowsMissing = _.missing(this.rootNode.allLeafChildren) || this.rootNode.allLeafChildren.length === 0;
 
         var empty = _.missing(this.rootNode) || rowsMissing  || !this.columnController.isReady();
 
@@ -173,7 +143,7 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     }
 
     public setDatasource(datasource: any): void {
-        console.error('ag-Grid: should never call setDatasource on inMemoryRowController');
+        console.error('ag-Grid-rx: should never call setDatasource on observableInMemoryRowController');
     }
 
     public getTopLevelNodes() {
@@ -257,153 +227,22 @@ export class InMemoryRowModel implements IInMemoryRowModel {
             return 0;
         }
     }
-
-    public forEachLeafNode(callback: Function): void {
+    
+    public forEachNode(callback: Function): void {
         if (this.rootNode.allLeafChildren) {
             this.rootNode.allLeafChildren.forEach( (rowNode, index) => callback(rowNode, index) );
         }
-    }
-    
-    public forEachNode(callback: Function): void {
-        this.recursivelyWalkNodesAndCallback(this.rootNode.childrenAfterGroup, callback, RecursionType.Normal, 0);
-    }
-
-    public forEachNodeAfterFilter(callback: Function): void {
-        this.recursivelyWalkNodesAndCallback(this.rootNode.childrenAfterFilter, callback, RecursionType.AfterFilter, 0);
-    }
-
-    public forEachNodeAfterFilterAndSort(callback: Function): void {
-        this.recursivelyWalkNodesAndCallback(this.rootNode.childrenAfterSort, callback, RecursionType.AfterFilterAndSort, 0);
-    }
-
-    public forEachPivotNode(callback: Function): void {
-        this.recursivelyWalkNodesAndCallback([this.rootNode], callback, RecursionType.PivotNodes, 0);
-    }
-
-    // iterates through each item in memory, and calls the callback function
-    // nodes - the rowNodes to traverse
-    // callback - the user provided callback
-    // recursion type - need this to know what child nodes to recurse, eg if looking at all nodes, or filtered notes etc
-    // index - works similar to the index in forEach in javascripts array function
-    private recursivelyWalkNodesAndCallback(nodes: RowNode[], callback: Function, recursionType: RecursionType, index: number) {
-        if (nodes) {
-            for (var i = 0; i < nodes.length; i++) {
-                var node = nodes[i];
-                callback(node, index++);
-                // go to the next level if it is a group
-                if (node.group) {
-                    // depending on the recursion type, we pick a difference set of children
-                    var nodeChildren: RowNode[];
-                    switch (recursionType) {
-                        case RecursionType.Normal : nodeChildren = node.childrenAfterGroup; break;
-                        case RecursionType.AfterFilter : nodeChildren = node.childrenAfterFilter; break;
-                        case RecursionType.AfterFilterAndSort : nodeChildren = node.childrenAfterSort; break;
-                        case RecursionType.PivotNodes :
-                            // for pivot, we don't go below leafGroup levels
-                            nodeChildren = !node.leafGroup ? node.childrenAfterSort : null; break;
-                    }
-                    if (nodeChildren) {
-                        index = this.recursivelyWalkNodesAndCallback(nodeChildren, callback, recursionType, index);
-                    }
-                }
-            }
-        }
-        return index;
-    }
-
-    // it's possible to recompute the aggregate without doing the other parts
-    // + gridApi.recomputeAggregates()
-    public doAggregate() {
-        if (this.aggregationStage) {
-            this.aggregationStage.execute({rowNode: this.rootNode});
-        }
-    }
-
-    // + gridApi.expandAll()
-    // + gridApi.collapseAll()
-    public expandOrCollapseAll(expand: boolean): void {
-
-        if (this.rootNode){
-            recursiveExpandOrCollapse(this.rootNode.childrenAfterGroup);
-        }
-
-        function recursiveExpandOrCollapse(rowNodes: RowNode[]): void {
-            if (!rowNodes) { return; }
-            rowNodes.forEach( (rowNode: RowNode) => {
-                if (rowNode.group) {
-                    rowNode.expanded = expand;
-                    recursiveExpandOrCollapse(rowNode.childrenAfterGroup);
-                }
-            });
-        }
-        this.refreshModel({step: Constants.STEP_MAP});
     }
 
     private doSort() {
         this.sortStage.execute({rowNode: this.rootNode});
     }
 
-    private doRowGrouping(groupState: any, newRowNodes: RowNode[]) {
-
-        // grouping is enterprise only, so if service missing, skip the step
-        // var rowsAlreadyGrouped = _.exists(this.gridOptionsWrapper.getNodeChildDetailsFunc());
-        // if (rowsAlreadyGrouped) { return; }
-
-        if (this.groupStage) {
-
-            if (newRowNodes) {
-                this.groupStage.execute({rowNode: this.rootNode, newRowNodes: newRowNodes});
-            } else {
-                // groups are about to get disposed, so need to deselect any that are selected
-                this.selectionController.removeGroupsFromSelection();
-                this.groupStage.execute({rowNode: this.rootNode});
-                // set open/closed state on groups
-                this.restoreGroupState(groupState);
-            }
-
-            if (this.gridOptionsWrapper.isGroupSelectsChildren()) {
-                this.selectionController.updateGroupsFromChildrenSelections();
-            }
-
-        } else {
-            this.rootNode.childrenAfterGroup = this.rootNode.allLeafChildren;
-        }
-    }
-
-    private restoreGroupState(groupState: any): void {
-        if (!groupState) { return; }
-
-        _.traverseNodesWithKey(this.rootNode.childrenAfterGroup, (node: RowNode, key: string)=> {
-            // if the group was open last time, then open it this time. however
-            // if was not open last time, then don't touch the group, so the 'groupDefaultExpanded'
-            // setting will take effect.
-            if (typeof groupState[key] === 'boolean') {
-                node.expanded = groupState[key];
-            }
-        });
-    }
-
     private doFilter() {
         this.filterStage.execute({rowNode: this.rootNode});
     }
 
-    private doPivot() {
-        if (this.pivotStage) {
-            this.pivotStage.execute({rowNode: this.rootNode});
-        }
-    }
-
-    private getGroupState(): any {
-        if (!this.rootNode.childrenAfterGroup || !this.gridOptionsWrapper.isRememberGroupStateWhenNewData()) {
-            return null;
-        }
-        var result: any = {};
-        _.traverseNodesWithKey(this.rootNode.childrenAfterGroup, (node: RowNode, key: string)=> result[key] = node.expanded );
-        return result;
-    }
-
-    private rowDataSubscription: Subscription = null;
-    public setRowData(rowData: Observable<any[]>) {
+    public setRowDataSource(rowData: Observable<any[]>) {
         // If we're already subscribed to an observable, unsubscribe.
         if (this.rowDataSubscription) this.rowDataSubscription.unsubscribe();
 
@@ -426,16 +265,13 @@ export class InMemoryRowModel implements IInMemoryRowModel {
         // to keep rendered rows, as we're trying to keep the same row nodes in place
         // wherever possible.
 
-        // remember group state, so we can expand groups that should be expanded
-        var groupState = this.getGroupState();
-
         this.nodeManager.updateRowData(newData);
 
         // Refresh the model, provided the column controller is ready.
         if (this.columnController.isReady()) {
             // Tell downstream that it is OK to keep rendered rows, as we've tried to maintain
             // the same set of nodes wherever possible.
-            this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, keepRenderedRows: true});
+            this.refreshModel({step: Constants.STEP_EVERYTHING, keepRenderedRows: true});
         }
 
         // - update selection
@@ -449,12 +285,7 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     }
 
     public insertItemsAtIndex(index: number, items: any[], skipRefresh: boolean): void {
-        // remember group state, so we can expand groups that should be expanded
-        var groupState = this.getGroupState();
-        var newNodes = this.nodeManager.insertItemsAtIndex(index, items);
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_ADDED, newNodes, groupState);
-        }
+        console.error('ag-Grid-rx: insertItemsAtIndex not supported by observableInMemoryRowController');
     }
 
     public onRowHeightChanged(): void {
@@ -467,32 +298,11 @@ export class InMemoryRowModel implements IInMemoryRowModel {
     }
 
     public removeItems(rowNodes: RowNode[], skipRefresh: boolean): void {
-        var groupState = this.getGroupState();
-        var removedNodes = this.nodeManager.removeItems(rowNodes);
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_REMOVED, removedNodes, groupState);
-        }
+        console.error('ag-Grid-rx: removeItems not supported by observableInMemoryRowController');
     }
 
     public addItems(items: any[], skipRefresh: boolean): void {
-        var groupState = this.getGroupState();
-        var newNodes = this.nodeManager.addItems(items);
-
-        if (!skipRefresh) {
-            this.refreshAndFireEvent(Events.EVENT_ITEMS_ADDED, newNodes, groupState);
-        }
-
-        // if (newNodes) {
-        //     this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState, newRowNodes: newNodes});
-        //     this.eventService.dispatchEvent(Events.EVENT_ITEMS_ADDED, {rowNodes: newNodes})
-        // }
-    }
-
-    private refreshAndFireEvent(eventName: string, rowNodes: RowNode[], groupState: any): void {
-        if (rowNodes) {
-            this.refreshModel({step: Constants.STEP_EVERYTHING, groupState: groupState});
-            this.eventService.dispatchEvent(eventName, {rowNodes: rowNodes})
-        }
+        console.error('ag-Grid-rx: addItems not supported by observableInMemoryRowController');
     }
 
 }
