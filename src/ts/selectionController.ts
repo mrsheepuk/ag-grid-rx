@@ -34,6 +34,8 @@ export class SelectionController {
         this.reset();
 
         if (this.gridOptionsWrapper.isRowModelDefault()) {
+            this.eventService.addEventListener(Events.EVENT_ROW_DATA_CHANGED, this.reset.bind(this));
+        } else if (this.gridOptionsWrapper.isRowModelObservable()) {
             this.eventService.addEventListener(Events.EVENT_ROW_DATA_CHANGED, this.rowDataChanged.bind(this));
         } else {
             this.logger.log('dont know what to do here');
