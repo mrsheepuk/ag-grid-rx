@@ -60,6 +60,7 @@ export class ObservableInMemoryNodeManager {
             this.rootNode.allLeafChildren = [];
             this.rootNode.childrenAfterGroup = [];
             this.nextId = 0;
+            this.nodeIndex = {};
             return;
         }
 
@@ -139,53 +140,4 @@ export class ObservableInMemoryNodeManager {
 
         return node;
     }
-
-    // public insertItemsAtIndex(index: number, rowData: any[]): RowNode[] {
-    //     if (this.isRowsAlreadyGrouped()) { return null; }
-
-    //     var nodeList = this.rootNode.allLeafChildren;
-
-    //     if (index > nodeList.length) {
-    //         console.warn(`ag-Grid: invalid index ${index}, max index is ${nodeList.length}`);
-    //         return;
-    //     }
-
-    //     var newNodes: RowNode[] = [];
-    //     // go through the items backwards, otherwise they get added in reverse order
-    //     for (let i = rowData.length - 1; i >= 0; i--) {
-    //         let data = rowData[i];
-    //         let newNode = this.createNode(data);
-    //         _.insertIntoArray(nodeList, newNode, index);
-    //         newNodes.push(newNode);
-    //     }
-
-    //     return newNodes.length > 0 ? newNodes : null;
-    // }
-
-    // public removeItems(rowNodes: RowNode[]): RowNode[] {
-    //     if (this.isRowsAlreadyGrouped()) { return; }
-
-    //     var nodeList = this.rootNode.allLeafChildren;
-
-    //     var removedNodes: RowNode[] = [];
-    //     rowNodes.forEach( rowNode => {
-    //         var indexOfNode = nodeList.indexOf(rowNode);
-    //         if (indexOfNode>=0) {
-    //             rowNode.setSelected(false);
-    //             nodeList.splice(indexOfNode, 1);
-    //         }
-    //         removedNodes.push(rowNode);
-    //     });
-
-    //     return removedNodes.length > 0 ? removedNodes : null;
-    // }
-
-    // public addItems(items: any): RowNode[] {
-    //     var nodeList = this.rootNode.allLeafChildren;
-    //     return this.insertItemsAtIndex(nodeList.length, items);
-    // }
-
-    // public isRowsAlreadyGrouped(): boolean {
-    //     return false;
-    // }
 }
