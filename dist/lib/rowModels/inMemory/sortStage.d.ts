@@ -1,4 +1,4 @@
-// Type definitions for ag-grid-rx v8.1.1
+// Type definitions for ag-grid-rx v8.1.1-3
 // Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { StageExecuteParams } from "../../interfaces/iRowNodeStage";

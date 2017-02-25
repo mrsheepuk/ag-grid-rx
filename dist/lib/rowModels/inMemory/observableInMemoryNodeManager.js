@@ -1,6 +1,6 @@
 /**
  * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
- * @version v8.1.1
+ * @version v8.1.1-3
  * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
@@ -45,6 +45,7 @@ var ObservableInMemoryNodeManager = (function () {
             this.rootNode.allLeafChildren = [];
             this.rootNode.childrenAfterGroup = [];
             this.nextId = 0;
+            this.nodeIndex = {};
             return;
         }
         var dataKeyProperty = this.gridOptionsWrapper.getRowDataSourceKeyProperty();
