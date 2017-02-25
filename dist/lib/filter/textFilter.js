@@ -1,10 +1,15 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -15,27 +20,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var utils_1 = require("../utils");
-var context_1 = require("../context/context");
-var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var TextFilter = (function () {
+var baseFilter_1 = require("./baseFilter");
+var componentAnnotations_1 = require("../widgets/componentAnnotations");
+var TextFilter = (function (_super) {
+    __extends(TextFilter, _super);
     function TextFilter() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    TextFilter.prototype.init = function (params) {
-        this.filterParams = params;
-        this.applyActive = params.apply === true;
-        this.newRowsActionKeep = params.newRowsAction === 'keep';
-        this.filterText = null;
-        this.filterType = TextFilter.CONTAINS;
-        this.createGui();
+    TextFilter.prototype.getApplicableFilterTypes = function () {
+        return [baseFilter_1.BaseFilter.EQUALS, baseFilter_1.BaseFilter.NOT_EQUAL, baseFilter_1.BaseFilter.STARTS_WITH, baseFilter_1.BaseFilter.ENDS_WITH,
+            baseFilter_1.BaseFilter.CONTAINS, baseFilter_1.BaseFilter.NOT_CONTAINS];
     };
-    TextFilter.prototype.onNewRowsLoaded = function () {
-        if (!this.newRowsActionKeep) {
-            this.setType(TextFilter.CONTAINS);
-            this.setFilter(null);
-        }
+    TextFilter.prototype.bodyTemplate = function () {
+        var translate = this.translate.bind(this);
+        return "<div class=\"ag-filter-body\">\n            <input class=\"ag-filter-filter\" id=\"filterText\" type=\"text\" placeholder=\"" + translate('filterOoo', 'Filter...') + "\"/>\n        </div>";
     };
+    TextFilter.prototype.initialiseFilterBodyUi = function () {
+        this.addDestroyableEventListener(this.eFilterTextField, 'input', this.onFilterTextFieldChanged.bind(this));
+        this.setType(baseFilter_1.BaseFilter.CONTAINS);
+    };
+    TextFilter.prototype.refreshFilterBodyUi = function () { };
     TextFilter.prototype.afterGuiAttached = function () {
         this.eFilterTextField.focus();
+    };
+    TextFilter.prototype.filterValues = function () {
+        return this.filterText;
     };
     TextFilter.prototype.doesFilterPass = function (params) {
         if (!this.filterText) {
@@ -43,7 +52,7 @@ var TextFilter = (function () {
         }
         var value = this.filterParams.valueGetter(params.node);
         if (!value) {
-            if (this.filterType === TextFilter.NOT_EQUALS) {
+            if (this.filter === baseFilter_1.BaseFilter.NOT_EQUAL) {
                 // if there is no value, but the filter type was 'not equals',
                 // then it should pass, as a missing value is not equal whatever
                 // the user is filtering on
@@ -57,14 +66,14 @@ var TextFilter = (function () {
         }
         var filterTextLoweCase = this.filterText.toLowerCase();
         var valueLowerCase = value.toString().toLowerCase();
-        switch (this.filterType) {
+        switch (this.filter) {
             case TextFilter.CONTAINS:
                 return valueLowerCase.indexOf(filterTextLoweCase) >= 0;
             case TextFilter.NOT_CONTAINS:
                 return valueLowerCase.indexOf(filterTextLoweCase) === -1;
             case TextFilter.EQUALS:
                 return valueLowerCase === filterTextLoweCase;
-            case TextFilter.NOT_EQUALS:
+            case TextFilter.NOT_EQUAL:
                 return valueLowerCase != filterTextLoweCase;
             case TextFilter.STARTS_WITH:
                 return valueLowerCase.indexOf(filterTextLoweCase) === 0;
@@ -73,45 +82,11 @@ var TextFilter = (function () {
                 return index >= 0 && index === (valueLowerCase.length - filterTextLoweCase.length);
             default:
                 // should never happen
-                console.warn('invalid filter type ' + this.filterType);
+                console.warn('invalid filter type ' + this.filter);
                 return false;
         }
     };
-    TextFilter.prototype.getGui = function () {
-        return this.eGui;
-    };
-    TextFilter.prototype.isFilterActive = function () {
-        return this.filterText !== null;
-    };
-    TextFilter.prototype.createTemplate = function () {
-        var translate = this.gridOptionsWrapper.getLocaleTextFunc();
-        return "<div>\n                    <div>\n                        <select class=\"ag-filter-select\" id=\"filterType\">\n                        <option value=\"" + TextFilter.CONTAINS + "\">" + translate('contains', 'Contains') + "</option>\n                        <option value=\"" + TextFilter.NOT_CONTAINS + "\">" + translate('notContains', 'Not contains') + "</option>\n                        <option value=\"" + TextFilter.EQUALS + "\">" + translate('equals', 'Equals') + "</option>\n                        <option value=\"" + TextFilter.NOT_EQUALS + "\">" + translate('notEquals', 'Not equals') + "</option>\n                        <option value=\"" + TextFilter.STARTS_WITH + "\">" + translate('startsWith', 'Starts with') + "</option>\n                        <option value=\"" + TextFilter.ENDS_WITH + "\">" + translate('endsWith', 'Ends with') + "</option>\n                        </select>\n                    </div>\n                    <div>\n                        <input class=\"ag-filter-filter\" id=\"filterText\" type=\"text\" placeholder=\"" + translate('filterOoo', 'Filter...') + "\"/>\n                    </div>\n                    <div class=\"ag-filter-apply-panel\" id=\"applyPanel\">\n                        <button type=\"button\" id=\"applyButton\">" + translate('applyFilter', 'Apply Filter') + "</button>\n                    </div>\n                </div>";
-    };
-    TextFilter.prototype.createGui = function () {
-        this.eGui = utils_1.Utils.loadTemplate(this.createTemplate());
-        this.eFilterTextField = this.eGui.querySelector("#filterText");
-        this.eTypeSelect = this.eGui.querySelector("#filterType");
-        utils_1.Utils.addChangeListener(this.eFilterTextField, this.onFilterChanged.bind(this));
-        this.eTypeSelect.addEventListener("change", this.onTypeChanged.bind(this));
-        this.setupApply();
-    };
-    TextFilter.prototype.setupApply = function () {
-        var _this = this;
-        if (this.applyActive) {
-            this.eApplyButton = this.eGui.querySelector('#applyButton');
-            this.eApplyButton.addEventListener('click', function () {
-                _this.filterParams.filterChangedCallback();
-            });
-        }
-        else {
-            utils_1.Utils.removeElement(this.eGui, '#applyPanel');
-        }
-    };
-    TextFilter.prototype.onTypeChanged = function () {
-        this.filterType = this.eTypeSelect.value;
-        this.filterChanged();
-    };
-    TextFilter.prototype.onFilterChanged = function () {
+    TextFilter.prototype.onFilterTextFieldChanged = function () {
         var filterText = utils_1.Utils.makeNull(this.eFilterTextField.value);
         if (filterText && filterText.trim() === '') {
             filterText = null;
@@ -121,19 +96,9 @@ var TextFilter = (function () {
             var previousLowerCase = this.filterText ? this.filterText.toLowerCase() : null;
             this.filterText = filterText;
             if (previousLowerCase !== newLowerCase) {
-                this.filterChanged();
+                this.onFilterChanged();
             }
         }
-    };
-    TextFilter.prototype.filterChanged = function () {
-        this.filterParams.filterModifiedCallback();
-        if (!this.applyActive) {
-            this.filterParams.filterChangedCallback();
-        }
-    };
-    TextFilter.prototype.setType = function (type) {
-        this.filterType = type;
-        this.eTypeSelect.value = type;
     };
     TextFilter.prototype.setFilter = function (filter) {
         filter = utils_1.Utils.makeNull(filter);
@@ -146,42 +111,30 @@ var TextFilter = (function () {
             this.eFilterTextField.value = null;
         }
     };
-    TextFilter.prototype.getType = function () {
-        return this.filterType;
-    };
     TextFilter.prototype.getFilter = function () {
         return this.filterText;
     };
-    TextFilter.prototype.getModel = function () {
-        if (this.isFilterActive()) {
-            return {
-                type: this.filterType,
-                filter: this.filterText
-            };
-        }
-        else {
-            return null;
-        }
+    TextFilter.prototype.resetState = function () {
+        this.setFilter(null);
+        this.setFilterType(baseFilter_1.BaseFilter.CONTAINS);
     };
-    TextFilter.prototype.setModel = function (model) {
-        if (model) {
-            this.setType(model.type);
-            this.setFilter(model.filter);
-        }
-        else {
-            this.setFilter(null);
-        }
+    TextFilter.prototype.serialize = function () {
+        return {
+            type: this.filter,
+            filter: this.filterText
+        };
+    };
+    TextFilter.prototype.parse = function (model) {
+        this.setFilterType(model.type);
+        this.setFilter(model.filter);
+    };
+    TextFilter.prototype.setType = function (filterType) {
+        this.setFilterType(filterType);
     };
     return TextFilter;
-}());
-TextFilter.CONTAINS = 'contains'; //1;
-TextFilter.NOT_CONTAINS = 'notContains'; //1;
-TextFilter.EQUALS = 'equals'; //2;
-TextFilter.NOT_EQUALS = 'notEquals'; //3;
-TextFilter.STARTS_WITH = 'startsWith'; //4;
-TextFilter.ENDS_WITH = 'endsWith'; //5;
+}(baseFilter_1.ComparableBaseFilter));
 __decorate([
-    context_1.Autowired('gridOptionsWrapper'),
-    __metadata("design:type", gridOptionsWrapper_1.GridOptionsWrapper)
-], TextFilter.prototype, "gridOptionsWrapper", void 0);
+    componentAnnotations_1.QuerySelector('#filterText'),
+    __metadata("design:type", HTMLInputElement)
+], TextFilter.prototype, "eFilterTextField", void 0);
 exports.TextFilter = TextFilter;

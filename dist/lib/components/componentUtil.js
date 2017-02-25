@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -155,11 +155,12 @@ ComponentUtil.EVENTS = [];
 ComponentUtil.STRING_PROPERTIES = [
     'sortingOrder', 'rowClass', 'rowSelection', 'overlayLoadingTemplate',
     'overlayNoRowsTemplate', 'headerCellTemplate', 'quickFilterText', 'rowModelType',
-    'editType'
+    'editType', 'rowDataSourceKeyProperty'
 ];
 ComponentUtil.OBJECT_PROPERTIES = [
     'rowStyle', 'context', 'groupColumnDef', 'localeText', 'icons', 'datasource', 'viewportDatasource',
-    'groupRowRendererParams', 'aggFuncs', 'fullWidthCellRendererParams', 'defaultColGroupDef', 'defaultColDef'
+    'groupRowRendererParams', 'aggFuncs', 'fullWidthCellRendererParams', 'defaultColGroupDef', 'defaultColDef',
+    'rowDataSource'
 ];
 ComponentUtil.ARRAY_PROPERTIES = [
     'slaveGrids', 'rowData', 'floatingTopRowData', 'floatingBottomRowData', 'columnDefs', 'excelStyles'

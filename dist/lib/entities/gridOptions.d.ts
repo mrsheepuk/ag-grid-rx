@@ -1,6 +1,7 @@
-// Type definitions for ag-grid v8.1.1
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.1
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
+import { Observable } from "rxjs";
 import { RowNode } from "./rowNode";
 import { GridApi } from "../gridApi";
 import { ColumnApi } from "../columnController/columnController";
@@ -8,7 +9,7 @@ import { Column } from "./column";
 import { IViewportDatasource } from "../interfaces/iViewportDatasource";
 import { ICellRendererFunc, ICellRendererComp } from "../rendering/cellRenderers/iCellRenderer";
 import { IAggFunc, ColGroupDef, ColDef } from "./colDef";
-import { IDatasource } from "../rowControllers/iDatasource";
+import { IDatasource } from "../rowModels/iDatasource";
 import { GridCellDef } from "./gridCell";
 import { IDateComp } from "../rendering/dateComponent";
 /****************************************************************
@@ -138,6 +139,8 @@ export interface GridOptions {
      * Don't forget to update ComponentUtil if changing this class. *
      ****************************************************************/
     rowData?: any[];
+    rowDataSource?: Observable<any[]>;
+    rowDataSourceKeyProperty?: string;
     floatingTopRowData?: any[];
     floatingBottomRowData?: any[];
     showToolPanel?: boolean;

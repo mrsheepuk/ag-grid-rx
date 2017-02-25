@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -88,7 +88,8 @@ var GridOptionsWrapper = GridOptionsWrapper_1 = (function () {
     GridOptionsWrapper.prototype.isRowModelPagination = function () { return this.gridOptions.rowModelType === constants_1.Constants.ROW_MODEL_TYPE_PAGINATION; };
     GridOptionsWrapper.prototype.isRowModelVirtual = function () { return this.gridOptions.rowModelType === constants_1.Constants.ROW_MODEL_TYPE_VIRTUAL; };
     GridOptionsWrapper.prototype.isRowModelViewport = function () { return this.gridOptions.rowModelType === constants_1.Constants.ROW_MODEL_TYPE_VIEWPORT; };
-    GridOptionsWrapper.prototype.isRowModelDefault = function () { return !(this.isRowModelPagination() || this.isRowModelVirtual() || this.isRowModelViewport()); };
+    GridOptionsWrapper.prototype.isRowModelObservable = function () { return this.gridOptions.rowModelType === constants_1.Constants.ROW_MODEL_TYPE_OBSERVABLE; };
+    GridOptionsWrapper.prototype.isRowModelDefault = function () { return !(this.isRowModelPagination() || this.isRowModelVirtual() || this.isRowModelViewport() || this.isRowModelObservable()); };
     GridOptionsWrapper.prototype.isFullRowEdit = function () { return this.gridOptions.editType === 'fullRow'; };
     GridOptionsWrapper.prototype.isSuppressFocusAfterRefresh = function () { return isTrue(this.gridOptions.suppressFocusAfterRefresh); };
     GridOptionsWrapper.prototype.isShowToolPanel = function () { return isTrue(this.gridOptions.showToolPanel); };
@@ -144,6 +145,8 @@ var GridOptionsWrapper = GridOptionsWrapper_1 = (function () {
     GridOptionsWrapper.prototype.getPaginationPageSize = function () { return this.gridOptions.paginationPageSize; };
     GridOptionsWrapper.prototype.getPaginationInitialRowCount = function () { return this.gridOptions.paginationInitialRowCount; };
     GridOptionsWrapper.prototype.getRowData = function () { return this.gridOptions.rowData; };
+    GridOptionsWrapper.prototype.getRowDataSource = function () { return this.gridOptions.rowDataSource; };
+    GridOptionsWrapper.prototype.getRowDataSourceKeyProperty = function () { return this.gridOptions.rowDataSourceKeyProperty; };
     GridOptionsWrapper.prototype.isGroupUseEntireRow = function () { return isTrue(this.gridOptions.groupUseEntireRow); };
     GridOptionsWrapper.prototype.isEnableRtl = function () { return isTrue(this.gridOptions.enableRtl); };
     GridOptionsWrapper.prototype.getGroupColumnDef = function () { return this.gridOptions.groupColumnDef; };
@@ -191,6 +194,7 @@ var GridOptionsWrapper = GridOptionsWrapper_1 = (function () {
     GridOptionsWrapper.prototype.isSuppressParentsInRowNodes = function () { return isTrue(this.gridOptions.suppressParentsInRowNodes); };
     GridOptionsWrapper.prototype.isEnableStatusBar = function () { return isTrue(this.gridOptions.enableStatusBar); };
     GridOptionsWrapper.prototype.isFunctionsReadOnly = function () { return isTrue(this.gridOptions.functionsReadOnly); };
+    GridOptionsWrapper.prototype.isFloatingFilter = function () { return false; };
     GridOptionsWrapper.prototype.getDefaultColDef = function () { return this.gridOptions.defaultColDef; };
     GridOptionsWrapper.prototype.getDefaultColGroupDef = function () { return this.gridOptions.defaultColGroupDef; };
     GridOptionsWrapper.prototype.getHeaderCellTemplate = function () { return this.gridOptions.headerCellTemplate; };

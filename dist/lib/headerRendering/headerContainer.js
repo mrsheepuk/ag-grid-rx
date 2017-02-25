@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -97,7 +97,14 @@ var HeaderContainer = (function () {
         var rowCount = this.columnController.getHeaderRowCount();
         for (var dept = 0; dept < rowCount; dept++) {
             var groupRow = dept !== (rowCount - 1);
-            var headerRowComp = new headerRowComp_1.HeaderRowComp(dept, groupRow, this.pinned, this.eRoot, this.dropTarget);
+            var type = groupRow ? headerRowComp_1.HeaderRowType.COLUMN_GROUP : headerRowComp_1.HeaderRowType.COLUMN;
+            var headerRowComp = new headerRowComp_1.HeaderRowComp(dept, type, this.pinned, this.eRoot, this.dropTarget);
+            this.context.wireBean(headerRowComp);
+            this.headerRowComps.push(headerRowComp);
+            this.eContainer.appendChild(headerRowComp.getGui());
+        }
+        if (this.gridOptionsWrapper.isFloatingFilter()) {
+            var headerRowComp = new headerRowComp_1.HeaderRowComp(rowCount - 1, headerRowComp_1.HeaderRowType.FLOATING_FILTER, this.pinned, this.eRoot, this.dropTarget);
             this.context.wireBean(headerRowComp);
             this.headerRowComps.push(headerRowComp);
             this.eContainer.appendChild(headerRowComp.getGui());

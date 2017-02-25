@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -49,6 +49,7 @@ Constants.KEY_CTRL_DOWN_NAME = 'ctrlDown';
 Constants.ROW_MODEL_TYPE_PAGINATION = 'pagination';
 Constants.ROW_MODEL_TYPE_VIRTUAL = 'virtual';
 Constants.ROW_MODEL_TYPE_VIEWPORT = 'viewport';
+Constants.ROW_MODEL_TYPE_OBSERVABLE = 'observable';
 Constants.ROW_MODEL_TYPE_NORMAL = 'normal';
 Constants.ALWAYS = 'always';
 Constants.ONLY_WHEN_GROUPING = 'onlyWhenGrouping';

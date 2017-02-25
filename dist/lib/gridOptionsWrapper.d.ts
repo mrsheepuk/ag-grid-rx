@@ -1,6 +1,7 @@
-// Type definitions for ag-grid v8.1.1
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.1
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
+import { Observable } from 'rxjs';
 import { RowNode } from "./entities/rowNode";
 import { GridOptions, NodeChildDetails, GetContextMenuItems, GetMainMenuItems, ProcessRowParams, ProcessCellForExportParams, GetRowNodeIdFunc, NavigateToNextCellParams, TabToNextCellParams } from "./entities/gridOptions";
 import { GridApi } from "./gridApi";
@@ -8,7 +9,7 @@ import { ColDef, IAggFunc, ColGroupDef } from "./entities/colDef";
 import { ColumnApi } from "./columnController/columnController";
 import { IViewportDatasource } from "./interfaces/iViewportDatasource";
 import { ICellRendererFunc, ICellRendererComp } from "./rendering/cellRenderers/iCellRenderer";
-import { IDatasource } from "./rowControllers/iDatasource";
+import { IDatasource } from "./rowModels/iDatasource";
 import { GridCellDef } from "./entities/gridCell";
 export declare class GridOptionsWrapper {
     private static MIN_COL_WIDTH;
@@ -46,6 +47,7 @@ export declare class GridOptionsWrapper {
     isRowModelPagination(): boolean;
     isRowModelVirtual(): boolean;
     isRowModelViewport(): boolean;
+    isRowModelObservable(): boolean;
     isRowModelDefault(): boolean;
     isFullRowEdit(): boolean;
     isSuppressFocusAfterRefresh(): boolean;
@@ -102,6 +104,8 @@ export declare class GridOptionsWrapper {
     getPaginationPageSize(): number;
     getPaginationInitialRowCount(): number;
     getRowData(): any[];
+    getRowDataSource(): Observable<any[]>;
+    getRowDataSourceKeyProperty(): string;
     isGroupUseEntireRow(): boolean;
     isEnableRtl(): boolean;
     getGroupColumnDef(): ColDef;
@@ -151,6 +155,7 @@ export declare class GridOptionsWrapper {
     isSuppressParentsInRowNodes(): boolean;
     isEnableStatusBar(): boolean;
     isFunctionsReadOnly(): boolean;
+    isFloatingFilter(): boolean;
     getDefaultColDef(): ColDef;
     getDefaultColGroupDef(): ColGroupDef;
     getHeaderCellTemplate(): string;

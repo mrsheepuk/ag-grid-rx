@@ -1,7 +1,7 @@
 /**
- * ag-grid - Advanced Data Grid / Data Table supporting Javascript / React / AngularJS / Web Components
+ * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
  * @version v8.1.1
- * @link http://www.ag-grid.com/
+ * @link https://github.com/mrsheepuk/ag-grid-rx
  * @license MIT
  */
 "use strict";
@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var context_1 = require("./context/context");
 var constants_1 = require("./constants");
 var columnController_1 = require("./columnController/columnController");
-var floatingRowModel_1 = require("./rowControllers/floatingRowModel");
+var floatingRowModel_1 = require("./rowModels/floatingRowModel");
 var utils_1 = require("./utils");
 var gridRow_1 = require("./entities/gridRow");
 var gridCell_1 = require("./entities/gridCell");

@@ -1,5 +1,5 @@
-// Type definitions for ag-grid v8.1.1
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.1
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 import { Column } from "../entities/column";
 import { ColDef } from "../entities/colDef";
@@ -32,6 +32,9 @@ export interface IDoesFilterPassParams {
     data: any;
 }
 export interface IFilterParams {
+    clearButton?: boolean;
+    applyButton?: boolean;
+    newRowsAction?: string;
     column: Column;
     colDef: ColDef;
     rowModel: IRowModel;

@@ -1,5 +1,5 @@
-// Type definitions for ag-grid v8.1.1
-// Project: http://www.ag-grid.com/
+// Type definitions for ag-grid-rx v8.1.1
+// Project: https://github.com/mrsheepuk/ag-grid-rx
 // Definitions by: Niall Crosby <https://github.com/ceolter/>
 export declare class Constants {
     static STEP_EVERYTHING: number;
@@ -41,6 +41,7 @@ export declare class Constants {
     static ROW_MODEL_TYPE_PAGINATION: string;
     static ROW_MODEL_TYPE_VIRTUAL: string;
     static ROW_MODEL_TYPE_VIEWPORT: string;
+    static ROW_MODEL_TYPE_OBSERVABLE: string;
     static ROW_MODEL_TYPE_NORMAL: string;
     static ALWAYS: string;
     static ONLY_WHEN_GROUPING: string;
