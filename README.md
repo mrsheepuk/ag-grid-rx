@@ -21,11 +21,11 @@ When using an observable data source, certain features of the main ag-Grid are n
 
 #### Key differences to ag-Grid
 * To use with an observable source:
-** Set the rowDataSource configuration option or call the setRowDataSource API method.
-** Set the rowModelType configuration option to 'observable'. 
-** You **must** also provide a rowDataSourceKeyProperty value. This identifies a 'primary 
-  key' property which each item provided by the Observable **must** have.
-* This primary key must be unique within the supplied data, and constant for a given 
+    - Set the rowDataSource configuration option or call the setRowDataSource API method.
+    - Set the rowModelType configuration option to 'observable'. 
+    - You must also provide a rowDataSourceKeyProperty value. This identifies a 'primary 
+      key' property which each item provided by the Observable must have.
+* The 'primary key' must be unique within the supplied data, and constant for a given 
   'logical' data item.
 * The objects provided by the Observable **must** be immutable if you wish the grid to 
   be updated with the updated values. For best performance, you should keep the same
