@@ -7,8 +7,8 @@ the provision of data into the grid, giving efficient updating of the existing r
 that observable emits new values. This makes it ideal for Angular (2+) combined with NgRx or
 Redux for state management.
 
-When using an observable data source, certain features of the main ag-Grid are not supported 
-- see below for key differences.
+When using an observable data source, certain features of the main ag-Grid are not 
+supported - see below for key differences.
 
 #### Benefits
 * Better in-browser performance when frequently updating large data sets which mostly stay
