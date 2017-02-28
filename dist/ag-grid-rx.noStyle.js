@@ -1,4 +1,4 @@
-// ag-grid-rx v8.1.1-3
+// ag-grid-rx v8.1.1-4
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -68,7 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -325,7 +325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -497,7 +497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -974,7 +974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -1083,7 +1083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -1145,7 +1145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -1462,7 +1462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -2459,7 +2459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -2578,7 +2578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -2803,7 +2803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -2921,7 +2921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -3645,7 +3645,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -3813,7 +3813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -4076,7 +4076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -5900,7 +5900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -6154,7 +6154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -6564,7 +6564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -6721,7 +6721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -6838,7 +6838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -6922,7 +6922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -7123,7 +7123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -7176,7 +7176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -7370,7 +7370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -7509,7 +7509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -8266,7 +8266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -9825,7 +9825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -10038,7 +10038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -10195,7 +10195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -10642,7 +10642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -10967,7 +10967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11158,7 +11158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11420,7 +11420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11673,7 +11673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11729,7 +11729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11922,7 +11922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -11962,7 +11962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -12038,7 +12038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -12127,7 +12127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -12198,7 +12198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -12269,7 +12269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -12360,7 +12360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -13378,7 +13378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -14493,7 +14493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -14628,7 +14628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -14976,7 +14976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -15335,7 +15335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -15526,7 +15526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16007,7 +16007,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16270,7 +16270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16416,7 +16416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16672,7 +16672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16880,7 +16880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -16947,7 +16947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17099,7 +17099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17268,7 +17268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17384,7 +17384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17510,7 +17510,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17812,7 +17812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -17910,7 +17910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18119,7 +18119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18228,7 +18228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18323,7 +18323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18392,7 +18392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18474,7 +18474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18504,7 +18504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18534,7 +18534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18602,7 +18602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18687,7 +18687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18776,7 +18776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -18878,7 +18878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19219,7 +19219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19327,7 +19327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19389,7 +19389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19519,7 +19519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19612,7 +19612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19726,7 +19726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19745,7 +19745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19830,7 +19830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -19897,7 +19897,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -20143,7 +20143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -20284,7 +20284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -20443,7 +20443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -20815,7 +20815,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -21058,7 +21058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -21462,7 +21462,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -21566,7 +21566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -21680,7 +21680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -21743,7 +21743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -22033,7 +22033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -22201,7 +22201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -22392,7 +22392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -22689,7 +22689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -22809,7 +22809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23117,7 +23117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23223,7 +23223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23318,7 +23318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23362,7 +23362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23395,7 +23395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23444,7 +23444,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23544,7 +23544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23645,7 +23645,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23751,7 +23751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -23922,7 +23922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -24195,7 +24195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -24526,7 +24526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -24726,7 +24726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25204,7 +25204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25390,7 +25390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25588,6 +25588,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.rootNode.allLeafChildren.forEach(function (rowNode, index) { return callback(rowNode, index); });
 	        }
 	    };
+	    ObservableInMemoryRowModel.prototype.forEachNodeAfterFilter = function (callback) {
+	        if (this.rootNode.childrenAfterFilter) {
+	            this.rootNode.childrenAfterFilter.forEach(function (rowNode, index) { return callback(rowNode, index); });
+	        }
+	    };
+	    ObservableInMemoryRowModel.prototype.forEachNodeAfterFilterAndSort = function (callback) {
+	        if (this.rootNode.childrenAfterSort) {
+	            this.rootNode.childrenAfterSort.forEach(function (rowNode, index) { return callback(rowNode, index); });
+	        }
+	    };
 	    ObservableInMemoryRowModel.prototype.doSort = function () {
 	        this.sortStage.execute({ rowNode: this.rootNode });
 	    };
@@ -25712,7 +25722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25834,7 +25844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25881,7 +25891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -25954,7 +25964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -26000,7 +26010,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -26118,7 +26128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
@@ -26222,7 +26232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * ag-grid-rx - Advanced Data Grid / Data Table with Observble rowData support (fork of ag-grid)
-	 * @version v8.1.1-3
+	 * @version v8.1.1-4
 	 * @link https://github.com/mrsheepuk/ag-grid-rx
 	 * @license MIT
 	 */
