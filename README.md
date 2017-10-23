@@ -2,7 +2,14 @@
 ag-Grid-rx
 ==============
 
-A fork of [ag-Grid](http://www.ag-grid.com) which supports the use of an RxJS observable for
+#### NO LONGER SUPPORTED
+As [ag-Grid](https://www.ag-grid.com) now supports updating from RxJS observables in a clean,
+neat way, **I no longer maintain this fork and it is no longer neccessary**. See [the ag-Grid 
+documentation for using with RxJS](https://www.ag-grid.com/example-angular-rxjs/?framework=all#gsc.tab=0).
+
+#### Old README:
+
+A fork of [ag-Grid](https://www.ag-grid.com) which supports the use of an RxJS observable for
 the provision of data into the grid, giving efficient updating of the existing rows when
 that observable emits new values. This makes it ideal for Angular (2+) combined with NgRx or
 Redux for state management.
@@ -36,7 +43,7 @@ supported - see below for key differences.
   data source. Fork this and implement it if you need it, my use case didn't need it and it 
   would add to the complexity of the Observable implementation.
 
-For everything else, see the main [ag-Grid documentation](http://www.ag-grid.com/).
+For everything else, see the main [ag-Grid documentation](https://www.ag-grid.com/).
 
 #### Install with Npm
 ```sh
